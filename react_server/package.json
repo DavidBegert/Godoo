@@ -18,7 +18,7 @@
     "events"
   ],
   "author": "David Begert",
-  "license": "MIT",
+  "license": "ISC",
 
   "devDependencies": {
   "babel-core": "^6.7.2",

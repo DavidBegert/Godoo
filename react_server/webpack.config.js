@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var config = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:6000', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
     path.resolve(__dirname, 'src', 'index.js'),
   ],

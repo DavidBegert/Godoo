@@ -12,10 +12,10 @@ new WebpackDevServer(webpack(config), {
     colors: true,
     timings: true
   }
-}).listen(6000, '0.0.0.0', function (err, result) {
+}).listen(3000, '0.0.0.0', function (err, result) {
   if (err) {
     console.log(err);
   }
 
-  console.log('Building modules to serve at localhost:6000');
+  console.log('Building modules to serve at localhost:3000');
 });
