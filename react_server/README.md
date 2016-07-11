@@ -1,0 +1,1 @@
+#This is the react server folder where we handle all the front end logic and make api requests to the rails server running on a different port.
