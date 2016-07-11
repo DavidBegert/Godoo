@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import GoogleMap from './components/google_map.js'
 
 export default class App extends Component {
 
   constructor(props) {
-    console.log('hello ;)');
     super(props);
   }
 
+
+
   render() {
     return (
-      <h1> Welcome to react baby! </h1>
+      <div>
+        <h1> Hello World, This is App.js </h1>
+        <GoogleMap />
+      </div>
     );
   }
 
