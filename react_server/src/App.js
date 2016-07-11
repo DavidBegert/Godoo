@@ -8,11 +8,13 @@ export default class App extends Component {
   }
 
 
-
   render() {
+    var hStyle = {
+      color: 'blue'
+    }
     return (
       <div>
-        <h1> Hello World, This is App.js </h1>
+        <h1 style={hStyle}> Hello World, This is App.js </h1>
         <GoogleMap />
       </div>
     );
