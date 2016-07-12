@@ -5,10 +5,7 @@ export default class EventCard extends Component {
   render() {
     return (
 
-    <div className="columns">
       <div className="column is-one-third space_edit">
-        
-
           <div className="box1">
             <div className="box space_edit2">
               <article className="media">
@@ -77,10 +74,7 @@ export default class EventCard extends Component {
               </article>
             </div>
           </div>
-           
-
         </div>
-      </div>
         
 
 

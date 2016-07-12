@@ -21,9 +21,9 @@ export default class MapComponent extends Component {
     ]
 
     return (
-      <div className='section is-one-third'>
-        <GoogleMapContent markers={exampleMarkers} />
-      </div>
+        <div className='column is-two-thirds'>
+          <GoogleMapContent markers={exampleMarkers} />
+        </div>
 
     );
   }

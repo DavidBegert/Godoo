@@ -9,7 +9,6 @@ export default class App extends Component {
     super(props);
   }
 
-
   render() {
     var hStyle = {
       color: 'blue'
@@ -17,9 +16,10 @@ export default class App extends Component {
     return (
       <div>
         <Nav />
-        <EventCard />
-        <h1 style={hStyle}> Hello World, This is App.js </h1>
-        <MapComponent />
+        <div className="columns">
+          <EventCard />
+          <MapComponent />
+        </div>
       </div>
     );
   }
