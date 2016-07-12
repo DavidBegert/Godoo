@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
+import Nav from 'Nav';
 import GoogleMapComponent from './components/google_map_component.jsx';
 
 export default class App extends Component {
