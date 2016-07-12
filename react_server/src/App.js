@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EventCard from './components/EventCard.js';
 import Nav from './components/Nav.js';
 import GoogleMapComponent from './components/google_map_component.jsx';
 
@@ -31,7 +32,7 @@ export default class App extends Component {
     return (
       <div>
         <Nav />
-        <h1> Welcome to react baby! </h1>
+        <EventCard />
         <h1 style={hStyle}> Hello World, This is App.js </h1>
         <GoogleMapComponent markers={exampleMarkers} />
       </div>
