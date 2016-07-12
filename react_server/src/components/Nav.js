@@ -4,7 +4,6 @@ export default class Nav extends Component {
 
   render() {
     return (
-        // <nav> Nav </nav>
       <nav className="nav">
         <div className="nav-left">
           <a className="nav-item" href="#">
