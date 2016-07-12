@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 export default class Nav extends Component {
 
@@ -61,7 +61,7 @@ export default class Nav extends Component {
           </span>
         </div>
       </nav>
-      );
+    );
   }
 }  
 
