@@ -19,22 +19,22 @@
   ],
   "author": "David Begert",
   "license": "ISC",
-
   "devDependencies": {
-  "babel-core": "^6.7.2",
-  "babel-loader": "^6.2.4",
-  "babel-preset-es2015": "^6.6.0",
-  "babel-preset-react": "^6.5.0",
-  "babel-preset-stage-0": "^6.5.0",
-  "css-loader": "^0.23.1",
-  "react-hot-loader": "^1.3.0",
-  "style-loader": "^0.13.0",
-  "webpack": "^1.12.14",
-  "webpack-dev-server": "^1.14.1"
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "jquery": "^3.1.0",
     "react": "^15.2.1",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "react-google-maps": "^4.11.0"
   }
 }
