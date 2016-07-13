@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import EventList from './components/EventList';
-import Nav from './components/Nav';
-import MapComponent from './components/MapComponent';
+import EventList from './EventList';
+import Nav from './Nav';
+import MapComponent from './MapComponent';
 
 export default class App extends Component {
 
