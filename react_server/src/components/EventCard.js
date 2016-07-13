@@ -4,23 +4,29 @@ export default class EventCard extends Component {
 
   render() {
     return (
-
-      <div className="column is-one-third space_edit">
+      // Removed 1/3 width bulma class
+      // TODO : Jazz it up with bulma css.
+      <div >
         <div className="box1">
           <div className="box space_edit2">
             <article className="media">
               <div className="media-left">
                 <figure className="image is-64x64">
-                  <img src="images/surfer_girl_chilled.jpg" alt="Image"/>
+                  <img src={this.props.image_url} alt="Image"/>
                 </figure>
               </div>
               <div className="media-content">
                 <div className="content">
                   <p>
-                    <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small> -->
-                    <strong>P and E Summer Concerts</strong> <small>@pandefair</small> <small>31m</small>
+                    <strong>{this.props.title}</strong>
                     <br />
-                    Every night at 8:30pm, the PNE Amphitheatre will present a summer full of the best music! Don't miss the sounds of Canada's-own, Juno-award winning The Sheepdogs! 
+                    <em>{this.props.venue_name}</em>
+                    <br />
+                    {this.props.description}
+                    <br />
+                    {this.props.venue_address}
+                    <br />
+                    {this.props.start_time}
                   </p>
                 </div>
                 <nav className="level">
