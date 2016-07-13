@@ -6,7 +6,7 @@ export default class FilterList extends Component {
   render() {
     return (
 
-      <div class="column is-one-third space_edit">
+      <div className="column is-one-third space_edit">
 
         <div className="button-area"> 
 
