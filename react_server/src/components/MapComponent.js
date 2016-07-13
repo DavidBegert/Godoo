@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {GoogleMapLoader, GoogleMap, Marker, InfoWindow} from "react-google-maps";
+import FilterList from "./FilterList";
 import $ from "jquery";
 
 export default class GoogleMapContent extends Component {
