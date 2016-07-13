@@ -32,9 +32,6 @@ export default class GoogleMapContent extends Component {
       success: function(response) {
         var results = response.events.event;
         console.log(results);
-        // var arr = Object.keys(results).map(function(k) { return results[k] });
-        // console.log('array: ');
-        // console.log(arr[0])
         that.setState({ data: results });
       }
     });

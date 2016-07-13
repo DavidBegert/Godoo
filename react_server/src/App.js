@@ -10,9 +10,6 @@ export default class App extends Component {
   }
 
   render() {
-    var hStyle = {
-      color: 'blue'
-    }
     return (
       <div>
         <Nav />
