@@ -6,7 +6,7 @@ export default class EventList extends Component {
   render() {
     // TODO display collection of EventCard items
     return (
-      <div>
+      <div className="column is-one-third">
         <EventCard 
         title="PNE Summer Concert - Pat Benetar" 
         description="Every night at 8:30pm, the PNE Amphitheatre will present a summer full of the best music! Don't miss the sounds of Canada's-own, Juno-award winning The Sheepdogs! "
