@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import EventsPage from './EventsPage.js';
-import HomePage from './HomePage.js';
+import EventsPage from './components/EventsPage.js';
+import HomePage from './components/HomePage.js';
 
 export default class App extends Component {
 
