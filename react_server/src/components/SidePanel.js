@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FilterList from './components/FilterList.js';
-import EventList from './components/EventList.js';
+import FilterList from './FilterList';
+import EventList from './EventList';
 
 export default class SidePanel extends Component {
 

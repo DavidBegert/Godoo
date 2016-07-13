@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SidePanel from './components/SidePanel.js';
-import Nav from './components/Nav.js';
-import MapComponent from './components/MapComponent.js';
+import SidePanel from './components/SidePanel';
+import Nav from './components/Nav';
+import MapComponent from './components/MapComponent';
 
 export default class App extends Component {
 

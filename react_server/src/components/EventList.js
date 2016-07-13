@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EventCard from './components/EventCard';
+import EventCard from './EventCard';
 
 export default class EventList extends Component {
 
