@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import FilterList from './components/FilterList.js';
-import FilterItem from './components/FilterItem.js';
-import EventCard from './components/EventCard.js';
-import Nav from './components/Nav.js';
-import MapComponent from './components/MapComponent.js';
+import SidePanel from './components/SidePanel';
+import Nav from './components/Nav';
+import MapComponent from './components/MapComponent';
 
 export default class App extends Component {
 
@@ -19,9 +17,7 @@ export default class App extends Component {
       <div>
         <Nav />
         <div className="columns">
-          <FilterList />
-          <FilterItem />
-          <EventCard />
+          <SidePanel />
           <MapComponent />
         </div>
       </div>
