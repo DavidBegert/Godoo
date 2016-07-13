@@ -1,103 +1,123 @@
 import React, { Component } from 'react';
 import {GoogleMapLoader, GoogleMap, Marker, InfoWindow} from "react-google-maps";
+import $ from "jquery";
 
 export default class GoogleMapContent extends Component {
+
+//TO DO : if it has no description then make it say <no description> or something. Also make the description render as html since there are br tags right now.
 
   constructor(props) {
 
     super(props);
     this.state = {
-      //array of objects of markers
-      markers: [
-        {
-          position: { lat: 48.0112183, lng: -124.52067570000001 },
-          key: "The Shop",
-          defaultAnimation: 2,
-          title: "This is the title",
-          showInfo: false,
-          options: {
-            description: "The Shop is a concert hall event where you will be watching something cool!!!"
-          }
-        },
-        {
-          position: {lat: 49, lng: -125},
-          key: "Vancouver",
-          defaultAnimation: 3,
-          title: "Theatre",
-          showInfo: false,
-          options: {
-            description: "This is the vancouver theatre and may be the funnest place ever."
-          }
-        }
-      ]
+      previousMarker: null
     }
   }
 
+  componentDidMount() {
+    var that = this; 
+    $.ajax({
+      url: 'http://api.eventful.com/json/events/search',
+      dataType: 'jsonp',
+      data: {
+        location: "49.2788,-123.1139",
+        app_key: 'FFmssWtvRRfc9VF7',
+        page_size: 100,
+        date: "Today",
+        within: 1,
+        change_multi_day_start: true,
+        ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
+        category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
+      },
+      success: function(response) {
+        var results = response.events.event;
+        console.log(results);
+        // var arr = Object.keys(results).map(function(k) { return results[k] });
+        // console.log('array: ');
+        // console.log(arr[0])
+        that.setState({ data: results });
+      }
+    });
+  };
+
   handleMarkerClick(marker) {
-    if (marker.showInfo === false) {
+    if (!marker.showInfo) {
       marker.showInfo = true;
+      if (this.state.previousMarker){ 
+        this.state.previousMarker.showInfo = false;
+      }
+      this.state.previousMarker = marker;
     } else {
       marker.showInfo = false;
     }
     this.setState(this.state); 
-  }
-  handleMarkerClose(marker) {
-    marker.showInfo = false;
-    this.setState(this.state);
-  }
+  };
 
   renderInfoWindow(marker) {
     return (
-      <InfoWindow>
-        {marker.options.description}
+      <InfoWindow> 
+        <div style={{width: "550px"}}>
+          <strong>{marker.title}:</strong>
+
+          <p>{marker.description}</p>
+        </div> 
       </InfoWindow>
       
     );
     
-  }
+  };
 
   render() {
-
-    return (
-      <div className='column is-two-thirds' style={{height: "100%"}}>
-        <GoogleMapLoader
-          containerElement={
-            <div
-              {...this.props}
-              style={{
-                height: "100%",
-              }} > 
-            </div>
-          }
-          googleMapElement={
-            <GoogleMap
-              ref='map'
-              defaultZoom={7}
-              center={{ lat: 48.363882, lng: -125.044922 }}
-            >
-
-            {this.state.markers.map((marker, index) => {
-              return (
-                <Marker
-                  key={index}
-                  position={marker.position}
-                  title={marker.title}
-                  onClick={() => this.handleMarkerClick(marker)}
-                  onMouseover={function(e) { console.log('mousedOver') } }
-                > 
-                  { console.log("hello") }
-                  { marker.showInfo ? this.renderInfoWindow(marker) : null }
-
-                </Marker>
-              );
-            })
+    if (this.state.data) {  
+      return (
+        <div className='column is-two-thirds' style={{height: "100%"}}>
+          {console.log("helllllooooo the whole map just got rendered")}
+          <GoogleMapLoader
+            containerElement={
+              <div
+                {...this.props}
+                style={{
+                  height: "100%",
+                }} > 
+              </div>
             }
+            googleMapElement={
+              <GoogleMap
+                ref='map'
+                defaultZoom={13}
+                defaultCenter={{ lat: 49.275882, lng: -123.114922 }}
+              >
 
-            </GoogleMap>
-          }
-        />
-      </div>
-    );
+              {this.state.data.map((marker, index) => {  //this.state.markers.map
+  
+                return (
+                  <Marker
+                    key={index}
+                    position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
+                    title={ marker.title }//marker.title
+                    onClick={() => this.handleMarkerClick(marker)} 
+                    // onMouseover={() => this.handleMarkerClick(marker) }
+                    // onMouseleave={() => this.handleMarkerLeave(marker) }
+                  > 
+
+                    { marker.showInfo ? this.renderInfoWindow(marker) : null }
+
+                  </Marker>
+                );
+              })
+              }
+
+              </GoogleMap>
+            }
+          />
+        </div>
+      );
+    }
+    else {
+      return (
+        <h2> <br/><br/>Loading... </h2>
+      );
+    }
   }
 
 };
