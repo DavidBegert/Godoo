@@ -41,7 +41,7 @@ export default class GoogleMapContent extends Component {
   handleMarkerClick(marker) {
     if (!marker.showInfo) {
       marker.showInfo = true;
-      if (this.state.previousMarker){ 
+      if (this.state.previousMarker && this.state.previousMarker != marker){ 
         this.state.previousMarker.showInfo = false;
       }
       this.state.previousMarker = marker;
@@ -53,7 +53,7 @@ export default class GoogleMapContent extends Component {
 
   renderInfoWindow(marker) {
     return (
-      <InfoWindow> 
+      <InfoWindow onCloseclick={() => this.handleMarkerClick(marker)} > 
         <div style={{width: "550px"}}>
           <strong>{marker.title}:</strong>
 
