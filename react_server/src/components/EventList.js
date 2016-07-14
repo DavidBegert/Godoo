@@ -9,7 +9,7 @@ export default class EventList extends Component {
     //TO DO: add default image
     var defaultImage = null;
 
-    var eventCards = this.props.events.map(function(event) {
+    var eventCards = this.props.selectedEvents.map(function(event) {
       return <EventCard 
         key={event.id}
         title={event.title}
