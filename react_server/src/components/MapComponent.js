@@ -18,7 +18,7 @@ export default class GoogleMapContent extends Component {
 
   handleFilterClick(category) {
     this.setState(function(previousState) {
-      return {filteredCategories: previousState.filteredCategories.unshift(category)};
+      return {filteredCategories: [previousState.filteredCategories... category]};
     });
   }
 
@@ -50,53 +50,49 @@ export default class GoogleMapContent extends Component {
   };
 
   render() {
-    if (this.props.events) {  
-      return (
-          <GoogleMapLoader
-            containerElement={
-              <div
-                //{...this.props}
-                style={{
-                  height: "100%",
-                }} > 
-              </div>
+    return (
+      if (this.props.events) {  
+        <GoogleMapLoader
+          containerElement={
+            <div
+              //{...this.props}
+              style={{
+                height: "100%",
+              }} > 
+            </div>
+          }
+          googleMapElement={
+            <GoogleMap
+              ref='map'
+              defaultZoom={13}
+              defaultCenter={{ lat: 49.275882, lng: -123.114922 }}
+            >
+
+            {this.props.events.map((marker, index) => {  //this.state.markers.map
+
+              return (
+                <Marker
+                  key={index}
+                  position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
+                  title={ marker.title }//marker.title
+                  onClick={() => this.onMarkerClick(marker)} 
+                  // onMouseover={() => this.onMarkerClick(marker) }
+                  // onMouseleave={() => this.handleMarkerLeave(marker) }
+                > 
+
+                  { marker.showInfo ? this.renderInfoWindow(marker) : null }
+
+                </Marker>
+              );
+            })
             }
-            googleMapElement={
-              <GoogleMap
-                ref='map'
-                defaultZoom={13}
-                defaultCenter={{ lat: 49.275882, lng: -123.114922 }}
-              >
 
-              {this.props.events.map((marker, index) => {  //this.state.markers.map
-  
-                return (
-                  <Marker
-                    key={index}
-                    position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
-                    title={ marker.title }//marker.title
-                    onClick={() => this.onMarkerClick(marker)} 
-                    // onMouseover={() => this.onMarkerClick(marker) }
-                    // onMouseleave={() => this.handleMarkerLeave(marker) }
-                  > 
-
-                    { marker.showInfo ? this.renderInfoWindow(marker) : null }
-
-                  </Marker>
-                );
-              })
-              }
-
-              </GoogleMap>
+            </GoogleMap>
             }
-          />
-      );
-    }
-    else {
-      return (
-        <h2> <br/><br/>Loading... </h2>
-      );
-    }
+        />
+      }
+      <h2> <br/><br/>Loading... </h2>
+    );
   }
 
 };
