@@ -6,8 +6,10 @@ export default class HomePage extends Component {
 
   render() {
     return(
-      <Hero />
-      <InfoSection />
+      <div>
+        <Hero />
+        <InfoSection />
+      </div>
     );
   }
 
