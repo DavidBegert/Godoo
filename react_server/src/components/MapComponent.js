@@ -5,7 +5,8 @@ import $ from "jquery";
 
 export default class GoogleMapContent extends Component {
 
-//TO DO : if it has no description then make it say <no description> or something. Also make the description render as html since there are br tags right now.
+// DONE : stripped html tags from description
+//TO DO : add whitespace in place of removed html tags
 
   constructor(props) {
     super(props);
@@ -35,7 +36,7 @@ export default class GoogleMapContent extends Component {
         <div style={{width: "500px", maxHeight: "100px"}}>
           <strong>{marker.title}:</strong>
 
-          <p>{marker.description}</p>
+          <p>{$(marker.description).text()}</p>
         </div> 
       </InfoWindow>
       
