@@ -15,7 +15,7 @@ export default class EventList extends Component {
           <EventCard 
             key={event.id}
             title={event.title}
-            description={event.description}
+            description={event.description ? event.description.slice(0, 300) + '...' : "No description."}
             start_time={event.start_time}
             venue_name={event.venue_name}
             venue_address={event.venue_address}
