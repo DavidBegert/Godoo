@@ -35,19 +35,24 @@ export default class EventsPage extends Component {
         }
         var results = response.events.event;
         console.log(results);
-        this.setState({ 
-          events: results,
-          // Sets random event for the map to center on and events list to populate with
-          selectedEvents: results[getRandomIntInclusive(0, results.length)]
+        this.setState({
+          events: results
+          /*, selectedEvents: results[getRandomIntInclusive(0, results.length) ] */
         });
       }.bind(this)
     });
   };
 
+  handleMapMarkerClick(marker) {
+    console.log('marker click handled');
+    console.log(this.state.selectedEvents);
+    this.state.selectedEvents.unshift(marker);
+    this.setState(this.state);
+  }
+
   render() {
-    var hStyle = {
-      color: 'blue'
-    }
+    console.log("selected events: ");
+    console.log(this.state.selectedEvents);
     return (
       <div>
         <Nav />
@@ -56,7 +61,13 @@ export default class EventsPage extends Component {
             <SearchForm />
             <EventList selectedEvents={this.state.selectedEvents} />
           </div>
-          <MapComponent />
+          <div className='column is-two-thirds' style={{height: "100%"}}>
+            <MapComponent
+              events={this.state.events}
+              selectedEvents={this.state.selectedEvents}
+              handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
+            />
+          </div>
         </div>
       </div>
     );
