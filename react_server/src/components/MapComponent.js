@@ -70,6 +70,8 @@ export default class GoogleMapContent extends Component {
                     position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
                     title={ marker.title }//marker.title
                     onClick={() => this.onMarkerClick(marker)} 
+                    //icon={"https://lh4.ggpht.com/Tr5sntMif9qOPrKV_UVl7K8A_V3xQDgA7Sw_qweLUFlg76d_vGFA7q1xIKZ6IcmeGqg=w300"}
+                    //visible={false}
                     // onMouseover={() => this.onMarkerClick(marker) }
                     // onMouseleave={() => this.handleMarkerLeave(marker) }
                   > 
