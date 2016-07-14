@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
+import SearchForm from './SearchForm';
 
 export default class EventList extends Component {
 
