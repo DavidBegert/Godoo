@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FilterList from './FilterList';
+import Filters from './Filters';
 import EventList from './EventList';
 
 export default class SidePanel extends Component {
@@ -7,7 +7,7 @@ export default class SidePanel extends Component {
   render() {
     return (
       <div>
-        <FilterList />
+        <Filters />
         <EventList />
       </div>
     );
