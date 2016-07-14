@@ -6,14 +6,26 @@ export default class App extends Component {
 
   constructor() {
     super();
+    this.state = {
+      homePage: true
+    }
   }
 
   // TODO - Write logic to render either HomePage or EventsPage
+  switchPage() {
+    this.setState({homePage: false});
+  }
 
   render() {
-    return (
-      <EventsPage />
-    );
+    if (this.state.homePage) {
+      return (
+        <HomePage switchPage={this.switchPage.bind(this)}/>
+      );
+    } else {
+      return (
+        <EventsPage />
+      );
+    }
   }
 
 

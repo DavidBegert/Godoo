@@ -9,7 +9,7 @@ export default class HomePage extends Component {
       <div>
         <Hero />
         <InfoSection />
-        Hi there
+        <button onClick={this.props.switchPage}> Switch page </button>
       </div>
     );
   }
