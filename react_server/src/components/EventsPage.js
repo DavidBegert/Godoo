@@ -48,7 +48,9 @@ export default class EventsPage extends Component {
             <SearchForm />
             <EventList events={this.state.events} />
           </div>
-          <MapComponent />
+          <div className='column is-two-thirds' style={{height: "100%"}}>
+            <MapComponent events={this.state.events} />
+          </div>
         </div>
       </div>
     );

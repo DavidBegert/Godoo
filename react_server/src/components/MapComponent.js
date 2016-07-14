@@ -10,6 +10,7 @@ export default class GoogleMapContent extends Component {
   constructor(props) {
 
     super(props);
+    console.log("hi david")
     this.state = {
       previousMarker: null
     }
@@ -66,14 +67,12 @@ export default class GoogleMapContent extends Component {
   };
 
   render() {
-    if (this.state.data) {  
+    if (this.props.events) {  
       return (
-        <div className='column is-two-thirds' style={{height: "100%"}}>
-          {console.log("helllllooooo the whole map just got rendered")}
           <GoogleMapLoader
             containerElement={
               <div
-                {...this.props}
+                //{...this.props}
                 style={{
                   height: "100%",
                 }} > 
@@ -86,7 +85,7 @@ export default class GoogleMapContent extends Component {
                 defaultCenter={{ lat: 49.275882, lng: -123.114922 }}
               >
 
-              {this.state.data.map((marker, index) => {  //this.state.markers.map
+              {this.props.events.map((marker, index) => {  //this.state.markers.map
   
                 return (
                   <Marker
@@ -108,7 +107,6 @@ export default class GoogleMapContent extends Component {
               </GoogleMap>
             }
           />
-        </div>
       );
     }
     else {
