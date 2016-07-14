@@ -30,22 +30,25 @@ export default class EventsPage extends Component {
         category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
       },
       success: function(response) {
-        // function getRandomIntInclusive(min,max) {
-        //   return Math.floor(Math.random() * (max - min + 1)) + min;
-        // }
+        function getRandomIntInclusive(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
         var results = response.events.event;
         console.log(results);
-        this.setState({ events: results /*, selectedEvents: results[getRandomIntInclusive(0, results.length) ] */});
+        this.setState({
+          events: results
+          /*, selectedEvents: results[getRandomIntInclusive(0, results.length) ] */
+        });
       }.bind(this)
     });
   };
 
-    handleMapMarkerClick(marker) {
-      console.log('marker click handled');
-      console.log(this.state.selectedEvents);
-      this.state.selectedEvents.unshift(marker);
-      this.setState(this.state);
-    }
+  handleMapMarkerClick(marker) {
+    console.log('marker click handled');
+    console.log(this.state.selectedEvents);
+    this.state.selectedEvents.unshift(marker);
+    this.setState(this.state);
+  }
 
   render() {
     console.log("selected events: ");
@@ -59,7 +62,11 @@ export default class EventsPage extends Component {
             <EventList selectedEvents={this.state.selectedEvents} />
           </div>
           <div className='column is-two-thirds' style={{height: "100%"}}>
-            <MapComponent events={this.state.events} selectedEvents={this.state.selectedEvents} handleMapMarkerClick={this.handleMapMarkerClick.bind(this)} />
+            <MapComponent
+              events={this.state.events}
+              selectedEvents={this.state.selectedEvents}
+              handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
+            />
           </div>
         </div>
       </div>
