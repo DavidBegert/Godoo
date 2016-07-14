@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {GoogleMapLoader, GoogleMap, Marker, InfoWindow} from "react-google-maps";
+import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle} from "react-google-maps";
 import FilterList from "./FilterList";
 import $ from "jquery";
+
 
 export default class GoogleMapContent extends Component {
 
@@ -59,7 +60,7 @@ export default class GoogleMapContent extends Component {
               <GoogleMap
                 ref='map'
                 defaultZoom={13}
-                defaultCenter={{ lat: 49.275882, lng: -123.114922 }}
+                defaultCenter={this.props.defaultCenter}
               >
 
               {this.props.events.map((marker, index) => {  //this.state.markers.map
