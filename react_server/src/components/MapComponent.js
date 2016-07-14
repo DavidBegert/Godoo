@@ -9,7 +9,6 @@ export default class GoogleMapContent extends Component {
 
   constructor(props) {
     super(props);
-    console.log("hi david")
     this.state = {
       previousMarker: null,
       filteredCategories: []
@@ -18,8 +17,9 @@ export default class GoogleMapContent extends Component {
 
   handleFilterClick(category) {
     this.setState(function(previousState) {
-      return {filteredCategories: [...previousState.filteredCategories, category]};
+      return ({filteredCategories: [...previousState.filteredCategories, category]});
     });
+    console.log(this.state.filteredCategories);
   }
 
   onMarkerClick(marker) {
@@ -51,7 +51,8 @@ export default class GoogleMapContent extends Component {
 
   render() {
     if (this.props.events) {  
-      return (
+      return (<div>
+        <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
         <GoogleMapLoader
           containerElement={
             <div
@@ -90,7 +91,7 @@ export default class GoogleMapContent extends Component {
             </GoogleMap>
             }
         />
-      );
+      </div>);
     }
     return (<h2> <br/><br/>Loading... </h2>)
   }

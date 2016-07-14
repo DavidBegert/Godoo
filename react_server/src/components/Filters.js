@@ -4,29 +4,23 @@ export default class Filters extends Component {
 
   render() {
     return (
+      <div className="button-area"> 
 
-      <div className="column is-one-third space_edit">
+        <a className="button is-primary" onClick={() => {this.props.onFilterClick('comedy')}}>Comedy</a>
+        <br />
+        <a className="button is-primary" onClick={() => {this.props.onFilterClick('festivals_parades')}}>Festivals</a>
+        <br />
+        <a className="button is-primary" onClick={() => {this.props.onFilterClick('food')}}>Dining</a>
+        <br />
+  
+        <br />
+        <a className="button is-primary" onClick={() => {this.props.onFilterClick('music')}}>Concerts</a>
+        <br />
+        <a className="button is-primary" onClick={() => {this.props.onFilterClick('family_fun_kids')}}>Family</a>
+        <br />
+        <a className="button is-primary" onClick={() => {this.props.onFilterClick('sports')}}>Sports</a>
 
-        <div className="button-area"> 
-
-              <a className="button is-primary">Comedy</a>
-              <br />
-              <a className="button is-primary">Festivals</a>
-              <br />
-              <a className="button is-primary">Dining</a>
-              <br />
-        
-              <br />
-              <a className="button is-primary">Concerts</a>
-              <br />
-              <a className="button is-primary">Family</a>
-              <br />
-              <a className="button is-primary">Sports</a>
-    
-        </div> 
-      </div>  
-
-
+      </div> 
     );
   }
 }  
