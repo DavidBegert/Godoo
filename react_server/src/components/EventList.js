@@ -7,7 +7,7 @@ export default class EventList extends Component {
   render() {
 
     //TO DO: add default image
-    var defaultImage = null;
+    var defaultImage = "http://thumb101.shutterstock.com/display_pic_with_logo/11994/253973893/stock-vector-event-word-cloud-business-concept-253973893.jpg";
 
     if (this.props.selectedEvents) {
       var eventCards = this.props.selectedEvents.map(function(event) {
