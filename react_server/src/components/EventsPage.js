@@ -42,8 +42,6 @@ export default class EventsPage extends Component {
   };
 
   handleMapMarkerClick(marker) {
-    console.log('marker click handled');
-    console.log(this.state.selectedEvents);
     this.state.selectedEvents.unshift(marker);
     this.setState(this.state);
   }
@@ -62,7 +60,6 @@ export default class EventsPage extends Component {
           <div className='column is-two-thirds' style={{height: "100%"}}>
             <MapComponent
               events={this.state.events}
-              selectedEvents={this.state.selectedEvents}
               handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
             />
           </div>
