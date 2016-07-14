@@ -4,8 +4,8 @@ import HomePage from './components/HomePage.js';
 
 export default class App extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
 
   // TODO - Write logic to render either HomePage or EventsPage
