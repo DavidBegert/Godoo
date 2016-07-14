@@ -11,9 +11,6 @@ export default class App extends Component {
   // TODO - Write logic to render either HomePage or EventsPage
 
   render() {
-    var hStyle = {
-      color: 'blue'
-    }
     return (
       <EventsPage />
     );
