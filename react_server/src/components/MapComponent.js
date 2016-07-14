@@ -11,8 +11,15 @@ export default class GoogleMapContent extends Component {
     super(props);
     console.log("hi david")
     this.state = {
-      previousMarker: null
+      previousMarker: null,
+      filteredCategories: []
     }
+  }
+
+  handleFilterClick(category) {
+    this.setState(function(previousState) {
+      return {filteredCategories: previousState.filteredCategories.unshift(category)};
+    });
   }
 
   onMarkerClick(marker) {
@@ -21,7 +28,7 @@ export default class GoogleMapContent extends Component {
       if (this.state.previousMarker && this.state.previousMarker != marker){ 
         this.state.previousMarker.showInfo = false;
       }
-      this.state.previousMarker = marker;
+      this.setState({previousMarker: marker});
     } else {
       marker.showInfo = false;
     }
