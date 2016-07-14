@@ -9,11 +9,12 @@ export default class EventList extends Component {
     //TO DO: add default image
     var defaultImage = "http://thumb101.shutterstock.com/display_pic_with_logo/11994/253973893/stock-vector-event-word-cloud-business-concept-253973893.jpg";
 
-    if (this.props.selectedEvents) {
-      var eventCards = this.props.selectedEvents.map(function(event) {
+    if (this.props.selectedEvents.length != 0) {
+      var eventCards = this.props.selectedEvents.map(function(event, index) {
+
         return (
           <EventCard 
-            key={event.id}
+            key={index}
             title={event.title}
             description={event.description}
             start_time={event.start_time}
@@ -23,13 +24,18 @@ export default class EventList extends Component {
           />
         )
       });
+      return (
+        <div>
+          {eventCards}
+        </div>
+      );
+    } else {
+        return (
+          <div>
+            <img src="http://img.pandawhale.com/173798-relaxicat-calm-destress-cat-gi-Ylay.gif" />
+          </div>
+        );
     }
-
-    return (
-      <div>
-        {eventCards}
-      </div>
-    );
   }
 
 }

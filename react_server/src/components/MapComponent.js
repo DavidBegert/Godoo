@@ -17,6 +17,7 @@ export default class GoogleMapContent extends Component {
 
   onMarkerClick(marker) {
     if (!marker.showInfo) {
+      this.props.handleMapMarkerClick(marker);
       marker.showInfo = true;
       if (this.state.previousMarker && this.state.previousMarker != marker){ 
         this.state.previousMarker.showInfo = false;
@@ -25,7 +26,7 @@ export default class GoogleMapContent extends Component {
     } else {
       marker.showInfo = false;
     }
-    this.props.handleMapMarkerClick(marker);
+    this.setState(this.state);
   };
 
   renderInfoWindow(marker) {
