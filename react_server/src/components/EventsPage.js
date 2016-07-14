@@ -30,12 +30,13 @@ export default class EventsPage extends Component {
         category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
       },
       success: function(response) {
-        // function getRandomIntInclusive(min,max) {
-        //   return Math.floor(Math.random() * (max - min + 1)) + min;
-        // }
+        function getRandomIntInclusive(min,max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
         var results = response.events.event;
         console.log(results);
-        this.setState({ events: results /*, selectedEvents: results[getRandomIntInclusive(0, results.length) ] */});
+        this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
+        this.setState({ events: results } );
       }.bind(this)
     });
   };
