@@ -144,6 +144,7 @@ venue_url: "http://vancouver.eventful.com/venues/silhouette-studio-/V0-001-01020
 
 var eventCards = this.props.events.map(function(event) {
   return <EventCard 
+    key={event.id}
     title={event.title}
     description={event.description}
     start_time={event.start_time}

@@ -15,28 +15,28 @@ export default class GoogleMapContent extends Component {
     }
   }
 
-  componentDidMount() {
-    var that = this; 
-    $.ajax({
-      url: 'http://api.eventful.com/json/events/search',
-      dataType: 'jsonp',
-      data: {
-        location: "49.2788,-123.1139",
-        app_key: 'FFmssWtvRRfc9VF7',
-        page_size: 100,
-        date: "Today",
-        within: 1,
-        change_multi_day_start: true,
-        ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
-        category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
-      },
-      success: function(response) {
-        var results = response.events.event;
-        console.log(results);
-        that.setState({ data: results });
-      }
-    });
-  };
+  // componentDidMount() {
+  //   var that = this; 
+  //   $.ajax({
+  //     url: 'http://api.eventful.com/json/events/search',
+  //     dataType: 'jsonp',
+  //     data: {
+  //       location: "49.2788,-123.1139",
+  //       app_key: 'FFmssWtvRRfc9VF7',
+  //       page_size: 100,
+  //       date: "Today",
+  //       within: 1,
+  //       change_multi_day_start: true,
+  //       ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
+  //       category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
+  //     },
+  //     success: function(response) {
+  //       var results = response.events.event;
+  //       console.log(results);
+  //       that.setState({ data: results });
+  //     }
+  //   });
+  // };
 
   handleMarkerClick(marker) {
     if (!marker.showInfo) {

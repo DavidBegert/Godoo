@@ -29,19 +29,6 @@ export default class EventCard extends Component {
                     {this.props.start_time}
                   </p>
                 </div>
-                <nav className="level">
-                  <div className="level-left">
-                    <a className="level-item">
-                      <span className="icon is-small"><i className="fa fa-reply"></i></span>
-                    </a>
-                    <a className="level-item">
-                      <span className="icon is-small"><i className="fa fa-retweet"></i></span>
-                    </a>
-                    <a className="level-item">
-                      <span className="icon is-small"><i className="fa fa-heart"></i></span>
-                    </a>
-                  </div>
-                </nav>
               </div>
             </article>
           </div>
