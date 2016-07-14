@@ -35,10 +35,8 @@ export default class EventsPage extends Component {
         }
         var results = response.events.event;
         console.log(results);
-        this.setState({
-          events: results
-          /*, selectedEvents: results[getRandomIntInclusive(0, results.length) ] */
-        });
+        this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
+        this.setState({ events: results });
       }.bind(this)
     });
   };
