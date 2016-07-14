@@ -4,6 +4,18 @@ import EventList from './EventList';
 import Nav from './Nav';
 import MapComponent from './MapComponent';
 import SearchForm from './SearchForm';
+import { default as canUseDOM } from "can-use-dom";
+
+
+const geolocation = (
+  canUseDOM && navigator.geolocation || {
+    getCurrentPosition: (success, failure) => {
+      failure( () => { console.log("ERROR ERROR ERROR") });
+      success(() => {console.log("YAY YAY YAY") });
+    },
+  }
+);
+
 
 export default class EventsPage extends Component {
 
@@ -11,17 +23,21 @@ export default class EventsPage extends Component {
     super();
     this.state = {
       events: [],
-      selectedEvents: []
+      selectedEvents: [],
+      currentPosition: { lat: 49.2788, lng: -123.1139 } //default position...
     }
   }
 
   componentDidMount() {
+    geolocation.getCurrentPosition((position) => {
+      this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude} })
+    });
     $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
       data: {
-        location: "49.2788,-123.1139",
-        app_key: 'FFmssWtvRRfc9VF7',
+        location: `${this.state.currentPosition.lat}, ${this.state.currentPosition.lng}`,
+        app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
         date: "Today",
         within: 1,
@@ -61,6 +77,7 @@ export default class EventsPage extends Component {
             <MapComponent
               events={this.state.events}
               handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
+              defaultCenter={this.state.currentPosition}
             />
           </div>
         </div>
