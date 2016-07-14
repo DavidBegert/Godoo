@@ -8,7 +8,6 @@ export default class GoogleMapContent extends Component {
 //TO DO : if it has no description then make it say <no description> or something. Also make the description render as html since there are br tags right now.
 
   constructor(props) {
-
     super(props);
     console.log("hi david")
     this.state = {
@@ -16,30 +15,7 @@ export default class GoogleMapContent extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   var that = this; 
-  //   $.ajax({
-  //     url: 'http://api.eventful.com/json/events/search',
-  //     dataType: 'jsonp',
-  //     data: {
-  //       location: "49.2788,-123.1139",
-  //       app_key: 'FFmssWtvRRfc9VF7',
-  //       page_size: 100,
-  //       date: "Today",
-  //       within: 1,
-  //       change_multi_day_start: true,
-  //       ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
-  //       category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
-  //     },
-  //     success: function(response) {
-  //       var results = response.events.event;
-  //       console.log(results);
-  //       that.setState({ data: results });
-  //     }
-  //   });
-  // };
-
-  handleMarkerClick(marker) {
+  onMarkerClick(marker) {
     if (!marker.showInfo) {
       marker.showInfo = true;
       if (this.state.previousMarker && this.state.previousMarker != marker){ 
@@ -49,12 +25,12 @@ export default class GoogleMapContent extends Component {
     } else {
       marker.showInfo = false;
     }
-    this.setState(this.state); 
+    this.props.handleMapMarkerClick(marker);
   };
 
   renderInfoWindow(marker) {
     return (
-      <InfoWindow onCloseclick={() => this.handleMarkerClick(marker)} > 
+      <InfoWindow onCloseclick={() => this.onMarkerClick(marker)} > 
         <div style={{width: "500px", maxHeight: "100px"}}>
           <strong>{marker.title}:</strong>
 
@@ -92,8 +68,8 @@ export default class GoogleMapContent extends Component {
                     key={index}
                     position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
                     title={ marker.title }//marker.title
-                    onClick={() => this.handleMarkerClick(marker)} 
-                    // onMouseover={() => this.handleMarkerClick(marker) }
+                    onClick={() => this.onMarkerClick(marker)} 
+                    // onMouseover={() => this.onMarkerClick(marker) }
                     // onMouseleave={() => this.handleMarkerLeave(marker) }
                   > 
 
