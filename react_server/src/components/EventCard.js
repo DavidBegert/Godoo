@@ -46,7 +46,9 @@ export default class EventCard extends Component {
             </article>
           </div>
         </div>
+
       </div>
+
     );
   }
 }  
