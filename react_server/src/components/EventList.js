@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
-import SearchForm from './SearchForm';
 
 export default class EventList extends Component {
 
@@ -143,7 +142,7 @@ venue_name: "Silhouette Studio",
 venue_url: "http://vancouver.eventful.com/venues/silhouette-studio-/V0-001-010202606-2?utm_source=apis&utm_medium=apim&utm_campaign=apic"
 }];
 
-var eventCards = theseEvents.map(function(event) {
+var eventCards = this.props.events.map(function(event) {
   return <EventCard 
     title={event.title}
     description={event.description}
@@ -157,7 +156,7 @@ var eventCards = theseEvents.map(function(event) {
 
     // TODO display collection of EventCard items
     return (
-      <div className="column is-one-third">
+      <div>
         {eventCards}
       </div>
     );
