@@ -32,7 +32,8 @@ export default class EventList extends Component {
     } else {
         return (
           <div>
-            <img src="http://img.pandawhale.com/173798-relaxicat-calm-destress-cat-gi-Ylay.gif" />
+            <br/>
+            <img src="http://img.pandawhale.com/173798-relaxicat-calm-destress-cat-gi-Ylay.gif" style={{borderRadius: "200%", paddingLeft: "15px"}} />
           </div>
         );
     }

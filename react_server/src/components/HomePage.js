@@ -9,6 +9,7 @@ export default class HomePage extends Component {
       <div>
         <Hero />
         <InfoSection />
+        Hi there
       </div>
     );
   }
