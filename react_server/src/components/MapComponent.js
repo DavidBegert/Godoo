@@ -18,7 +18,7 @@ export default class GoogleMapContent extends Component {
 
   handleFilterClick(category) {
     this.setState(function(previousState) {
-      return {filteredCategories: [previousState.filteredCategories... category]};
+      return {filteredCategories: [...previousState.filteredCategories, category]};
     });
   }
 
@@ -50,8 +50,8 @@ export default class GoogleMapContent extends Component {
   };
 
   render() {
-    return (
-      if (this.props.events) {  
+    if (this.props.events) {  
+      return (
         <GoogleMapLoader
           containerElement={
             <div
@@ -90,9 +90,9 @@ export default class GoogleMapContent extends Component {
             </GoogleMap>
             }
         />
-      }
-      <h2> <br/><br/>Loading... </h2>
-    );
+      );
+    }
+    return (<h2> <br/><br/>Loading... </h2>)
   }
 
 };
