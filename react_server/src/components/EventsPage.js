@@ -65,7 +65,7 @@ export default class EventsPage extends Component {
   };
 
   handleMapMarkerClick(marker) {
-    this.state.selectedEventIDs.unshift(marker);
+    this.state.selectedEventIDs.unshift(marker.id);
     this.setState(this.state);
   }
 

@@ -83,7 +83,7 @@ export default class GoogleMapContent extends Component {
                 >
 
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) && !this.props.selectedEventIDs.includes(marker)) {
+                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) && !this.props.selectedEventIDs.includes(marker.id)) {
                     return (
                       <Marker
                         key={index}
