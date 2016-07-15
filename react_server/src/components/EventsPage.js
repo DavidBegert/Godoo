@@ -57,7 +57,7 @@ export default class EventsPage extends Component {
 
           return {
             events: results,
-            selectedEventIDs: [randomEvent, ...previousState.selectedEventIDs]
+            selectedEventIDs: [randomEvent.id, ...previousState.selectedEventIDs]
           }
         });
       }.bind(this)
