@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle} from "react-google-maps";
-import FilterList from "./FilterList";
-import $ from "jquery";
+import Filters from "./Filters";
 
 
 export default class GoogleMapContent extends Component {
@@ -11,10 +10,27 @@ export default class GoogleMapContent extends Component {
 
   constructor(props) {
     super(props);
-    console.log("hi david")
     this.state = {
-      previousMarker: null
+      previousMarker: null,
+      filteredCategories: []
     }
+  }
+
+  handleFilterClick(category) {
+    this.setState(function(previousState) {
+      var newFilterSet;
+
+      if (previousState.filteredCategories.includes(category)) {
+        newFilterSet = previousState.filteredCategories.filter(function(filterCategory) {
+          return filterCategory != category;
+        });
+      }
+      else {
+        newFilterSet = [...previousState.filteredCategories, category];
+      }
+
+      return {filteredCategories: newFilterSet};
+    });
   }
 
   onMarkerClick(marker) {
@@ -24,7 +40,7 @@ export default class GoogleMapContent extends Component {
       if (this.state.previousMarker && this.state.previousMarker != marker){ 
         this.state.previousMarker.showInfo = false;
       }
-      this.state.previousMarker = marker;
+      this.setState({previousMarker: marker});
     } else {
       marker.showInfo = false;
     }
@@ -45,55 +61,55 @@ export default class GoogleMapContent extends Component {
   };
 
   render() {
+
     if (this.props.events) {  
       return (
-          <GoogleMapLoader
-            containerElement={
-              <div
-                //{...this.props}
-                style={{
-                  height: "100%",
-                }} > 
-              </div>
-            }
-            googleMapElement={
-              <GoogleMap
-                ref='map'
-                defaultZoom={13}
-                defaultCenter={this.props.defaultCenter}
-              >
+          <div>
+            <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
+            <GoogleMapLoader
+              containerElement={
+                <div
+                  //{...this.props}
+                  style={{
+                    height: "100%",
+                  }} > 
+                </div>
+              }
+              googleMapElement={
+                <GoogleMap
+                  ref='map'
+                  defaultZoom={13}
+                  defaultCenter={this.props.defaultCenter}
+                >
 
-              {this.props.events.map((marker, index) => {  //this.state.markers.map
-  
-                return (
-                  <Marker
-                    key={index}
-                    position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
-                    title={ marker.title }//marker.title
-                    onClick={() => this.onMarkerClick(marker)} 
-                    //icon={"https://lh4.ggpht.com/Tr5sntMif9qOPrKV_UVl7K8A_V3xQDgA7Sw_qweLUFlg76d_vGFA7q1xIKZ6IcmeGqg=w300"}
-                    //visible={false}
-                    // onMouseover={() => this.onMarkerClick(marker) }
-                    // onMouseleave={() => this.handleMarkerLeave(marker) }
-                  > 
+                {this.props.events.map((marker, index) => {  //this.state.markers.map
+                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) && !this.props.selectedEvents.includes(marker)) {
+                    return (
+                      <Marker
+                        key={index}
+                        position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
+                        title={ marker.title }//marker.title
+                        onClick={() => this.onMarkerClick(marker)} 
+                        //icon={"https://lh4.ggpht.com/Tr5sntMif9qOPrKV_UVl7K8A_V3xQDgA7Sw_qweLUFlg76d_vGFA7q1xIKZ6IcmeGqg=w300"}
+                        //visible={false}
+                        // onMouseover={() => this.onMarkerClick(marker) }
+                        // onMouseleave={() => this.handleMarkerLeave(marker) }
+                      > 
 
-                    { marker.showInfo ? this.renderInfoWindow(marker) : null }
+                        { marker.showInfo ? this.renderInfoWindow(marker) : null }
 
-                  </Marker>
-                );
-              })
+                      </Marker>
+                    );
+                  }
+                })
               }
 
               </GoogleMap>
-            }
-          />
-      );
+              }
+            />
+          </div>);
     }
-    else {
-      return (
-        <h2> <br/><br/>Loading... </h2>
-      );
-    }
+    return (<h2> <br/><br/>Loading... </h2>)
   }
 
 };

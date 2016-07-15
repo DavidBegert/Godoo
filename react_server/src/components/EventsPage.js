@@ -42,6 +42,7 @@ export default class EventsPage extends Component {
         date: "Today",
         within: 1,
         change_multi_day_start: true,
+        include: 'categories',
         ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
         category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
       },
@@ -51,8 +52,15 @@ export default class EventsPage extends Component {
         }
         var results = response.events.event;
         console.log(results);
-        this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
-        this.setState({ events: results });
+        // this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
+        this.setState(function(previousState) { 
+          var randomEvent = results[getRandomIntInclusive(0, results.length)];
+
+          return {
+            events: results,
+            selectedEvents: [randomEvent, ...previousState.selectedEvents]
+          }
+        });
       }.bind(this)
     });
   };
@@ -76,6 +84,7 @@ export default class EventsPage extends Component {
           <div className='column is-two-thirds' style={{height: "100%"}}>
             <MapComponent
               events={this.state.events}
+              selectedEvents={this.state.selectedEvents}
               handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
               defaultCenter={this.state.currentPosition}
             />
