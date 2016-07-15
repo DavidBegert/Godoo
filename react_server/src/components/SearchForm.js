@@ -35,17 +35,7 @@ export default class SearchForm extends Component {
   render() {
 
     return (
-      //<input type="text" placeholder="Enter a city"></input>
-       /* <SearchBox
-          onPlacesChanged={this.handlePlacesChanged}
-          ref="searchBox"
-          placeholder="Customized your placeholder"
-          style={SearchForm.inputStyle}
-        />*/
-        <div id='diver'>
-          <input id="searchTextField" placeholder="Enter your address" type="text"></input>
-        </div>
-
+      <input id="searchTextField" placeholder="Enter your address" type="text"></input>
     );
   }
 

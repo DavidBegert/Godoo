@@ -28,7 +28,7 @@ export default class EventsPage extends Component {
     }
   }
 
-  componentDidMount() { //think about changing to componentWillMount() 
+  componentWillMount() { //think about changing to componentWillMount() 
     geolocation.getCurrentPosition((position) => {
       this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude} })
     });
