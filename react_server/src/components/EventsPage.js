@@ -23,7 +23,7 @@ export default class EventsPage extends Component {
     super();
     this.state = {
       events: [],
-      selectedEvents: [],
+      selectedEventIDs: [],
       currentPosition: { lat: 49.2788, lng: -123.1139 } //default position...
     }
   }
@@ -52,13 +52,12 @@ export default class EventsPage extends Component {
         }
         var results = response.events.event;
         console.log(results);
-        // this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
         this.setState(function(previousState) { 
           var randomEvent = results[getRandomIntInclusive(0, results.length)];
 
           return {
             events: results,
-            selectedEvents: [randomEvent, ...previousState.selectedEvents]
+            selectedEventIDs: [randomEvent, ...previousState.selectedEventIDs]
           }
         });
       }.bind(this)
@@ -66,25 +65,28 @@ export default class EventsPage extends Component {
   };
 
   handleMapMarkerClick(marker) {
-    this.state.selectedEvents.unshift(marker);
+    this.state.selectedEventIDs.unshift(marker);
     this.setState(this.state);
   }
 
   render() {
     console.log("selected events: ");
-    console.log(this.state.selectedEvents);
+    console.log(this.state.selectedEventIDs);
     return (
       <div>
         <Nav />
         <div className="columns">
           <div className="column is-one-third">
             <SearchForm />
-            <EventList selectedEvents={this.state.selectedEvents} />
+            <EventList
+              events={this.state.events}
+              selectedEventIDs={this.state.selectedEventIDs}
+            />
           </div>
           <div className='column is-two-thirds' style={{height: "100%"}}>
             <MapComponent
               events={this.state.events}
-              selectedEvents={this.state.selectedEvents}
+              selectedEventIDs={this.state.selectedEventIDs}
               handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
               defaultCenter={this.state.currentPosition}
             />

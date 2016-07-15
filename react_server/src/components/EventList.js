@@ -10,8 +10,8 @@ export default class EventList extends Component {
     //TO DO: add default image
     var defaultImage = "http://thumb101.shutterstock.com/display_pic_with_logo/11994/253973893/stock-vector-event-word-cloud-business-concept-253973893.jpg";
 
-    if (this.props.selectedEvents.length) {
-      var eventCards = this.props.selectedEvents.map(function(event, index) {
+    if (this.props.selectedEventIDs.length) {
+      var eventCards = this.props.selectedEventIDs.map(function(event, index) {
         var description = event.description ? event.description : "No description.";
         description = $('<div>' + event.description + '</div>').text();
         return (
