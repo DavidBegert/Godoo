@@ -43,19 +43,24 @@ export default class EventsPage extends Component {
         within: 1,
         change_multi_day_start: true,
         include: 'categories',
-        ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
-        category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
+        ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations,business',
+        // I'm no longer explicitly requiring categories here, but this comment is useful a list of the categories not excluded by the search, so leave it alone.
+        // category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,,singles_social,outdoors_recreation,performing_arts,animals,,sales,science,religion_spirituality,sports,technology,politics_activism,other',
+        include: 'categories,subcategories,popularity,tickets,price,links',
+        // prop_name_value:'description!=null'
       },
       success: function(response) {
         function getRandomIntInclusive(min, max) {
           return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         var results = response.events.event;
-        console.log(results);
+        // console.log(results);
         // this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
+        results = results.filter(function(result) {
+              return !!result.description;
+            }),
         this.setState(function(previousState) { 
           var randomEvent = results[getRandomIntInclusive(0, results.length)];
-
           return {
             events: results,
             selectedEvents: [randomEvent, ...previousState.selectedEvents]
