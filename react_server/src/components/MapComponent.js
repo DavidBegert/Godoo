@@ -60,6 +60,7 @@ export default class GoogleMapContent extends Component {
   };
 
   render() {
+
     if (this.props.events) {  
       return (<div>
         <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
@@ -80,21 +81,22 @@ export default class GoogleMapContent extends Component {
             >
 
             {this.props.events.map((marker, index) => {  //this.state.markers.map
+              if (!this.state.filteredCategories.includes(marker.categories.category[0].id) && !this.props.selectedEvents.includes(marker)) {
+                return (
+                  <Marker
+                    key={index}
+                    position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
+                    title={ marker.title }//marker.title
+                    onClick={() => this.onMarkerClick(marker)} 
+                    // onMouseover={() => this.onMarkerClick(marker) }
+                    // onMouseleave={() => this.handleMarkerLeave(marker) }
+                  > 
 
-              return (
-                <Marker
-                  key={index}
-                  position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
-                  title={ marker.title }//marker.title
-                  onClick={() => this.onMarkerClick(marker)} 
-                  // onMouseover={() => this.onMarkerClick(marker) }
-                  // onMouseleave={() => this.handleMarkerLeave(marker) }
-                > 
+                    { marker.showInfo ? this.renderInfoWindow(marker) : null }
 
-                  { marker.showInfo ? this.renderInfoWindow(marker) : null }
-
-                </Marker>
-              );
+                  </Marker>
+                );
+              }
             })
             }
 
