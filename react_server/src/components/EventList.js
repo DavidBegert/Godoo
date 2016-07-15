@@ -12,7 +12,8 @@ export default class EventList extends Component {
 
     if (this.props.selectedEvents.length) {
       var eventCards = this.props.selectedEvents.map(function(event, index) {
-        var description = event.description ? $(event.description).text() : "No description.";
+        var description = event.description ? event.description : "No description.";
+        description = $('<div>' + event.description + '</div>').text();
         return (
           <EventCard 
             key={index}
