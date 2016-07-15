@@ -10,23 +10,28 @@ export default class EventList extends Component {
     //TO DO: add default image
     var defaultImage = "http://thumb101.shutterstock.com/display_pic_with_logo/11994/253973893/stock-vector-event-word-cloud-business-concept-253973893.jpg";
 
+    // TODO: refactor?
     if (this.props.selectedEventIDs.length) {
-      var eventCards = this.props.events.map((event, index) => {
-        if (this.props.selectedEventIDs.includes(event.id)) {
-          var description = event.description ? event.description : "No description.";
-          description = $('<div>' + event.description + '</div>').text();
-          return (
-            <EventCard 
-              key={index}
-              title={event.title}
-              description={description.length > 300 ? description.slice(0, 300) + '...' : description}
-              start_time={event.start_time}
-              venue_name={event.venue_name}
-              venue_address={event.venue_address}
-              image_url={event.image ? event.image.small.url : defaultImage } 
-            />
-          )
-        }
+      var eventArray = this.props.selectedEventIDs.map((eventId) => {
+        return this.props.events.find((event) => {
+          return event.id === eventId;
+        });
+      });
+      console.log(eventArray);
+      var eventCards = eventArray.map((event, index) => {
+        var description = event.description ? event.description : "No description.";
+        description = $('<div>' + event.description + '</div>').text();
+        return (
+          <EventCard 
+            key={index}
+            title={event.title}
+            description={description.length > 300 ? description.slice(0, 300) + '...' : description}
+            start_time={event.start_time}
+            venue_name={event.venue_name}
+            venue_address={event.venue_address}
+            image_url={event.image ? event.image.small.url : defaultImage } 
+          />
+        )
       });
       return (
         <div>
