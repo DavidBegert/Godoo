@@ -7,31 +7,33 @@ import SearchForm from './SearchForm';
 import { default as canUseDOM } from "can-use-dom";
 
 
-const geolocation = (
-  canUseDOM && navigator.geolocation || {
-    getCurrentPosition: (success, failure) => {
-      failure( () => { console.log("ERROR ERROR ERROR") });
-      success(() => {console.log("YAY YAY YAY") });
-    },
-  }
-);
+// const geolocation = (
+//   canUseDOM && navigator.geolocation || {
+//     getCurrentPosition: (success, failure) => {
+//       failure( () => { console.log("ERROR ERROR ERROR") });
+//       success(() => {console.log("YAY YAY YAY") });
+//     },
+//   }
+// );
 
 
 export default class EventsPage extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      events: [],
-      selectedEvents: [],
-      currentPosition: { lat: 49.2788, lng: -123.1139 } //default position...
-    }
+  constructor(props) {
+    super(props);
+    console.log(props.events);
+    // this.state = {
+    //   events: this.props.events,
+    //   selectedEvents: this.props.selectedEvents,
+    //   currentPosition: this.props.location //default position...
+    // }
   }
 
-  componentWillMount() {
-    geolocation.getCurrentPosition((position) => {
-      this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude} })
-    });
+  //componentWillMount() {
+    // geolocation.getCurrentPosition((position) => {
+    //   this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude} })
+    // });
+
     // $.ajax({
     //   url: 'http://api.eventful.com/json/events/search',
     //   dataType: 'jsonp',
@@ -63,30 +65,30 @@ export default class EventsPage extends Component {
     //     });
     //   }.bind(this)
     // });
-  };
+ // };
 
   handleMapMarkerClick(marker) {
-    this.state.selectedEvents.unshift(marker);
-    this.setState(this.state);
+    this.props.handleMapMarkerClick(marker);
   }
 
   render() {
     console.log("selected events: ");
-    console.log(this.state.selectedEvents);
+    console.log(this.props.selectedEvents);
     return (
       <div>
         <Nav />
         <div className="columns">
           <div className="column is-one-third">
-            <SearchForm />
-            <EventList selectedEvents={this.state.selectedEvents} />
+            <SearchForm /> 
+            <EventList selectedEvents={this.props.selectedEvents} />
           </div>
           <div className='column is-two-thirds' style={{height: "100%"}}>
+
             <MapComponent
-              events={this.state.events}
-              selectedEvents={this.state.selectedEvents}
+              events={this.props.events}
+              selectedEvents={this.props.selectedEvents}
               handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
-              defaultCenter={this.state.currentPosition}
+              defaultCenter={this.props.currentPosition}
             />
           </div>
         </div>

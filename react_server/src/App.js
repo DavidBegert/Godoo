@@ -10,7 +10,8 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      selectedEvents: []
+      selectedEvents: [],
+      mapCenter: {lat: 49.2827, lng: -123.1207}
     }
   }
 
@@ -21,6 +22,10 @@ export default class App extends Component {
 
   makeAjaxCall(location) {
     console.log("CALL MADE");
+    var lat = parseFloat(location.split(', ')[0]);
+    var lng = parseFloat(location.split(', ')[1]);
+    var mapCenter = {lat: lat, lng: lng};
+    this.setState({mapCenter: mapCenter});
     $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
@@ -44,15 +49,20 @@ export default class App extends Component {
         // this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
         this.setState(function(previousState) { 
           var randomEvent = results[getRandomIntInclusive(0, results.length)];
-
           return {
             events: results,
-            selectedEvents: [randomEvent, ...previousState.selectedEvents]
+            selectedEvents: [randomEvent, ...previousState.selectedEvents],
           }
         });
+        //debugger;
       }.bind(this)
     });
   };
+
+  handleMapMarkerClick(marker) {
+    this.state.selectedEvents.unshift(marker);
+    this.setState(this.state);
+  }
 
   render() {
     if (this.state.homePage) {
@@ -61,7 +71,7 @@ export default class App extends Component {
       );
     } else {
       return (
-        <EventsPage />
+        <EventsPage handleMapMarkerClick={this.handleMapMarkerClick.bind(this)} events={this.state.events} selectedEvents={this.state.selectedEvents} currentPosition={this.state.mapCenter} />
       );
     }
   }

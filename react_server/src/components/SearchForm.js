@@ -26,7 +26,7 @@ export default class SearchForm extends Component {
               var longitude = results[0].geometry.location.lng();
               that.props.makeCall(`${latitude}, ${longitude}`);
           } else {
-              alert( 'Geocode was not successful for the following reason: ' + status );
+              alert( 'Geocode was not successful because: ' + status );
           }
         });
 
