@@ -17,7 +17,7 @@
 /log/*
 !/log/.keep
 /tmp
-/*.log
+*.log
 
 # ignore api keys
 /eventful_key.txt
