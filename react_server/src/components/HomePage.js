@@ -5,13 +5,16 @@ import SearchForm from './SearchForm';
 
 export default class HomePage extends Component {
 
+  constructor(props) {
+    super();
+  }
   render() {
     return(
       <div>
         <Hero />
         <InfoSection />
-        <SearchForm />
-        <button onClick={this.props.switchPage}> Switch page </button>
+        <SearchForm makeCall={this.props.makeCall}/>
+        <button onClick={this.props.switchPage}>Show me Events!</button>
       </div>
     );
   }
