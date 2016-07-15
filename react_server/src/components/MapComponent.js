@@ -35,8 +35,8 @@ export default class GoogleMapContent extends Component {
     return (
       <InfoWindow onCloseclick={() => this.onMarkerClick(marker)} > 
         <div style={{width: "500px", maxHeight: "100px"}}>
-          <strong>{marker.title}:</strong>
-          <p>{$('<div>' + marker.description + '</div>').text()}</p>
+          <strong>{marker.title}</strong>
+          <p>{marker.description ? $('<div>' + marker.description + '</div>').text() : "No description."}</p>
         </div> 
       </InfoWindow>
       
