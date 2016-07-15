@@ -12,18 +12,15 @@ export default class EventList extends Component {
 
     // TODO: refactor?
     if (this.props.selectedEventIDs.length) {
-      var eventArray = this.props.selectedEventIDs.map((eventId) => {
-        return this.props.events.find((event) => {
-          return event.id === eventId;
+      var eventCards = this.props.selectedEventIDs.map((eventId) => {
+        var event = this.props.events.find((associatedEvent) => {
+          return associatedEvent.id === eventId;
         });
-      });
-      console.log(eventArray);
-      var eventCards = eventArray.map((event, index) => {
         var description = event.description ? event.description : "No description.";
         description = $('<div>' + event.description + '</div>').text();
         return (
           <EventCard 
-            key={index}
+            key={event.id}
             title={event.title}
             description={description.length > 300 ? description.slice(0, 300) + '...' : description}
             start_time={event.start_time}
