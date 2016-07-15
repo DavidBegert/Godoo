@@ -23,7 +23,7 @@ export default class EventsPage extends Component {
     super();
     this.state = {
       events: [],
-      selectedEvents: [],
+      selectedEventIDs: [],
       currentPosition: { lat: 49.2788, lng: -123.1139 } //default position...
     }
   }
@@ -54,16 +54,18 @@ export default class EventsPage extends Component {
           return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         var results = response.events.event;
+
         // console.log(results);
         // this.state.selectedEvents.unshift(results[getRandomIntInclusive(0, results.length)]);
         results = results.filter(function(result) {
               return !!result.description;
             }),
+
         this.setState(function(previousState) { 
           var randomEvent = results[getRandomIntInclusive(0, results.length)];
           return {
             events: results,
-            selectedEvents: [randomEvent, ...previousState.selectedEvents]
+            selectedEventIDs: [randomEvent.id, ...previousState.selectedEventIDs]
           }
         });
       }.bind(this)
@@ -71,26 +73,34 @@ export default class EventsPage extends Component {
   };
 
   handleMapMarkerClick(marker) {
-    this.state.selectedEvents.unshift(marker);
-    this.setState(this.state);
+    this.setState((previousState) => {
+      var eventIdIndex = previousState.selectedEventIDs.indexOf(marker.id);
+      if (eventIdIndex > -1) {
+        previousState.selectedEventIDs.splice(eventIdIndex, 1);
+      }
+      return {selectedEventIDs: [marker.id, ...previousState.selectedEventIDs]}
+    });
   }
 
   render() {
     console.log("selected events: ");
-    console.log(this.state.selectedEvents);
+    console.log(this.state.selectedEventIDs);
     return (
       <div>
         <Nav />
         <div className="columns">
           <div className="column is-one-third">
             <SearchForm />
-            <EventList selectedEvents={this.state.selectedEvents} />
+            <EventList
+              events={this.state.events}
+              selectedEventIDs={this.state.selectedEventIDs}
+            />
           </div>
           <div className='column is-two-thirds' style={{height: "100%"}}>
             <MapComponent
               events={this.state.events}
-              selectedEvents={this.state.selectedEvents}
-              handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
+              selectedEventIDs={this.state.selectedEventIDs}
+              onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
               defaultCenter={this.state.currentPosition}
             />
           </div>

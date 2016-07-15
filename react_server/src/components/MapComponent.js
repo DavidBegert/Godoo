@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle} from "react-google-maps";
 import Filters from "./Filters";
+import $ from 'jquery';
 
 
 export default class GoogleMapContent extends Component {
@@ -35,7 +36,8 @@ export default class GoogleMapContent extends Component {
 
   onMarkerClick(marker) {
     if (!marker.showInfo) {
-      this.props.handleMapMarkerClick(marker);
+      console.log(marker);
+      this.props.onMapMarkerClick(marker);
       marker.showInfo = true;
       if (this.state.previousMarker && this.state.previousMarker != marker){ 
         this.state.previousMarker.showInfo = false;
@@ -83,7 +85,7 @@ export default class GoogleMapContent extends Component {
                 >
 
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) && !this.props.selectedEvents.includes(marker)) {
+                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
                       <Marker
                         key={index}
