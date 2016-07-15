@@ -17,9 +17,19 @@ export default class GoogleMapContent extends Component {
 
   handleFilterClick(category) {
     this.setState(function(previousState) {
-      return ({filteredCategories: [...previousState.filteredCategories, category]});
+      var newFilterSet;
+
+      if (previousState.filteredCategories.includes(category)) {
+        newFilterSet = previousState.filteredCategories.filter(function(filterCategory) {
+          return filterCategory != category;
+        });
+      }
+      else {
+        newFilterSet = [...previousState.filteredCategories, category];
+      }
+
+      return {filteredCategories: newFilterSet};
     });
-    console.log(this.state.filteredCategories);
   }
 
   onMarkerClick(marker) {
