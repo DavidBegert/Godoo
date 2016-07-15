@@ -65,8 +65,13 @@ export default class EventsPage extends Component {
   };
 
   handleMapMarkerClick(marker) {
-    this.state.selectedEventIDs.unshift(marker.id);
-    this.setState(this.state);
+    this.setState((previousState) => {
+      var eventIdIndex = previousState.selectedEventIDs.indexOf(marker.id);
+      if (eventIdIndex > -1) {
+        previousState.selectedEventIDs.splice(eventIdIndex, 1);
+      }
+      return {selectedEventIDs: [marker.id, ...previousState.selectedEventIDs]}
+    });
   }
 
   render() {
@@ -87,7 +92,7 @@ export default class EventsPage extends Component {
             <MapComponent
               events={this.state.events}
               selectedEventIDs={this.state.selectedEventIDs}
-              handleMapMarkerClick={this.handleMapMarkerClick.bind(this)}
+              onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
               defaultCenter={this.state.currentPosition}
             />
           </div>
