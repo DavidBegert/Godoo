@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchForm from './SearchForm';
 
 export default class Hero extends Component {
 
@@ -12,9 +13,9 @@ export default class Hero extends Component {
             </h1>
             <br />
             <br />
-            <input className="input input-city" type="text" placeholder="Enter a city"></input>
+            <SearchForm makeCall={this.props.makeCall}/>
             <input className="input input-date" type="date" placeholder="Pick a date"></input>
-            <button className="button get-started">
+            <button className="button get-started" onClick={this.props.switchPage}>
               Get Started
             </button>
            </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Hero from './Hero';
 import InfoSection from './InfoSection';
-import SearchForm from './SearchForm';
 
 export default class HomePage extends Component {
 
@@ -11,10 +10,8 @@ export default class HomePage extends Component {
   render() {
     return(
       <div>
-        <Hero />
+        <Hero makeCall={this.props.makeCall} switchPage={this.props.switchPage} />
         <InfoSection />
-        <SearchForm makeCall={this.props.makeCall}/>
-        <button onClick={this.props.switchPage}>Show me Events!</button>
       </div>
     );
   }
