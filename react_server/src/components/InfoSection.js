@@ -4,8 +4,39 @@ export default class InfoSection extends Component {
 
   render() {
     return (
-      <section>
-      </section>
+       <section className="section is-medium ">
+        <div className="container">
+        <div className="heading how-it-works-headings">
+          <h1 className="title">How it works</h1>
+        </div>
+        <br />
+        <br />
+          <div className="columns" id="how-it-works-images">
+            <div className="column is-4 ">
+              <img src="phone_in_the_country.jpg"/>
+              <br />
+              <p><strong>Browse Events</strong></p>
+              <br />
+              <p> We bring together a variety of events recommended by industry experts</p>
+            </div>
+            <div className="column is-4">
+              <img src="man_photos_city.jpeg"/>
+              <br />
+              <p><strong>Create an Itinerary</strong></p>
+              <br />
+              <p> Select your favourite events and create an itinerary for you and your friends</p>
+            </div>
+            <div className="column is-4">
+              <img src="on_the_beach.jpg"/>
+              <br />
+              <p><strong>Enjoy your experience</strong></p>
+              <br />
+              <p> Meet new people, try new things and enjoy all the city has to offer</p>
+            </div>
+          </div>
+          
+        </div>
+    </section>
     );
   }
 
