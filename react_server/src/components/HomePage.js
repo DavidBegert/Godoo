@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Nav from './Nav';
 import Hero from './Hero';
 import InfoSection from './InfoSection';
 
@@ -10,6 +11,7 @@ export default class HomePage extends Component {
   render() {
     return(
       <div>
+        <Nav />
         <Hero makeCall={this.props.makeCall} switchPage={this.props.switchPage} />
         <InfoSection />
       </div>
