@@ -7,7 +7,6 @@ export default class EventList extends Component {
   render() {
   //TO DO : FIgure out what to do with events that have start and end time as 12am (some are all day but dunno when they close and stuff)
     function formatDate(startTime, endTime) {
-      console.log(endTime);
       var formattedDate = new Date(startTime);
       if (formattedDate.getHours() >= 12) {
         var hours = formattedDate.getHours() - 12 || 12;
