@@ -3,6 +3,9 @@ import EventsPage from './components/EventsPage.js';
 import HomePage from './components/HomePage.js';
 import $ from 'jquery';
 
+//TODO implement the geolocation option. (commented out below). 
+//Also, put in logic if the place entered does not have any events. Show an error message. 
+
 // const geolocation = (
 //   canUseDOM && navigator.geolocation || {
 //     getCurrentPosition: (success, failure) => {
