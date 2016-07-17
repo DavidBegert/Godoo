@@ -6,19 +6,19 @@ export default class Filters extends Component {
     return (
       <div className="button-area on-the-map"> 
 
-        <a className="button is-primary" onClick={() => {this.props.onFilterClick('comedy')}}>Comedy</a>
+        <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('comedy')}}>Comedy</a>
         <br />
-        <a className="button is-primary" onClick={() => {this.props.onFilterClick('festivals_parades')}}>Festivals</a>
+        <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('festivals_parades')}}>Festivals</a>
         <br />
-        <a className="button is-primary" onClick={() => {this.props.onFilterClick('food')}}>Dining</a>
+        <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('food')}}>Dining</a>
         <br />
   
         <br />
-        <a className="button is-primary" onClick={() => {this.props.onFilterClick('music')}}>Concerts</a>
+        <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('music')}}>Concerts</a>
         <br />
-        <a className="button is-primary" onClick={() => {this.props.onFilterClick('family_fun_kids')}}>Family</a>
+        <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('family_fun_kids')}}>Family</a>
         <br />
-        <a className="button is-primary" onClick={() => {this.props.onFilterClick('sports')}}>Sports</a>
+        <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('sports')}}>Sports</a>
 
       </div> 
     );
