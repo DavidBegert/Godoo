@@ -95,12 +95,13 @@
   position: relative;
 } */
 
-#on-the-map {
+.on-the-map {
   position: absolute;
   top: 15; 
+  z-index: 3;
 } 
 
-#on-the-map button {
+.on-the-map button {
   float: right;
   padding-top:40px;
 }
@@ -119,7 +120,7 @@
   padding: 0px;
 }
 
-#map-button {
+.map-button {
   position: relative;
 }
 

@@ -4,7 +4,7 @@ export default class Filters extends Component {
 
   render() {
     return (
-      <div className="button-area"> 
+      <div className="button-area on-the-map"> 
 
         <a className="button is-primary" onClick={() => {this.props.onFilterClick('comedy')}}>Comedy</a>
         <br />
