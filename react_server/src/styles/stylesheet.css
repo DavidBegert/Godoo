@@ -98,6 +98,7 @@
 .on-the-map {
   position: absolute;
   top: 15; 
+  z-index: 3;
 } 
 
 .on-the-map button {
