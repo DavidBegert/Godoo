@@ -87,6 +87,7 @@
 .space_edit {
   overflow-y: scroll;
   height: 100%;
+  padding-left: 25px;
 }
 
 /* .container-map {
