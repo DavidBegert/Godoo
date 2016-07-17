@@ -14,7 +14,6 @@ export default class Hero extends Component {
             <br />
             <br />
             <SearchForm makeCall={this.props.makeCall}/>
-            <input className="input input-date" type="date" placeholder="Pick a date"></input>
             <button className="button get-started" onClick={this.props.switchPage}>
               Get Started
             </button>

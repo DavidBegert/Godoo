@@ -5,14 +5,17 @@ export default class SearchForm extends Component {
 
   componentDidMount() {
     var that = this;
+    var location;
+    var date;
     var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(28.70, -127.50), 
       new google.maps.LatLng(48.85, -55.90)
       );
 
-      var input = document.getElementById('searchTextField');
+      var cityInput = document.getElementById('searchTextField');
+      var dateInput = document.getElementById('searchDateField');
 
-      var searchBox = new google.maps.places.SearchBox(input, {
+      var searchBox = new google.maps.places.SearchBox(cityInput, {
         bounds: defaultBounds
       });
 
@@ -24,13 +27,21 @@ export default class SearchForm extends Component {
           if( status == google.maps.GeocoderStatus.OK ) {
               var latitude = results[0].geometry.location.lat();
               var longitude = results[0].geometry.location.lng();
-              that.props.makeCall(`${latitude}, ${longitude}`);
+              location = `${latitude}, ${longitude}`;
+              that.props.makeCall(location, date);
           } else {
               alert( 'Geocode was not successful because: ' + status );
           }
         });
 
+      });
 
+      dateInput.addEventListener('change', function() {
+        console.log("date fired!!!");
+        var dayInEventfulApiForm = dateInput.value.replace(/-/g, "") + "00";
+        date = dayInEventfulApiForm + "-" + dayInEventfulApiForm;
+        console.log(date);
+        that.props.makeCall(location, date);
       });
   }
 
@@ -50,7 +61,10 @@ export default class SearchForm extends Component {
     //   width: "400px"
     // }
     return (
-      <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" onSubmit={console.log('search form submitted')}></input>
+      <section>
+        <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" onSubmit={console.log('search form submitted')}></input>
+        <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input><br/><br/>
+      </section>
     );
   }
 
