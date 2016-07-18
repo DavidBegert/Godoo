@@ -49,7 +49,7 @@ export default class EventsPage extends Component {
         <Nav />
         <div className="columns">
           <div className="column is-one-third space_edit">
-            <SearchForm />
+            <SearchForm showButton={false}/>
             <EventList
               events={this.props.events}
               selectedEventIDs={this.state.selectedEventIDs}

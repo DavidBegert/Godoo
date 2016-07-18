@@ -67,10 +67,8 @@ export default class SearchForm extends Component {
       <section>
         <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" /*onSubmit={} */></input>
         <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input>
-        <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }>
-          Get Started
-        </button>
-        <input type="range" min=".5" max="5" step=".1" onChange={ () => console.log("WOAH!")} />
+        { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
+        { (!this.props.showButton) && <input className="center" type="range" min=".5" max="5" step=".1" onChange={ () => console.log("WOAH!")} /> }
       </section>
     );
   }

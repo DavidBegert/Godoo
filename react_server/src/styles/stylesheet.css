@@ -31,6 +31,8 @@
 .logo {
   font-family: cursive;
   width: 100px;
+  font-size: 30px;
+  font-weight: bolder;
 }
 
 .container1 {
@@ -125,10 +127,12 @@
   position: relative;
 }
 
-.hero-pic {
+.hero-body {
   background-image: url("/src/images/people-eiffel-tower-lights-night copy.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
+  padding-top: 240px !important;
+  padding-bottom: 380px !important;
 }
 
 .how-it-works-headings {

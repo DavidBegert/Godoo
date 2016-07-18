@@ -40,7 +40,10 @@ export default class Hero extends Component {
             </h1>
             <br />
             <br />
-            <SearchForm makeCall={this.props.makeCall} isTheCityAndDateFilledIn={this.isTheCityAndDateFilledIn.bind(this)} handleGetStartedPress={this.handleGetStartedPress.bind(this)} />
+            <SearchForm makeCall={this.props.makeCall} 
+            isTheCityAndDateFilledIn={this.isTheCityAndDateFilledIn.bind(this)} 
+            handleGetStartedPress={this.handleGetStartedPress.bind(this)}
+            showButton={true} />
             { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
           </div>
         </div>
