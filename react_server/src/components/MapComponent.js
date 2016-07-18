@@ -29,7 +29,7 @@ export default class GoogleMapContent extends Component {
       else {
         newFilterSet = [...previousState.filteredCategories, category];
       }
-
+      console.log(newFilterSet);
       return {filteredCategories: newFilterSet};
     });
   }
@@ -85,7 +85,7 @@ export default class GoogleMapContent extends Component {
                 >
 
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
+                  if (this.state.filteredCategories.length == 0 || this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
                       <Marker
                         key={index}
