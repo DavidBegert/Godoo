@@ -29,6 +29,7 @@ export default class SearchForm extends Component {
               var longitude = results[0].geometry.location.lng();
               location = `${latitude}, ${longitude}`;
               that.props.makeCall(location, date);
+              that.props.isTheCityAndDateFilledIn(location, date);
           } else {
               alert( 'Geocode was not successful because: ' + status );
           }
@@ -40,10 +41,12 @@ export default class SearchForm extends Component {
         console.log("date fired!!!");
         var dayInEventfulApiForm = dateInput.value.replace(/-/g, "") + "00";
         date = dayInEventfulApiForm + "-" + dayInEventfulApiForm;
-        console.log(date);
+        that.props.isTheCityAndDateFilledIn(location, date);
         that.props.makeCall(location, date);
       });
   }
+
+
 
   render() {
     // var inputStyle = {
@@ -62,8 +65,11 @@ export default class SearchForm extends Component {
     // }
     return (
       <section>
-        <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" onSubmit={console.log('search form submitted')}></input>
-        <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input><br/><br/>
+        <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" /*onSubmit={} */></input>
+        <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input>
+        <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }>
+          Get Started
+        </button>
       </section>
     );
   }
