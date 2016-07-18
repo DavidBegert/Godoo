@@ -70,6 +70,7 @@ export default class SearchForm extends Component {
         <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }>
           Get Started
         </button>
+        <input type="range" min=".5" max="5" step=".1" onChange={ () => console.log("WOAH!")} />
       </section>
     );
   }
