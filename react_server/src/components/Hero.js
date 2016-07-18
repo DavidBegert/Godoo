@@ -3,22 +3,47 @@ import SearchForm from './SearchForm';
 
 export default class Hero extends Component {
 
+  constructor(props) {
+    super();
+    this.state = {
+      cityAndDateFilledIn: false,
+      showWarning: false
+    }
+  }
+  handleGetStartedPress() {
+    console.log('handling get started press from hero.js')
+    if (this.state.cityAndDateFilledIn) {
+      this.props.switchPage();
+    } else {
+      this.setState({showWarning: true})
+    }
+  }
+
+  isTheCityAndDateFilledIn(place, date) {
+    console.log(place);
+    console.log(date);
+    if (place && date) {
+      this.setState({cityAndDateFilledIn: true});
+    } else {
+      console.log("BABABABBABABAM");
+      this.setState({cityAndDateFilledIn: false});
+    }
+  }
+
   render() {
     return (
       <section className="hero is-large">
         <div className="hero-body hero-pic">
-         <div className="container city-heading">
-          <h1 className="title hero-title">
-            Discover events around the city
+          <div className="container city-heading">
+            <h1 className="title hero-title">
+              Discover events around the city
             </h1>
             <br />
             <br />
-            <SearchForm makeCall={this.props.makeCall}/>
-            <button className="button get-started" onClick={this.props.switchPage}>
-              Get Started
-            </button>
-           </div>
-         </div>
+            <SearchForm makeCall={this.props.makeCall} isTheCityAndDateFilledIn={this.isTheCityAndDateFilledIn.bind(this)} handleGetStartedPress={this.handleGetStartedPress.bind(this)} />
+            { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
+          </div>
+        </div>
       </section>
     );
   }

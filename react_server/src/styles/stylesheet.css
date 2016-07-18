@@ -152,6 +152,10 @@
   font-family: sans-serif;
 }
 
+.warning {
+  color: red;
+}
+
 /* #on-the-map {
   z-index: 2;
 } */
