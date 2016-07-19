@@ -12,7 +12,11 @@ export default class HomePage extends Component {
     return(
       <div>
         <Nav />
-        <Hero makeCall={this.props.makeCall} switchPage={this.props.switchPage} />
+        <Hero
+          makeCall={this.props.makeCall}
+          switchPage={this.props.switchPage}
+          today={this.props.today}
+        />
         <InfoSection />
       </div>
     );

@@ -16,20 +16,6 @@ import $ from 'jquery';
 //   }
 // );
 
-function getTodaysDate() {
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-  if(dd<10) {
-      dd='0'+dd
-  } 
-  if(mm<10) {
-      mm='0'+mm
-  } 
-  return yyyy+mm+dd+"00-"+yyyy+mm+dd+"00";
-}
-
 var currentAjaxRequest = {};
 
 export default class App extends Component {
@@ -40,8 +26,13 @@ export default class App extends Component {
       homePage: true,
       events: [],
       mapCenter: {lat: 49.2827, lng: -123.1207}, //this is a default to vancouver
-      today: getTodaysDate()
+      today: new Date().toISOString().slice(0,10)
     }
+  }
+
+  convertDateForAjax(date) {
+    date = date.split('-').join('') + '00'
+    return date + "-" + date;
   }
 
   // TODO - Write logic to render either HomePage or EventsPage, fix the few bugs in the ajax request. (
@@ -56,6 +47,7 @@ export default class App extends Component {
         this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude }})
       })
     */
+    date = this.convertDateForAjax(date);
 
     if (location === undefined) {
       console.log("no location");
@@ -117,7 +109,11 @@ export default class App extends Component {
   render() {
     if (this.state.homePage) {
       return (
-        <HomePage makeCall={this.makeAjaxCall.bind(this)} switchPage={this.switchPage.bind(this)}/>
+        <HomePage 
+          makeCall={this.makeAjaxCall.bind(this)}
+          switchPage={this.switchPage.bind(this)}
+          today={this.state.today}
+         />
       );
     } else {
       return (

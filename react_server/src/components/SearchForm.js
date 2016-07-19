@@ -5,7 +5,7 @@ export default class SearchForm extends Component {
   componentDidMount() {
     var that = this;
     var location;
-    var date;
+    var date = this.props.today;
     var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(28.70, -127.50), 
       new google.maps.LatLng(48.85, -55.90)
@@ -52,7 +52,10 @@ export default class SearchForm extends Component {
 
   }
 
-
+  generateDefaultDate() {
+    var today = new Date();
+    return today.toISOString().slice(0,10);
+  }
 
 
   render() {
@@ -72,8 +75,19 @@ export default class SearchForm extends Component {
     // }
     return (
       <section>
-        <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" /*onSubmit={} */></input>
-        <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input>
+        <input 
+        className="input input-city" 
+        id="searchTextField" 
+        placeholder="Enter your city/address" 
+        type="text" 
+        /*onSubmit={} */
+         />
+        <input 
+          className="input input-date"
+          id="searchDateField"
+          type="date" 
+          defaultValue={this.props.today} 
+        />
         { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
         { (!this.props.showButton) && <div> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
       </section>
