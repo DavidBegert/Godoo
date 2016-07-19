@@ -79,20 +79,26 @@ export default class App extends Component {
         app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
         date: date,
-        within: 1,
+        within: 5,
+        unit: 'km',
         change_multi_day_start: true,
         include: 'categories',
         ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
-        category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
+        sort_order: 'relevance'
       },
       success: function(response) {
         var results = response.events.event;
         console.log(results);
-        this.setState({events: results});
+        // Filter out events with no description. They're usually crap.
+        var goodResults = results.filter( function(event) {
+          return event.description;
+          });
+        console.log(goodResults);
+        this.setState({ events: goodResults });
         ajaxRequest = null;
       }.bind(this)
     });
-  };
+  }
 
   // handleMapMarkerClick(marker) {
   //   this.state.selectedEvents.unshift(marker);
