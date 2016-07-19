@@ -162,6 +162,10 @@
   color: red;
 }
 
+.gmnoprint {
+  display: none;
+}
+
 /* #on-the-map {
   z-index: 2;
 } */
