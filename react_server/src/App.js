@@ -39,8 +39,8 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      mapCenter: {lat: 49.2827, lng: -123.1207} //this is a default to vancouver
-      today: getTodaysDate(),
+      mapCenter: {lat: 49.2827, lng: -123.1207}, //this is a default to vancouver
+      today: getTodaysDate()
     }
   }
 
@@ -94,7 +94,6 @@ export default class App extends Component {
       },
       beforeSend: function(jqXHR, settings) {
         currentAjaxRequest.settings = {date, location};
-        console.log(currentAjaxRequest);
       },
       success: function(response) {
         var results = response.events.event;
