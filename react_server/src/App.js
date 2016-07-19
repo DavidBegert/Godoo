@@ -16,8 +16,22 @@ import $ from 'jquery';
 //   }
 // );
 
+function getTodaysDate() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+      dd='0'+dd
+  } 
+  if(mm<10) {
+      mm='0'+mm
+  } 
+  return yyyy+mm+dd+"00-"+yyyy+mm+dd+"00";
+}
 
-var ajaxRequest;
+var currentAjaxRequest = {};
+
 export default class App extends Component {
 
   constructor() {
@@ -25,7 +39,8 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      mapCenter: {lat: 49.2827, lng: -123.1207}
+      mapCenter: {lat: 49.2827, lng: -123.1207},
+      today: getTodaysDate(),
     }
   }
 
@@ -35,7 +50,7 @@ export default class App extends Component {
     this.setState({homePage: false});
   };
 
-  makeAjaxCall(location, date = "Today") {
+  makeAjaxCall(location, date = this.state.today, page_number = 1) {
     /* 
       geolocation.getCurrentPosition((position) => {
         this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude }})
@@ -47,38 +62,28 @@ export default class App extends Component {
       return;
     }
 
-    if (ajaxRequest) {
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth()+1; //January is 0!
-      var yyyy = today.getFullYear();
-      if(dd<10) {
-          dd='0'+dd
-      } 
-      if(mm<10) {
-          mm='0'+mm
-      } 
-      var today = yyyy+mm+dd+"00-"+yyyy+mm+dd+"00";
-      if (date === today) { //if they clicked on todays date return since that request is already going through
+    if (currentAjaxRequest.promise) {
+
+      if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { //if they clicked on todays date return since that request is already going through
         console.log("THIS HAS ALREADY BEEN REQUESTED NO WORRIES DAVE");
         return;
       }
-      ajaxRequest.abort();
-      console.log("ajaxRequest abortted");
+      currentAjaxRequest.promise.abort();
+      console.log("currentAjaxRequest abortted");
     }
     console.log("CALL MADE");
-    console.log(date);
     var lat = parseFloat(location.split(', ')[0]);
     var lng = parseFloat(location.split(', ')[1]);
     var mapCenter = {lat: lat, lng: lng};
     this.setState({mapCenter: mapCenter});
-    ajaxRequest = $.ajax({
+    currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
       data: {
         location: location,
         app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
+        page_number: 1,
         date: date,
         within: 5,
         unit: 'km',
@@ -86,6 +91,10 @@ export default class App extends Component {
         include: 'categories,tickets',
         ex_category: 'learning_education,schools_alumni,conference,community,clubs_associations',
         sort_order: 'relevance'
+      },
+      beforeSend: function(jqXHR, settings) {
+        currentAjaxRequest.settings = {date, location};
+        console.log(currentAjaxRequest);
       },
       success: function(response) {
         var results = response.events.event;
@@ -96,7 +105,7 @@ export default class App extends Component {
           });
         console.log(goodResults);
         this.setState({ events: goodResults });
-        ajaxRequest = null;
+        currentAjaxRequest = {};
       }.bind(this)
     });
   }

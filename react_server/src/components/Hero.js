@@ -20,8 +20,6 @@ export default class Hero extends Component {
   }
 
   isTheCityAndDateFilledIn(place, date) {
-    console.log(place);
-    console.log(date);
     if (place && date) {
       this.setState({cityAndDateFilledIn: true});
     } else {
