@@ -21,7 +21,6 @@ export default class GoogleMapContent extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.radius != this.state.radiusOfMarkers){
-      console.log(newProps.radius)
       this.setState({radiusOfMarkers: newProps.radius, markerIdToBounce: null})  //continue from here. 
     } 
     else {

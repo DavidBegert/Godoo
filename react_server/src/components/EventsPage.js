@@ -4,7 +4,6 @@ import EventList from './EventList';
 import Nav from './Nav';
 import MapComponent from './MapComponent';
 import SearchForm from './SearchForm';
-import { default as canUseDOM } from "can-use-dom";
 
 
 export default class EventsPage extends Component {
@@ -21,7 +20,6 @@ export default class EventsPage extends Component {
 
   componentWillReceiveProps(newProps) {
     //set random event
-    console.log("PROPS RECIEVING");
     //debugger;
     var randomEvent = this.getRandomEvent(newProps.events);
     this.setState({ selectedEventIDs: [randomEvent.id] });

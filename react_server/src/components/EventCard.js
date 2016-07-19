@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 export default class EventCard extends Component {
   componentDidMount() {
-    console.log("eventcard mounted");
     var eventCard = document.getElementById(this.props.id);
     eventCard.addEventListener('mouseenter', function() {
       this.props.handleEventCardMouseEnter(this.props.id);

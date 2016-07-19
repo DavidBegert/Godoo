@@ -11,7 +11,6 @@ export default class Hero extends Component {
     }
   }
   handleGetStartedPress() {
-    console.log('handling get started press from hero.js')
     if (this.state.cityAndDateFilledIn) {
       this.props.switchPage();
     } else {
@@ -20,12 +19,9 @@ export default class Hero extends Component {
   }
 
   isTheCityAndDateFilledIn(place, date) {
-    console.log(place);
-    console.log(date);
     if (place && date) {
       this.setState({cityAndDateFilledIn: true});
     } else {
-      console.log("BABABABBABABAM");
       this.setState({cityAndDateFilledIn: false});
     }
   }
@@ -43,8 +39,14 @@ export default class Hero extends Component {
             <SearchForm makeCall={this.props.makeCall} 
             isTheCityAndDateFilledIn={this.isTheCityAndDateFilledIn.bind(this)} 
             handleGetStartedPress={this.handleGetStartedPress.bind(this)}
-            showButton={true} />
+            showButton={true} 
+            currentPosition={this.props.currentPosition}
+            />
+            <div>
+            <button onClick={() => this.props.handleGeolocationPress()}> Use My Current Location </button>
             { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
+            </div>
+            { (this.props.showLoadingGif) && <img id="homepage-gif" src="http://img.pandawhale.com/173798-relaxicat-calm-destress-cat-gi-Ylay.gif" />}
           </div>
         </div>
       </section>

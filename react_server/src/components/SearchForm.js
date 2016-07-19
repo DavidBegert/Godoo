@@ -2,15 +2,20 @@ import React, { Component } from 'react';
 
 export default class SearchForm extends Component {
 
+  constructor(props) {
+    super();
+    this.state = {
+      location: null,
+      date: null
+    }
+  }
+
   componentDidMount() {
     var that = this;
-    var location;
-    var date;
     var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(28.70, -127.50), 
       new google.maps.LatLng(48.85, -55.90)
       );
-
       var cityInput = document.getElementById('searchTextField');
       var dateInput = document.getElementById('searchDateField');
       var radiusInput = document.getElementById('radiusInputField')
@@ -27,9 +32,9 @@ export default class SearchForm extends Component {
           if( status == google.maps.GeocoderStatus.OK ) {
               var latitude = results[0].geometry.location.lat();
               var longitude = results[0].geometry.location.lng();
-              location = `${latitude}, ${longitude}`;
-              that.props.makeCall(location, date);
-              that.props.isTheCityAndDateFilledIn(location, date);
+              that.setState({location: `${latitude}, ${longitude}`})
+              that.props.makeCall(that.state.location, that.state.date);
+              that.props.isTheCityAndDateFilledIn(that.state.location, that.state.date);
           } else {
               alert( 'Geocode was not successful because: ' + status );
           }
@@ -39,16 +44,29 @@ export default class SearchForm extends Component {
 
       dateInput.addEventListener('change', function() {
         var dayInEventfulApiForm = dateInput.value.replace(/-/g, "") + "00";
-        date = dayInEventfulApiForm + "-" + dayInEventfulApiForm;
-        that.props.isTheCityAndDateFilledIn(location, date);
-        that.props.makeCall(location, date);
+        that.setState({date: dayInEventfulApiForm + "-" + dayInEventfulApiForm})
+        that.props.isTheCityAndDateFilledIn(that.state.location, that.state.date);
+        that.props.makeCall(that.state.location, that.state.date);
       });
       if (!that.props.showButton){
         radiusInput.addEventListener('input', function() {
           that.props.handleChangeInRadius(radiusInput.value);
         })
       }
-
+  }
+  componentWillReceiveProps(newProps) {
+    var cityInput = document.getElementById('searchTextField');
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'latLng': newProps.currentPosition }, function( results, status ) {
+      if( status == google.maps.GeocoderStatus.OK ) {
+          cityInput.value = results[0].formatted_address;
+          this.setState({location: `${newProps.currentPosition.lat}, ${newProps.currentPosition.lng}`});
+          this.props.isTheCityAndDateFilledIn(this.state.location, this.state.date);
+      } 
+      // else {
+      //     console.log( 'Geocode was not successful because: ' + status );
+      // }
+    }.bind(this));
 
   }
 

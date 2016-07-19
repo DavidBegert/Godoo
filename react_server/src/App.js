@@ -3,19 +3,18 @@ import classnames from 'classnames';
 import EventsPage from './components/EventsPage.js';
 import HomePage from './components/HomePage.js';
 import $ from 'jquery';
+import { default as canUseDOM } from "can-use-dom";
 
-//TODO implement the geolocation option. (commented out below). 
 //Also, put in logic if the place entered does not have any events. Show an error message. 
 
-// const geolocation = (
-//   canUseDOM && navigator.geolocation || {
-//     getCurrentPosition: (success, failure) => {
-//       failure( () => { console.log("ERROR ERROR ERROR") });
-//       success(() => {console.log("YAY YAY YAY") });
-//     },
-//   }
-// );
-
+const geolocation = (
+  canUseDOM && navigator.geolocation || {
+    getCurrentPosition: (success, failure) => {
+      failure( () => { console.log("ERROR ERROR ERROR") });
+      success(() => {console.log("YAY YAY YAY") });
+    },
+  }
+);
 
 var ajaxRequest;
 export default class App extends Component {
@@ -25,7 +24,8 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      mapCenter: {lat: 49.2827, lng: -123.1207} //this is a default to vancouver
+      mapCenter: null, //this is a default to vancouver
+      showLoadingGif: false
     }
   }
 
@@ -35,15 +35,16 @@ export default class App extends Component {
     this.setState({homePage: false});
   };
 
+  handleGeolocationPress() {
+    //populate the place form with closest place
+    this.setState({showLoadingGif: true});
+    geolocation.getCurrentPosition((position) => {
+      this.setState({mapCenter: {lat: position.coords.latitude, lng: position.coords.longitude }})
+      this.setState({showLoadingGif: false});
+    });
+  }
   makeAjaxCall(location, date = "Today") {
-    /* 
-      geolocation.getCurrentPosition((position) => {
-        this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude }})
-      })
-    */
-
-    if (location === undefined) {
-      console.log("no location");
+    if (!location) {
       return;
     }
 
@@ -64,13 +65,12 @@ export default class App extends Component {
         return;
       }
       ajaxRequest.abort();
-      console.log("ajaxRequest abortted");
     }
-    console.log("CALL MADE");
-    console.log(date);
+    
     var lat = parseFloat(location.split(', ')[0]);
     var lng = parseFloat(location.split(', ')[1]);
     var mapCenter = {lat: lat, lng: lng};
+    console.log("call made!");
     this.setState({mapCenter: mapCenter});
     ajaxRequest = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
@@ -89,27 +89,25 @@ export default class App extends Component {
       },
       success: function(response) {
         var results = response.events.event;
-        console.log(results);
         // Filter out events with no description. They're usually crap.
         var goodResults = results.filter( function(event) {
           return event.description;
           });
-        console.log(goodResults);
         this.setState({ events: goodResults });
         ajaxRequest = null;
       }.bind(this)
     });
   }
 
-  // handleMapMarkerClick(marker) {
-  //   this.state.selectedEvents.unshift(marker);
-  //   this.setState(this.state);
-  // }
-
   render() {
     if (this.state.homePage) {
       return (
-        <HomePage makeCall={this.makeAjaxCall.bind(this)} switchPage={this.switchPage.bind(this)}/>
+        <HomePage makeCall={this.makeAjaxCall.bind(this)} 
+        switchPage={this.switchPage.bind(this)} 
+        handleGeolocationPress={this.handleGeolocationPress.bind(this)}
+        currentPosition={this.state.mapCenter}
+        showLoadingGif={this.state.showLoadingGif}
+        />
       );
     } else {
       return (
