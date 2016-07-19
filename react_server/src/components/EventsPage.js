@@ -57,7 +57,11 @@ export default class EventsPage extends Component {
         <Nav />
         <div className="columns">
           <div className="column is-one-third space_edit">
-            <SearchForm showButton={false} handleChangeInRadius={this.handleChangeInRadius.bind(this)}/>
+            <SearchForm 
+              showButton={false}
+              handleChangeInRadius={this.handleChangeInRadius.bind(this)}
+              today={this.props.today}
+              />
             <EventList
               events={this.props.events}
               selectedEventIDs={this.state.selectedEventIDs}

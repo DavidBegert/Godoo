@@ -116,7 +116,11 @@ export default class App extends Component {
       );
     } else {
       return (
-        <EventsPage events={this.state.events} currentPosition={this.state.mapCenter} />
+        <EventsPage
+          events={this.state.events}
+          currentPosition={this.state.mapCenter}
+          today={this.state.today}
+        />
       );
     }
   }

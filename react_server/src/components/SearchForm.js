@@ -72,12 +72,6 @@ export default class SearchForm extends Component {
 
   }
 
-  generateDefaultDate() {
-    var today = new Date();
-    return today.toISOString().slice(0,10);
-  }
-
-
   render() {
     // var inputStyle = {
     //   border: "1px solid transparent",
