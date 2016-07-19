@@ -14,16 +14,24 @@ export default class GoogleMapContent extends Component {
     this.state = {
       previousMarker: null,
       filteredCategories: [],
-      radiusOfMarkers: 2
+      radiusOfMarkers: 2,
+      markerIdToBounce: null
     }
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.radius != this.state.radiusOfMarkers){
-      console.log("THIS IS MAP");
-      console.log(newProps.radius);
-      this.setState({radiusOfMarkers: newProps.radius}) 
+      this.setState({radiusOfMarkers: newProps.radius, markerIdToBounce: null})  //continue from here. 
+    } 
+    else {
+      if(this.props.selectedEventIDs === newProps.selectedEventIDs){  //if it was an event card mousedOver
+        console.log("this is componenet will reciveve in map and ");
+        this.setState({markerIdToBounce: newProps.eventIdMousedOver});
+      } else {
+        this.setState({markerIdToBounce: null});
+      }
     }
+
   }
 
   handleFilterClick(category) {
@@ -56,6 +64,12 @@ export default class GoogleMapContent extends Component {
     }
     this.setState(this.state);
   };
+
+  getAnimation(marker) {
+    if(marker.id === this.state.markerIdToBounce){
+      return 4;
+    }
+  }
 
   renderInfoWindow(marker) {
     return (
@@ -99,6 +113,7 @@ export default class GoogleMapContent extends Component {
                         position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
                         title={ marker.title }//marker.title
                         onClick={() => this.onMarkerClick(marker)} 
+                        animation={this.getAnimation(marker)}
                         //icon={"https://lh4.ggpht.com/Tr5sntMif9qOPrKV_UVl7K8A_V3xQDgA7Sw_qweLUFlg76d_vGFA7q1xIKZ6IcmeGqg=w300"}
                         //visible={false}
                         // onMouseover={() => this.onMarkerClick(marker) }
