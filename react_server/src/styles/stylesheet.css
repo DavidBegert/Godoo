@@ -52,9 +52,7 @@
 .city-input {
   text-align: center;
   /* margin-left: 34%;
-  padding-top: 80px; */
-  
-
+  padding-top: 80px; */ 
 }
 
 .hero-title {
@@ -65,6 +63,12 @@
 .hero-subtitle {
   color: white;
 }
+
+/* Failed attempt to style the section block */
+/* .event-search {
+  height: 50px;
+  width: 100%;
+} */
 
 .input-city {
   width:200px;

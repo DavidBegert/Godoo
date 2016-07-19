@@ -81,7 +81,7 @@ export default class App extends Component {
         date: date,
         within: 1,
         change_multi_day_start: true,
-        include: 'categories',
+        include: 'categories,tickets',
         ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
         category: 'comedy,food,music,festivals_parades,movies_film,fundraisers,art,support,holiday,books,attractions,business,singles_social,outdoors_recreation,performing_arts,animals,politics_activism,sales,science,religion_spirituality,sports,technology,other',
       },
