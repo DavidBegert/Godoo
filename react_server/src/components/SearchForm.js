@@ -96,11 +96,10 @@ export default class SearchForm extends Component {
     return (
       <section>
         <input 
-        className="input input-city" 
-        id="searchTextField" 
-        placeholder="Enter your city/address" 
-        type="text" 
-        /*onSubmit={} */
+          className="input input-city" 
+          id="searchTextField" 
+          placeholder="Enter your city/address" 
+          type="text" 
          />
         <input 
           className="input input-date"
@@ -108,8 +107,9 @@ export default class SearchForm extends Component {
           type="date" 
           defaultValue={this.props.today} 
         />
+
         { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
-        { (!this.props.showButton) && <div> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
+        { (!this.props.showButton) && <div className="range-finder"> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
       </section>
     );
   }
