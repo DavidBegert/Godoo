@@ -29,7 +29,6 @@ export default class GoogleMapContent extends Component {
       else {
         newFilterSet = [...previousState.filteredCategories, category];
       }
-      console.log(newFilterSet);
       return {filteredCategories: newFilterSet};
     });
   }

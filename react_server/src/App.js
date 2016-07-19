@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import EventsPage from './components/EventsPage.js';
 import HomePage from './components/HomePage.js';
 import $ from 'jquery';
