@@ -24,7 +24,7 @@ export default class EventsPage extends Component {
     //set random event
     console.log("PROPS RECIEVING");
     //debugger;
-    var randomEvent = this.getRandomEvent(newProps);
+    var randomEvent = this.getRandomEvent(newProps.events);
     this.setState({ selectedEventIDs: [randomEvent.id] });
   };
 
@@ -39,7 +39,7 @@ export default class EventsPage extends Component {
   }
 
   getRandomIntInclusive(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   getRandomEvent(events_array) {
