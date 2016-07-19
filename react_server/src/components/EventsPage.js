@@ -12,10 +12,8 @@ export default class EventsPage extends Component {
   constructor(props) {
     super(props);
     if (props.events.length) { //if the ajax call completes before moving to this page
-      function getRandomIntInclusive(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-      var randomEvent = this.props.events[getRandomIntInclusive(0, this.props.events.length)];
+
+      var randomEvent = this.getRandomEvent(props.events); 
       this.state = {selectedEventIDs: [randomEvent.id]};
     } else {
         this.state = {selectedEventIDs: []}
@@ -25,11 +23,8 @@ export default class EventsPage extends Component {
   componentWillReceiveProps(newProps) {
     //set random event
     console.log("PROPS RECIEVING");
-    function getRandomIntInclusive(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
     //debugger;
-    var randomEvent = newProps.events[getRandomIntInclusive(0, newProps.events.length)];
+    var randomEvent = this.getRandomEvent(newProps.events);
     this.setState({ selectedEventIDs: [randomEvent.id] });
   };
 
@@ -41,6 +36,14 @@ export default class EventsPage extends Component {
       }
       return {selectedEventIDs: [marker.id, ...previousState.selectedEventIDs]}
     });
+  }
+
+  getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  getRandomEvent(events_array) {
+    return events_array[this.getRandomIntInclusive(0, this.props.events.length - 1)];
   }
 
   render() {
@@ -55,7 +58,7 @@ export default class EventsPage extends Component {
                selectedEventIDs={this.state.selectedEventIDs}
             />
           </div>
-          <div className='column is-two-thirds container-map  map-button' style={{height: "100%"}}>
+          <div className='column is-two-thirds container-map' style={{height: "100%"}}>
             <MapComponent
               selectedEventIDs={this.state.selectedEventIDs}
               events={this.props.events}

@@ -66,7 +66,6 @@ export default class GoogleMapContent extends Component {
     if (this.props.events) {  
       return (
           <div>
-            <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
             <GoogleMapLoader
               containerElement={
                 <div
@@ -82,7 +81,7 @@ export default class GoogleMapContent extends Component {
                   defaultZoom={13}
                   defaultCenter={this.props.defaultCenter}
                 >
-
+                <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
                   if (this.state.filteredCategories.length == 0 || this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
