@@ -52,7 +52,7 @@ export default class EventList extends Component {
         return (
           <div>
             <br/>
-            <img src="http://img.pandawhale.com/173798-relaxicat-calm-destress-cat-gi-Ylay.gif" style={{borderRadius: "200%", paddingLeft: "15px"}} />
+            <img src="https://66.media.tumblr.com/d799ad55c1a36417ef381ee48385987a/tumblr_o204gziLrm1v6xy94o1_400.gif" />
           </div>
         );
     }

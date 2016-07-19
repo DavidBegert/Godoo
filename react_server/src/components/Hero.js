@@ -46,7 +46,7 @@ export default class Hero extends Component {
             <button onClick={() => this.props.handleGeolocationPress()}> Use My Current Location </button>
             { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
             </div>
-            { (this.props.showLoadingGif) && <img id="homepage-gif" src="http://img.pandawhale.com/173798-relaxicat-calm-destress-cat-gi-Ylay.gif" />}
+            { (this.props.showLoadingGif) && <img id="homepage-gif" src="https://67.media.tumblr.com/tumblr_mdkoyttBGV1rgpyeqo1_500.gif" />}
           </div>
         </div>
       </section>

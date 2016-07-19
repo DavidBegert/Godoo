@@ -67,7 +67,7 @@ export default class App extends Component {
     if (currentAjaxRequest.promise) {
 
       if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { //if they clicked on todays date return since that request is already going through
-        console.log("THIS HAS ALREADY BEEN REQUESTED NO WORRIES DAVE");
+        console.log("this ajax request is already underway.");
         return;
       }
       currentAjaxRequest.promise.abort();

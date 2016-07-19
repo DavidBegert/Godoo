@@ -53,6 +53,7 @@
 .hero-title {
   color:white;
   font-family: arial;
+  margin-bottom: 1000px;
 }
 
 .hero-subtitle {
@@ -165,6 +166,6 @@
 
 
 #homepage-gif {
-  border-radius: 200%; 
-  width: 30%;
+  position: relative;
+  top: -220px;
 }

@@ -61,7 +61,9 @@ export default class SearchForm extends Component {
       if( status == google.maps.GeocoderStatus.OK ) {
           cityInput.value = results[0].formatted_address;
           this.setState({location: `${newProps.currentPosition.lat}, ${newProps.currentPosition.lng}`});
+          this.props.makeCall(this.state.location, this.state.date);
           this.props.isTheCityAndDateFilledIn(this.state.location, this.state.date);
+
       } 
       // else {
       //     console.log( 'Geocode was not successful because: ' + status );
