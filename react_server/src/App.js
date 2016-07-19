@@ -3,20 +3,20 @@ import classnames from 'classnames';
 import EventsPage from './components/EventsPage.js';
 import HomePage from './components/HomePage.js';
 import $ from 'jquery';
+import { default as canUseDOM } from "can-use-dom";
 
-//TODO implement the geolocation option. (commented out below). 
-//Also, put in logic if the place entered does not have any events. Show an error message. 
-
-// const geolocation = (
-//   canUseDOM && navigator.geolocation || {
-//     getCurrentPosition: (success, failure) => {
-//       failure( () => { console.log("ERROR ERROR ERROR") });
-//       success(() => {console.log("YAY YAY YAY") });
-//     },
-//   }
-// );
+//TODO - put in logic if the place entered does not have any events. Show an error message. 
 
 var currentAjaxRequest = {};
+
+const geolocation = (
+  canUseDOM && navigator.geolocation || {
+    getCurrentPosition: (success, failure) => {
+      failure( () => { console.log("ERROR ERROR ERROR") });
+      success(() => {console.log("YAY YAY YAY") });
+    },
+  }
+);
 
 export default class App extends Component {
 
@@ -25,8 +25,9 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      mapCenter: {lat: 49.2827, lng: -123.1207}, //this is a default to vancouver
       today: new Date().toISOString().slice(0,10)
+      mapCenter: null,
+      showLoadingGif: false
     }
   }
 
@@ -41,32 +42,34 @@ export default class App extends Component {
     this.setState({homePage: false});
   };
 
-  makeAjaxCall(location, date = this.state.today, page_number = 1) {
-    /* 
-      geolocation.getCurrentPosition((position) => {
-        this.setState({currentPosition: {lat: position.coords.latitude, lng: position.coords.longitude }})
-      })
-    */
-    date = this.convertDateForAjax(date);
+  handleGeolocationPress() {
+    //populate the place form with closest place
+    this.setState({showLoadingGif: true});
+    geolocation.getCurrentPosition((position) => {
+      this.setState({mapCenter: {lat: position.coords.latitude, lng: position.coords.longitude }})
+      this.setState({showLoadingGif: false});
+    });
+  }
 
-    if (location === undefined) {
-      console.log("no location");
+  makeAjaxCall(location, date = this.state.today, page_number = 1) {
+  date = this.convertDateForAjax(date);
+    if (!location) {
       return;
     }
 
     if (currentAjaxRequest.promise) {
 
       if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { //if they clicked on todays date return since that request is already going through
-        console.log("THIS HAS ALREADY BEEN REQUESTED NO WORRIES DAVE");
+        console.log("this ajax request is already underway.");
         return;
       }
       currentAjaxRequest.promise.abort();
-      console.log("currentAjaxRequest abortted");
     }
-    console.log("CALL MADE");
+    
     var lat = parseFloat(location.split(', ')[0]);
     var lng = parseFloat(location.split(', ')[1]);
     var mapCenter = {lat: lat, lng: lng};
+    console.log("call made!");
     this.setState({mapCenter: mapCenter});
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
@@ -75,7 +78,7 @@ export default class App extends Component {
         location: location,
         app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
-        page_number: 1,
+        page_number: page_number,
         date: date,
         within: 10,
         unit: 'km',
@@ -89,31 +92,27 @@ export default class App extends Component {
       },
       success: function(response) {
         var results = response.events.event;
-        console.log(results);
         // Filter out events with no description. They're usually crap.
         var goodResults = results.filter( function(event) {
           return event.description;
           });
-        console.log(goodResults);
         this.setState({ events: goodResults });
         currentAjaxRequest = {};
       }.bind(this)
     });
   }
 
-  // handleMapMarkerClick(marker) {
-  //   this.state.selectedEvents.unshift(marker);
-  //   this.setState(this.state);
-  // }
-
   render() {
     if (this.state.homePage) {
       return (
         <HomePage 
-          makeCall={this.makeAjaxCall.bind(this)}
+          makeCall={this.makeAjaxCall.bind(this)} 
           switchPage={this.switchPage.bind(this)}
           today={this.state.today}
-         />
+          handleGeolocationPress={this.handleGeolocationPress.bind(this)}
+          currentPosition={this.state.mapCenter}
+          showLoadingGif={this.state.showLoadingGif}
+        />
       );
     } else {
       return (

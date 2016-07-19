@@ -12,7 +12,6 @@ export default class Hero extends Component {
   }
   
   handleGetStartedPress() {
-    console.log('handling get started press from hero.js')
     if (this.state.cityAndDateFilledIn) {
       this.props.switchPage();
     } else {
@@ -24,7 +23,6 @@ export default class Hero extends Component {
     if (place && date) {
       this.setState({cityAndDateFilledIn: true});
     } else {
-      console.log("BABABABBABABAM");
       this.setState({cityAndDateFilledIn: false});
     }
   }
@@ -44,9 +42,14 @@ export default class Hero extends Component {
               isTheCityAndDateFilledIn={this.isTheCityAndDateFilledIn.bind(this)} 
               handleGetStartedPress={this.handleGetStartedPress.bind(this)}
               showButton={true} 
+              currentPosition={this.props.currentPosition}
               today={this.props.today}
             />
-            { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
+            <div>
+              <button onClick={() => this.props.handleGeolocationPress()}> Use My Current Location </button>
+              { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
+            </div>
+            { (this.props.showLoadingGif) && <img id="homepage-gif" src="https://67.media.tumblr.com/tumblr_mdkoyttBGV1rgpyeqo1_500.gif" />}
           </div>
         </div>
       </section>
