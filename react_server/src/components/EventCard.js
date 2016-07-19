@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 
 export default class EventCard extends Component {
+  componentDidMount() {
+    console.log("eventcard mounted");
+    var eventCard = document.getElementById(this.props.id);
+    eventCard.addEventListener('mouseenter', function() {
+      console.log("mouse has entered!!");
+      this.props.handleEventCardMouseEnter(this.props.id);
+    }.bind(this))
+  }
 
   render() {
     return (
       // Removed 1/3 width bulma class
       // TODO : Jazz it up with bulma css.
-      <div >
+      <div id={this.props.id}>
         <div className="box1">
           <div className="box space_edit2">
             <article className="media">

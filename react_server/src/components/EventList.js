@@ -32,12 +32,14 @@ export default class EventList extends Component {
         return (
           <EventCard 
             key={event.id}
+            id={event.id}
             title={event.title}
             description={description.length > 300 ? description.slice(0, 300) + '...' : description}
             start_time={formatDate(event.start_time, event.stop_time)}
             venue_name={event.venue_name}
             venue_address={event.venue_address}
             image_url={event.image ? event.image.small.url : defaultImage } 
+            handleEventCardMouseEnter={this.props.handleEventCardMouseEnter}
           />
         )
       });

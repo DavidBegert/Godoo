@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Rheostat from 'rheostat';
 
 export default class SearchForm extends Component {
 

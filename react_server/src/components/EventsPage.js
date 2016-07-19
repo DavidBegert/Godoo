@@ -13,9 +13,9 @@ export default class EventsPage extends Component {
     super(props);
     if (props.events.length) { //if the ajax call completes before moving to this page
       var randomEvent = this.getRandomEvent(props.events); 
-      this.state = {selectedEventIDs: [randomEvent.id], radius: 2};
+      this.state = {selectedEventIDs: [randomEvent.id], radius: 2, eventIdMousedOver: null};
     } else {
-        this.state = {selectedEventIDs: [], radius: 2}
+        this.state = {selectedEventIDs: [], radius: 2, eventIdMousedOver: null}
       }
   }
 
@@ -51,6 +51,10 @@ export default class EventsPage extends Component {
     this.setState({radius: newRadius});
   }
 
+  handleEventCardMouseEnter(eventId) {
+    this.setState({eventIdMousedOver: eventId});
+  }
+
   render() {
     return (
       <div>
@@ -61,6 +65,7 @@ export default class EventsPage extends Component {
             <EventList
               events={this.props.events}
               selectedEventIDs={this.state.selectedEventIDs}
+              handleEventCardMouseEnter={this.handleEventCardMouseEnter.bind(this)}
             />
           </div>
           <div className='column is-two-thirds container-map' style={{height: "100%"}}>
@@ -70,6 +75,7 @@ export default class EventsPage extends Component {
               onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
               defaultCenter={this.props.currentPosition}
               radius={this.state.radius}
+              eventIdMousedOver={this.state.eventIdMousedOver}
             />
           </div>
         </div>
