@@ -6,7 +6,7 @@ export default class SearchForm extends Component {
     super();
     this.state = {
       location: null,
-      date: null
+      date: this.props.today
     }
   }
 
