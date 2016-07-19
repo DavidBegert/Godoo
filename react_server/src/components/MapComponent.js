@@ -21,11 +21,11 @@ export default class GoogleMapContent extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.radius != this.state.radiusOfMarkers){
+      console.log(newProps.radius)
       this.setState({radiusOfMarkers: newProps.radius, markerIdToBounce: null})  //continue from here. 
     } 
     else {
       if(this.props.selectedEventIDs === newProps.selectedEventIDs){  //if it was an event card mousedOver
-        console.log("this is componenet will reciveve in map and ");
         this.setState({markerIdToBounce: newProps.eventIdMousedOver});
       } else {
         this.setState({markerIdToBounce: null});
@@ -81,7 +81,19 @@ export default class GoogleMapContent extends Component {
       </InfoWindow>
       
     );
-    
+  };
+
+  distanceBetween(origin, marker) {
+    var rad = function(x) {
+      return x * Math.PI / 180;
+    };
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(marker.latitude - origin.lat);
+    var dLong = rad(marker.longitude - origin.lng);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(origin.lat)) * Math.cos(rad(marker.latitude)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return (d / 1000.0); // returns the distance in kilometers
   };
 
   render() {
@@ -106,7 +118,7 @@ export default class GoogleMapContent extends Component {
                 >
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (this.state.filteredCategories.length == 0 /* && distanceBetween(this.props.defaultCenter, marker.) <= this.state.radiusOfMarkers */|| this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
+                  if (this.state.filteredCategories.length == 0 && this.distanceBetween(this.props.defaultCenter, marker) <= this.state.radiusOfMarkers || this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
                       <Marker
                         key={index}

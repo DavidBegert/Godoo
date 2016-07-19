@@ -5,7 +5,6 @@ export default class EventCard extends Component {
     console.log("eventcard mounted");
     var eventCard = document.getElementById(this.props.id);
     eventCard.addEventListener('mouseenter', function() {
-      console.log("mouse has entered!!");
       this.props.handleEventCardMouseEnter(this.props.id);
     }.bind(this))
   }

@@ -80,7 +80,7 @@ export default class App extends Component {
         app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
         date: date,
-        within: 5,
+        within: 10,
         unit: 'km',
         change_multi_day_start: true,
         include: 'categories,tickets',
