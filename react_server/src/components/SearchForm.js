@@ -12,11 +12,6 @@ export default class SearchForm extends Component {
 
   componentDidMount() {
     var that = this;
-<<<<<<< HEAD
-    var location;
-    var date = this.props.today;
-=======
->>>>>>> 2daa19c680af02e4b64b87e34bf7743351da79dc
     var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(28.70, -127.50), 
       new google.maps.LatLng(48.85, -55.90)
