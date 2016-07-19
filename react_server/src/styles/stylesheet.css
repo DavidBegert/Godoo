@@ -4,27 +4,20 @@
   border: 1px solid #d3d3d3 ;
 }
 
-.button-area {
-  /*margin-right: 30px;
-  margin-left: 120px;*/
+.button-area.on-the-map {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  /* max-width: 520px; */
-  /* padding-top: 40px; */
-  /* position: absolute; */
-  margin-left: 40px;
+  position: relative;
+  z-index: 3;
+  padding-top:40px;
+  align: center;
 }
 
 .button-area a {
-  background: #d3d3d3;
   padding: 1em 2.4em;
-  font-size: .9em;
   margin: 1em;
-  color: white;
-  text-decoration: none;
-  flex-grow: 1;
   text-align: center;
 }
 
@@ -97,19 +90,6 @@
   height: 100%;
   position: relative;
 } */
-
-.on-the-map {
-  position: absolute;
-  top: 15; 
-  z-index: 3;
-} 
-
-.on-the-map button {
-  float: right;
-  padding-top:40px;
-  align: center;
-  color: black;
-}
 
 .search-form {
   padding-top: 20px;

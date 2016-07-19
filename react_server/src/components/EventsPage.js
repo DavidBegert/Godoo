@@ -58,7 +58,7 @@ export default class EventsPage extends Component {
               selectedEventIDs={this.state.selectedEventIDs}
             />
           </div>
-          <div className='column is-two-thirds container-map  map-button' style={{height: "100%"}}>
+          <div className='column is-two-thirds container-map' style={{height: "100%"}}>
             <MapComponent
               selectedEventIDs={this.state.selectedEventIDs}
               events={this.props.events}
