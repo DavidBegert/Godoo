@@ -12,11 +12,10 @@ export default class EventsPage extends Component {
   constructor(props) {
     super(props);
     if (props.events.length) { //if the ajax call completes before moving to this page
-
       var randomEvent = this.getRandomEvent(props.events); 
-      this.state = {selectedEventIDs: [randomEvent.id]};
+      this.state = {selectedEventIDs: [randomEvent.id], radius: 2, eventIdMousedOver: null};
     } else {
-        this.state = {selectedEventIDs: []}
+        this.state = {selectedEventIDs: [], radius: 2, eventIdMousedOver: null}
       }
   }
 
@@ -46,16 +45,25 @@ export default class EventsPage extends Component {
     return events_array[this.getRandomIntInclusive(0, this.props.events.length - 1)];
   }
 
+  handleChangeInRadius(newRadius = 2) {
+    this.setState({radius: newRadius});
+  }
+
+  handleEventCardMouseEnter(eventId) {
+    this.setState({eventIdMousedOver: eventId});
+  }
+
   render() {
     return (
       <div>
         <Nav />
         <div className="columns">
           <div className="column is-one-third space_edit">
-             <SearchForm showButton={false}/>
-             <EventList
-               events={this.props.events}
-               selectedEventIDs={this.state.selectedEventIDs}
+            <SearchForm showButton={false} handleChangeInRadius={this.handleChangeInRadius.bind(this)}/>
+            <EventList
+              events={this.props.events}
+              selectedEventIDs={this.state.selectedEventIDs}
+              handleEventCardMouseEnter={this.handleEventCardMouseEnter.bind(this)}
             />
           </div>
           <div className='column is-two-thirds container-map' style={{height: "100%"}}>
@@ -64,6 +72,8 @@ export default class EventsPage extends Component {
               events={this.props.events}
               onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
               defaultCenter={this.props.currentPosition}
+              radius={this.state.radius}
+              eventIdMousedOver={this.state.eventIdMousedOver}
             />
           </div>
         </div>

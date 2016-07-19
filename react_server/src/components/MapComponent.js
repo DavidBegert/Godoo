@@ -13,20 +13,37 @@ export default class GoogleMapContent extends Component {
     super(props);
     this.state = {
       previousMarker: null,
-      filteredCategories: []
+      filteredCategories: [],
+      radiusOfMarkers: 2,
+      markerIdToBounce: null
     }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.radius != this.state.radiusOfMarkers){
+      console.log(newProps.radius)
+      this.setState({radiusOfMarkers: newProps.radius, markerIdToBounce: null})  //continue from here. 
+    } 
+    else {
+      if(this.props.selectedEventIDs === newProps.selectedEventIDs){  //if it was an event card mousedOver
+        this.setState({markerIdToBounce: newProps.eventIdMousedOver});
+      } else {
+        this.setState({markerIdToBounce: null});
+      }
+    }
+
   }
 
   handleFilterClick(category) {
     this.setState(function(previousState) {
       var newFilterSet;
 
-      if (previousState.filteredCategories.includes(category)) {
+      if (previousState.filteredCategories.includes(category)) { //taking away category
         newFilterSet = previousState.filteredCategories.filter(function(filterCategory) {
           return filterCategory != category;
         });
       }
-      else {
+      else { //adding category
         newFilterSet = [...previousState.filteredCategories, category];
       }
       return {filteredCategories: newFilterSet};
@@ -48,6 +65,12 @@ export default class GoogleMapContent extends Component {
     this.setState(this.state);
   };
 
+  getAnimation(marker) {
+    if(marker.id === this.state.markerIdToBounce){
+      return 4;
+    }
+  }
+
   renderInfoWindow(marker) {
     return (
       <InfoWindow onCloseclick={() => this.onMarkerClick(marker)} > 
@@ -58,7 +81,19 @@ export default class GoogleMapContent extends Component {
       </InfoWindow>
       
     );
-    
+  };
+
+  distanceBetween(origin, marker) {
+    var rad = function(x) {
+      return x * Math.PI / 180;
+    };
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(marker.latitude - origin.lat);
+    var dLong = rad(marker.longitude - origin.lng);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(origin.lat)) * Math.cos(rad(marker.latitude)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return (d / 1000.0); // returns the distance in kilometers
   };
 
   render() {
@@ -83,13 +118,14 @@ export default class GoogleMapContent extends Component {
                 >
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (this.state.filteredCategories.length == 0 || this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
+                  if (this.state.filteredCategories.length == 0 && this.distanceBetween(this.props.defaultCenter, marker) <= this.state.radiusOfMarkers || this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
                       <Marker
                         key={index}
                         position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) } } //marker.position
                         title={ marker.title }//marker.title
                         onClick={() => this.onMarkerClick(marker)} 
+                        animation={this.getAnimation(marker)}
                         //icon={"https://lh4.ggpht.com/Tr5sntMif9qOPrKV_UVl7K8A_V3xQDgA7Sw_qweLUFlg76d_vGFA7q1xIKZ6IcmeGqg=w300"}
                         //visible={false}
                         // onMouseover={() => this.onMarkerClick(marker) }

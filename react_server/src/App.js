@@ -39,7 +39,7 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      mapCenter: {lat: 49.2827, lng: -123.1207},
+      mapCenter: {lat: 49.2827, lng: -123.1207} //this is a default to vancouver
       today: getTodaysDate(),
     }
   }
@@ -85,7 +85,7 @@ export default class App extends Component {
         page_size: 100,
         page_number: 1,
         date: date,
-        within: 5,
+        within: 10,
         unit: 'km',
         change_multi_day_start: true,
         include: 'categories,tickets',
