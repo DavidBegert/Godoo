@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class SearchForm extends Component {
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       location: null,
       date: this.props.today
