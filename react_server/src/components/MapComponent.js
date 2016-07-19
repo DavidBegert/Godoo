@@ -13,7 +13,15 @@ export default class GoogleMapContent extends Component {
     super(props);
     this.state = {
       previousMarker: null,
-      filteredCategories: []
+      filteredCategories: [],
+      radiusOfMarkers: 2
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.radius != this.state.radiusOfMarkers){
+      console.log("THIS IS MAP")
+      this.setState({radiusOfMarkers: newProps.radius})  //continue from here. 
     }
   }
 
@@ -21,12 +29,12 @@ export default class GoogleMapContent extends Component {
     this.setState(function(previousState) {
       var newFilterSet;
 
-      if (previousState.filteredCategories.includes(category)) {
+      if (previousState.filteredCategories.includes(category)) { //taking away category
         newFilterSet = previousState.filteredCategories.filter(function(filterCategory) {
           return filterCategory != category;
         });
       }
-      else {
+      else { //adding category
         newFilterSet = [...previousState.filteredCategories, category];
       }
 
@@ -85,7 +93,7 @@ export default class GoogleMapContent extends Component {
                 >
 
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
+                  if (!this.state.filteredCategories.includes(marker.categories.category[0].id) /* && it is within range  /*|| this.props.selectedEventIDs.includes(marker.id) */) {
                     return (
                       <Marker
                         key={index}

@@ -44,9 +44,9 @@ export default class SearchForm extends Component {
         that.props.isTheCityAndDateFilledIn(location, date);
         that.props.makeCall(location, date);
       });
-      if (!this.props.showButton){
+      if (!that.props.showButton){
         radiusInput.addEventListener('input', function() {
-          console.log(radiusInput.value);
+          that.props.handleChangeInRadius(radiusInput.value);
         })
       }
 
@@ -76,7 +76,7 @@ export default class SearchForm extends Component {
         <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" /*onSubmit={} */></input>
         <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input>
         { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
-        { (!this.props.showButton) && <div> Range <input className="center" id="radiusInputField" value={2} type="range" min=".2" max="10" step=".2" /> </div> }
+        { (!this.props.showButton) && <div> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
       </section>
     );
   }
