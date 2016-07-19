@@ -25,7 +25,7 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      today: new Date().toISOString().slice(0,10)
+      today: new Date().toISOString().slice(0,10),
       mapCenter: null,
       showLoadingGif: false
     }
