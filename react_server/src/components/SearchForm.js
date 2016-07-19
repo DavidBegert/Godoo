@@ -91,11 +91,11 @@ export default class SearchForm extends Component {
     //   width: "400px"
     // }
     return (
-      <section>
+      <section className="search-form">
         <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" /*onSubmit={} */></input>
         <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input>
         { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
-        { (!this.props.showButton) && <div> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
+        { (!this.props.showButton) && <div className="range-finder"> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
       </section>
     );
   }
