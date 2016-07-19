@@ -84,7 +84,7 @@ export default class App extends Component {
         unit: 'km',
         change_multi_day_start: true,
         include: 'categories',
-        ex_category: 'learning_education,schools_alumni,conference,community,family_fun_kids,clubs_associations',
+        ex_category: 'learning_education,schools_alumni,conference,community,clubs_associations',
         sort_order: 'relevance'
       },
       success: function(response) {
