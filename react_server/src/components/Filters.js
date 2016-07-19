@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
 export default class Filters extends Component {
-
+// TO DO: make buttons show whether they are active.
   render() {
     return (
       <div className="button-area on-the-map"> 
-
         <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('comedy')}}>Comedy</a>
         <br />
         <a className="button is-primary is-inverted" onClick={() => {this.props.onFilterClick('festivals_parades')}}>Festivals</a>
