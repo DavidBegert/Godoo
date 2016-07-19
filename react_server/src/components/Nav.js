@@ -4,7 +4,7 @@ export default class Nav extends Component {
 
   render() {
     return (
-      <nav className="nav">
+      <nav className="nav border-nav">
         <div className="nav-left">
           <a className="nav-item logo" href="#">
             <strong>GoDoo</strong>
