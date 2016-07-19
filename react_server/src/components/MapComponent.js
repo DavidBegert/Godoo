@@ -20,8 +20,9 @@ export default class GoogleMapContent extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.radius != this.state.radiusOfMarkers){
-      console.log("THIS IS MAP")
-      this.setState({radiusOfMarkers: newProps.radius})  //continue from here. 
+      console.log("THIS IS MAP");
+      console.log(newProps.radius);
+      this.setState({radiusOfMarkers: newProps.radius}) 
     }
   }
 
@@ -91,7 +92,7 @@ export default class GoogleMapContent extends Component {
                 >
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
-                  if (this.state.filteredCategories.length == 0 /* && it is within range */|| this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
+                  if (this.state.filteredCategories.length == 0 /* && distanceBetween(this.props.defaultCenter, marker.) <= this.state.radiusOfMarkers */|| this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
                       <Marker
                         key={index}

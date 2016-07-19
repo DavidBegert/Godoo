@@ -25,7 +25,7 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      mapCenter: {lat: 49.2827, lng: -123.1207}
+      mapCenter: {lat: 49.2827, lng: -123.1207} //this is a default to vancouver
     }
   }
 

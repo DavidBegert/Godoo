@@ -46,8 +46,6 @@ export default class EventsPage extends Component {
   }
 
   handleChangeInRadius(newRadius = 2) {
-    console.log("new radius:");
-    console.log(newRadius); //want to pass this as a prop to mapcomponent
     this.setState({radius: newRadius});
   }
 
