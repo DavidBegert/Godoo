@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Rheostat from 'rheostat';
 
 export default class SearchForm extends Component {
 
@@ -14,6 +14,7 @@ export default class SearchForm extends Component {
 
       var cityInput = document.getElementById('searchTextField');
       var dateInput = document.getElementById('searchDateField');
+      var radiusInput = document.getElementById('radiusInputField')
 
       var searchBox = new google.maps.places.SearchBox(cityInput, {
         bounds: defaultBounds
@@ -38,13 +39,20 @@ export default class SearchForm extends Component {
       });
 
       dateInput.addEventListener('change', function() {
-        console.log("date fired!!!");
         var dayInEventfulApiForm = dateInput.value.replace(/-/g, "") + "00";
         date = dayInEventfulApiForm + "-" + dayInEventfulApiForm;
         that.props.isTheCityAndDateFilledIn(location, date);
         that.props.makeCall(location, date);
       });
+      if (!that.props.showButton){
+        radiusInput.addEventListener('input', function() {
+          that.props.handleChangeInRadius(radiusInput.value);
+        })
+      }
+
+
   }
+
 
 
 
@@ -68,6 +76,7 @@ export default class SearchForm extends Component {
         <input className="input input-city" id="searchTextField" placeholder="Enter your city/address" type="text" /*onSubmit={} */></input>
         <input className="input input-date" id="searchDateField" type="date" placeholder="Pick a date"></input>
         { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
+        { (!this.props.showButton) && <div> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
       </section>
     );
   }
