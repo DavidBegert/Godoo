@@ -38,8 +38,8 @@ export default class EventCard extends Component {
                   </p>
                 </div>
               </div>
-              <div class="media-right">
-                <button class="delete">x</button>
+              <div className="media-right">
+                <button className="delete">x</button>
               </div>
             </article>
           </div>
