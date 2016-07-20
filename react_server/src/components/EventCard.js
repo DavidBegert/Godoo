@@ -30,13 +30,13 @@ export default class EventCard extends Component {
                     <br />
                     <em>{this.props.venue_name}</em>
                     <br />
+                    <em>{this.props.start_time}</em>
+                    <br />
+                    <em>{this.props.venue_address}</em>
+                    <br />
                     <br />
                     {this.props.description}
                     <br />
-                    {this.props.venue_address}
-                    <br />
-                    <br />
-                    <em>{this.props.start_time}</em>
                   </p>
                 </div>
               </div>
