@@ -38,7 +38,21 @@ export default class EventCard extends Component {
                     {this.props.description}
                     <br />
                   </p>
+
+                  <nav className="level">
+                    <div className="level-left">
+                      <a className="level-item">
+                        <span className="icon is-small"><i className="fa fa-calendar"></i></span>
+                      </a>
+                      <a className="level-item">
+                        <span className="icon is-small"><i className="fa fa-ticket"></i></span>
+                      </a>
+                    </div>
+                  </nav>
+                  
+                  
                 </div>
+
               </div>
               <div className="media-right">
                 <button className="delete" onClick={()=>this.props.deselectEvent(this.props.id)}>x</button>
