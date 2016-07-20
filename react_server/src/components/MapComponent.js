@@ -16,7 +16,8 @@ export default class GoogleMapContent extends Component {
       radiusOfMarkers: 2,
       markerIdToBounce: null,
       directions: null,
-      showDirections: false
+      showDirections: false,
+      routeInfoWindow: null
     }
   }
 
@@ -57,22 +58,30 @@ export default class GoogleMapContent extends Component {
       console.log(marker);
       //show directions to marker
       var DirectionsService = new google.maps.DirectionsService();
-      console.log("made directions service");
       DirectionsService.route({
         origin: this.props.defaultCenter,
         destination: {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)},
         travelMode: google.maps.TravelMode.DRIVING,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          console.log(this.state.showDirections);
+          // console.log(result.routes[0].legs[0].distance.text);
+          // console.log(result.routes[0].legs[0].duration.text);
+          // var step = Math.floor(result.routes[0].legs[0].steps.length/2);
+          // console.log(step);
+          // var infowindow2 = new google.maps.InfoWindow();
+          // infowindow2.setContent(result.routes[0].legs[0].distance.text + "<br>" + result.routes[0].legs[0].duration.text + " ");
+          // infowindow2.setPosition(result.routes[0].legs[0].steps[step].end_location);
+          // console.log(infowindow2);
+          //infowindow2.open(document.getElementById('mapDiv'));
           this.setState({
             directions: result
           });
+          console.log(this.state.directions.routes[0].legs[0].steps[2].end_location);
+          console.log(this.state.directions.routes[0].legs[0].distance.text);
         } else {
           console.error(`error fetching directions ${result}`);
         }
       });
-      console.log('finished the directions');
       //end of showing directions
       this.props.onMapMarkerClick(marker);
       marker.showInfo = true;
@@ -194,7 +203,10 @@ export default class GoogleMapContent extends Component {
                     },
                   }}
                 /> */}
-                {this.state.directions && this.state.showDirections ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true}} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
+
+                {this.state.directions && this.state.showDirections ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true, suppressInfoWindows: false, infoWindow: new google.maps.InfoWindow({content: this.state.directions.routes[0].legs[0].distance.text, position: this.state.directions.routes[0].legs[0].steps[2].end_location}) }} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
+                {this.state.directions && this.state.showDirections ? <InfoWindow position={this.state.directions.routes[0].legs[0].steps[2].end_location} content={this.state.directions.routes[0].legs[0].distance.text}> </InfoWindow> : null }
+
 
 
               </GoogleMap>
