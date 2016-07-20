@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+var currentPosition;
 export default class SearchForm extends Component {
 
   constructor(props) {
     super(props);
+    var currentPosition;
     this.state = {
       location: null,
       date: this.props.today,
@@ -54,7 +55,8 @@ export default class SearchForm extends Component {
       }
   }
   componentWillReceiveProps(newProps) {
-    if (!newProps.currentPosition) { //not sure about this fix..
+    if ((!currentPosition) || (newProps.currentPosition.lat != currentPosition.lat && newProps.currentPosition.lng != currentPosition.lng)) { //if the current position changed
+      currentPosition = newProps.currentPosition;
       console.log("search form receiving props");
       var cityInput = document.getElementById('searchTextField');
       var geocoder = new google.maps.Geocoder();
