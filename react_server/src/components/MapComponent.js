@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle} from "react-google-maps";
+import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle, DirectionsRenderer} from "react-google-maps";
 import Filters from "./Filters";
 import $ from 'jquery';
 
 
 export default class GoogleMapContent extends Component {
 
-// DONE : stripped html tags from description
 //TO DO : add whitespace in place of removed html tags
-
+//TO DO : work on how to show the routes.. maybe stop zoom in and stuff.
   constructor(props) {
     super(props);
     this.state = {
       previousMarker: null,
       filteredCategories: [],
       radiusOfMarkers: 2,
-      markerIdToBounce: null
+      markerIdToBounce: null,
+      directions: null,
+      showDirections: false
     }
   }
 
@@ -49,9 +50,30 @@ export default class GoogleMapContent extends Component {
     });
   }
 
-  onMarkerClick(marker) {
+  onMarkerClick(marker) { 
+    //add route
+    this.setState({showDirections: true});
     if (!marker.showInfo) {
       console.log(marker);
+      //show directions to marker
+      var DirectionsService = new google.maps.DirectionsService();
+      console.log("made directions service");
+      DirectionsService.route({
+        origin: this.props.defaultCenter,
+        destination: {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)},
+        travelMode: google.maps.TravelMode.DRIVING,
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          console.log(this.state.showDirections);
+          this.setState({
+            directions: result
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      });
+      console.log('finished the directions');
+      //end of showing directions
       this.props.onMapMarkerClick(marker);
       marker.showInfo = true;
       if (this.state.previousMarker && this.state.previousMarker != marker){ 
@@ -100,9 +122,11 @@ export default class GoogleMapContent extends Component {
     if (this.props.events) {  
       return (
           <div>
+            <div id="right-panel"></div>
             <GoogleMapLoader
               containerElement={
                 <div
+                  id = 'mapDiv'
                   //{...this.props}
                   style={{
                     height: "100%",
@@ -116,6 +140,15 @@ export default class GoogleMapContent extends Component {
                   defaultCenter={this.props.defaultCenter}
                 >
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
+                <Marker
+                  key="userLocation"
+                  position={this.props.defaultCenter} //marker.position
+                  title="This is where you are"
+                  icon={"http://www.younicycle.com/imgs/younicycle_com/blue_dot_16.png"}
+                  //visible={false}
+                  // onMouseover={() => this.onMarkerClick(marker) }
+                  // onMouseleave={() => this.handleMarkerLeave(marker) }
+                  /> 
                 {this.props.events.map((marker, index) => {  //this.state.markers.map
                   if (this.state.filteredCategories.length == 0 && this.distanceBetween(this.props.defaultCenter, marker) <= this.state.radiusOfMarkers || this.state.filteredCategories.includes(marker.categories.category[0].id) || this.props.selectedEventIDs.includes(marker.id)) {
                     return (
@@ -131,13 +164,38 @@ export default class GoogleMapContent extends Component {
                         // onMouseleave={() => this.handleMarkerLeave(marker) }
                       > 
 
-                        { marker.showInfo ? this.renderInfoWindow(marker) : null }
+                        { /*marker.showInfo ? this.renderInfoWindow(marker) : null*/ }
 
                       </Marker>
                     );
                   }
                 })
               }
+                {/*<DrawingManager
+                  defaultDrawingMode={google.maps.drawing.OverlayType.CIRCLE}
+                  defaultOptions={{
+                    drawingControl: true,
+                    drawingControlOptions: {
+                      position: google.maps.ControlPosition.TOP_CENTER,
+                      drawingModes: [
+                        google.maps.drawing.OverlayType.CIRCLE,
+                        google.maps.drawing.OverlayType.POLYGON,
+                        google.maps.drawing.OverlayType.POLYLINE,
+                        google.maps.drawing.OverlayType.RECTANGLE,
+                      ],
+                    },
+                    circleOptions: {
+                      fillColor: `#ffff00`,
+                      fillOpacity: 1,
+                      strokeWeight: 5,
+                      clickable: false,
+                      editable: true,
+                      zIndex: 1,
+                    },
+                  }}
+                /> */}
+                {this.state.directions && this.state.showDirections ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true}} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
+
 
               </GoogleMap>
               }
