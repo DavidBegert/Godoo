@@ -51,6 +51,10 @@ export default class App extends Component {
     });
   }
 
+  handleEventCardClick(eventId) {
+    console.log("handleEventCardClick(" + eventId + ")");
+  }
+
   makeAjaxCall(location, date = this.state.today, page_number = 1) {
   date = this.convertDateForAjax(date);
     if (!location) {
@@ -118,6 +122,7 @@ export default class App extends Component {
           events={this.state.events}
           currentPosition={this.state.mapCenter}
           today={this.state.today}
+          onEventCardClick={this.handleEventCardClick.bind(this)}
         />
       );
     }

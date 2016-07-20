@@ -9,12 +9,16 @@ export default class EventCard extends Component {
     }.bind(this))
   }
 
+  componentWillUnmount() {
+    // TODO: unbind the mouseenter event here
+  }
+
 
   render() {
     return (
       // Removed 1/3 width bulma class
       // TODO : Jazz it up with bulma css.
-      <div id={this.props.id}>
+      <div id={this.props.id} onClick={(e) => { e.stopPropagation(); this.props.onEventCardClick(this.props.id)} }>
         <div className="box1">
           <div className="box space_edit2">
             <article className="media">
