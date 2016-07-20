@@ -88,7 +88,7 @@ export default class SearchForm extends Component {
     //   width: "400px"
     // }
     return (
-      <section>
+      <section className="search-form">
         <input 
           className="input input-city" 
           id="searchTextField" 
