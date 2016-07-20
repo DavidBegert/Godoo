@@ -71,6 +71,7 @@ export default class App extends Component {
     var mapCenter = {lat: lat, lng: lng};
     console.log("call made!");
     this.setState({mapCenter: mapCenter});
+    currentAjaxRequest.settings = {date, location};
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
@@ -86,9 +87,6 @@ export default class App extends Component {
         include: 'categories,tickets',
         ex_category: 'learning_education,schools_alumni,conference,community,clubs_associations',
         sort_order: 'relevance'
-      },
-      beforeSend: function(jqXHR, settings) {
-        currentAjaxRequest.settings = {date, location};
       },
       success: function(response) {
         var results = response.events.event;
