@@ -6,7 +6,8 @@ export default class SearchForm extends Component {
     super(props);
     this.state = {
       location: null,
-      date: this.props.today
+      date: this.props.today,
+      showWarning: false
     }
   }
 
@@ -34,7 +35,6 @@ export default class SearchForm extends Component {
               var longitude = results[0].geometry.location.lng();
               that.setState({location: `${latitude}, ${longitude}`})
               that.props.makeCall(that.state.location, that.state.date);
-              that.props.isTheCityAndDateFilledIn(that.state.location, that.state.date);
           } else {
               alert( 'Geocode was not successful because: ' + status );
           }
@@ -43,9 +43,8 @@ export default class SearchForm extends Component {
       });
 
       dateInput.addEventListener('change', function() {
-        var dayInEventfulApiForm = dateInput.value.replace(/-/g, "") + "00";
+        //var dayInEventfulApiForm = dateInput.value.replace(/-/g, "") + "00";
         that.setState({date: dayInEventfulApiForm + "-" + dayInEventfulApiForm})
-        that.props.isTheCityAndDateFilledIn(that.state.location, that.state.date);
         that.props.makeCall(that.state.location, that.state.date);
       });
       if (!that.props.showButton){
@@ -55,38 +54,41 @@ export default class SearchForm extends Component {
       }
   }
   componentWillReceiveProps(newProps) {
-    var cityInput = document.getElementById('searchTextField');
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'latLng': newProps.currentPosition }, function( results, status ) {
-      if( status == google.maps.GeocoderStatus.OK ) {
-          cityInput.value = results[0].formatted_address;
-          this.setState({location: `${newProps.currentPosition.lat}, ${newProps.currentPosition.lng}`});
-          this.props.makeCall(this.state.location, this.state.date);
-          this.props.isTheCityAndDateFilledIn(this.state.location, this.state.date);
-
-      } 
-      // else {
-      //     console.log( 'Geocode was not successful because: ' + status );
-      // }
-    }.bind(this));
+    if (!newProps.currentPosition) { //not sure about this fix..
+      console.log("search form receiving props");
+      var cityInput = document.getElementById('searchTextField');
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode( { 'latLng': newProps.currentPosition }, function( results, status ) {
+        if( status == google.maps.GeocoderStatus.OK ) {
+            cityInput.value = results[0].formatted_address;
+            this.setState({location: `${newProps.currentPosition.lat}, ${newProps.currentPosition.lng}`});
+            this.props.makeCall(this.state.location, this.state.date);
+        } 
+        // else {
+        //     console.log( 'Geocode was not successful because: ' + status );
+        // }
+      }.bind(this));
+    }
 
   }
 
+  // isTheCityAndDateFilledIn(place, date) {
+  //   if (place && date) {
+  //     this.setState({cityAndDateFilledIn: true});
+  //   } else {
+  //     this.setState({cityAndDateFilledIn: false});
+  //   }
+  // }
+
+  handleGetStartedPress() {
+    if (this.state.location && this.state.date) {
+      this.props.switchPage();
+    } else {
+      this.setState({showWarning: true})
+    }
+  }
+
   render() {
-    // var inputStyle = {
-    //   border: "1px solid transparent",
-    //   borderRadius: "1px",
-    //   boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
-    //   boxSizing: "border-box",
-    //   MozBoxSizing: "border-box",
-    //   fontSize: "14px",
-    //   height: "32px",
-    //   marginTop: "27px",
-    //   outline: "none",
-    //   padding: "0 12px",
-    //   textOverflow: "ellipses",
-    //   width: "400px"
-    // }
     return (
       <section className="search-form">
         <input 
@@ -102,8 +104,9 @@ export default class SearchForm extends Component {
           defaultValue={this.props.today} 
         />
 
-        { (this.props.showButton) && <button className="button get-started" onClick={() => this.props.handleGetStartedPress() }> Get Started </button> }
+        { (this.props.showButton) && <button className="button get-started" onClick={() => this.handleGetStartedPress() }> Get Started </button> }
         { (!this.props.showButton) && <div className="range-finder"> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
+        { (this.state.showWarning) && <p className='warning'> The City And Date Need To Be Filled In </p> }
       </section>
     );
   }
