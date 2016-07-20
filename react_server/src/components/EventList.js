@@ -40,6 +40,7 @@ export default class EventList extends Component {
             venue_address={event.venue_address}
             image_url={event.image ? event.image.small.url : defaultImage } 
             handleEventCardMouseEnter={this.props.handleEventCardMouseEnter}
+            deselectEvent={this.props.deselectEvent}
           />
         )
       });

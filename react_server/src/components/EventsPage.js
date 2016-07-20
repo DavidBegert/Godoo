@@ -51,6 +51,18 @@ export default class EventsPage extends Component {
     this.setState({eventIdMousedOver: eventId});
   }
 
+  deselectEvent(id) {
+    var new_array = this.state.selectedEventIDs.filter( function(eventID) {
+        return id !== eventID;
+      });
+    console.log(new_array);
+    this.setState({ selectedEventIDs: new_array });
+  }
+
+  // toggle() {
+  //   this.setState({hide: !this.state.hide});
+  // }
+
   render() {
     return (
       <div>
@@ -66,6 +78,7 @@ export default class EventsPage extends Component {
               events={this.props.events}
               selectedEventIDs={this.state.selectedEventIDs}
               handleEventCardMouseEnter={this.handleEventCardMouseEnter.bind(this)}
+              deselectEvent={this.deselectEvent.bind(this)}
             />
           </div>
           <div className='column is-two-thirds container-map' style={{height: "100%"}}>

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 export default class EventCard extends Component {
+
   componentDidMount() {
     var eventCard = document.getElementById(this.props.id);
     eventCard.addEventListener('mouseenter', function() {
       this.props.handleEventCardMouseEnter(this.props.id);
     }.bind(this))
   }
+
 
   render() {
     return (
@@ -39,7 +41,7 @@ export default class EventCard extends Component {
                 </div>
               </div>
               <div className="media-right">
-                <button className="delete">x</button>
+                <button className="delete" onClick={()=>this.props.deselectEvent(this.props.id)}>x</button>
               </div>
             </article>
           </div>
