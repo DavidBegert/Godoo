@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 var currentPosition;
 export default class SearchForm extends Component {
 
@@ -55,8 +56,8 @@ export default class SearchForm extends Component {
       }
   }
   componentWillReceiveProps(newProps) {
-    if ((!currentPosition) || (newProps.currentPosition.lat != currentPosition.lat && newProps.currentPosition.lng != currentPosition.lng)) { //if the current position changed
-      currentPosition = newProps.currentPosition;
+    //if ((!currentPosition) || (newProps.currentPosition.lat != currentPosition.lat && newProps.currentPosition.lng != currentPosition.lng)) { //if the current position changed
+      //currentPosition = newProps.currentPosition;
       console.log("search form receiving props");
       var cityInput = document.getElementById('searchTextField');
       var geocoder = new google.maps.Geocoder();
@@ -70,7 +71,7 @@ export default class SearchForm extends Component {
         //     console.log( 'Geocode was not successful because: ' + status );
         // }
       }.bind(this));
-    }
+    //}
 
   }
 
