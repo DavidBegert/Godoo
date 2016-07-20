@@ -24,11 +24,8 @@ export default class EventList extends Component {
 
     if (this.props.selectedEventIDs.length) {
       var eventCards = this.props.selectedEventIDs.map((eventId) => {
-        var event = this.props.events.find((associatedEvent) => {
-          return associatedEvent.id === eventId;
-        });
-        var description = event.description ? event.description : "No description.";
-        description = $('<div>' + event.description + '</div>').text();
+        var event = this.props.events.find((associatedEvent) => associatedEvent.id === eventId);
+        var description = $('<div>' + event.description + '</div>').text(); 
         return (
           <EventCard 
             key={event.id}
@@ -38,7 +35,7 @@ export default class EventList extends Component {
             start_time={formatDate(event.start_time, event.stop_time)}
             venue_name={event.venue_name}
             venue_address={event.venue_address}
-            image_url={event.image ? event.image.small.url : defaultImage } 
+            image_url={event.image && event.image.small ? event.image.small.url : defaultImage } 
             handleEventCardMouseEnter={this.props.handleEventCardMouseEnter}
           />
         )
@@ -52,7 +49,7 @@ export default class EventList extends Component {
         return (
           <div>
             <br/>
-            <img src="https://66.media.tumblr.com/d799ad55c1a36417ef381ee48385987a/tumblr_o204gziLrm1v6xy94o1_400.gif" />
+            <img id="eventpage-gif" src="https://66.media.tumblr.com/d799ad55c1a36417ef381ee48385987a/tumblr_o204gziLrm1v6xy94o1_400.gif" />
           </div>
         );
     }
