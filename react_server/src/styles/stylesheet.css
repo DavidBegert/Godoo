@@ -172,3 +172,11 @@
 
 #eventpage-gif {
 }
+
+#right-panel {
+  font-family: 'Roboto','sans-serif';
+  float: right;
+  overflow: auto;
+  /*float: none; */
+  /*width: auto; */
+}

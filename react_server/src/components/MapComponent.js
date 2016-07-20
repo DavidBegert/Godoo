@@ -21,7 +21,6 @@ export default class GoogleMapContent extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({showDirections: false});
     if (newProps.radius != this.state.radiusOfMarkers){
       this.setState({radiusOfMarkers: newProps.radius, markerIdToBounce: null})  //continue from here. 
     } 
@@ -53,40 +52,19 @@ export default class GoogleMapContent extends Component {
 
   onMarkerClick(marker) { 
     //add route
-    // var directionsService = new google.maps.DirectionsService();
-    // var directionsDisplay = new google.maps.DirectionsRenderer();
-
-    // var destination = {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)};
-    // console.log(this.props.defaultCenter);
-    // console.log(destination);
-    // var request = {
-    //     origin: this.props.defaultCenter,
-    //     destination: {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)},
-    //     travelMode: google.maps.DirectionsTravelMode.WALKING
-    // };
-
-    // directionsService.route(request, function (response, status) {
-    //   if (status == google.maps.DirectionsStatus.OK) {
-    //       directionsDisplay.setDirections(response);
-    //       console.log(response.routes[0])
-    //       var route = response.routes[0];
-    //       this.setState({path: route});
-    //   }
-    // }.bind(this));
-
-    //this.props.defaultCenter
     this.setState({showDirections: true});
     if (!marker.showInfo) {
       console.log(marker);
       //show directions to marker
-      const DirectionsService = new google.maps.DirectionsService();
+      var DirectionsService = new google.maps.DirectionsService();
+      console.log("made directions service");
       DirectionsService.route({
         origin: this.props.defaultCenter,
         destination: {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)},
         travelMode: google.maps.TravelMode.DRIVING,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          console.log('setting state of map');
+          console.log(this.state.showDirections);
           this.setState({
             directions: result
           });
@@ -94,6 +72,7 @@ export default class GoogleMapContent extends Component {
           console.error(`error fetching directions ${result}`);
         }
       });
+      console.log('finished the directions');
       //end of showing directions
       this.props.onMapMarkerClick(marker);
       marker.showInfo = true;
@@ -143,6 +122,7 @@ export default class GoogleMapContent extends Component {
     if (this.props.events) {  
       return (
           <div>
+            <div id="right-panel"></div>
             <GoogleMapLoader
               containerElement={
                 <div
@@ -214,7 +194,7 @@ export default class GoogleMapContent extends Component {
                     },
                   }}
                 /> */}
-                {this.state.directions && this.state.showDirections ? <DirectionsRenderer directions={this.state.directions} /> : null}
+                {this.state.directions && this.state.showDirections ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true}} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
 
 
               </GoogleMap>
