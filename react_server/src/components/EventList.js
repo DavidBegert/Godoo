@@ -9,7 +9,6 @@ export default class EventList extends Component {
     
     var defaultImage = "http://thumb101.shutterstock.com/display_pic_with_logo/11994/253973893/stock-vector-event-word-cloud-business-concept-253973893.jpg";
     console.log(this.props.showLoadingGifMap)
-    if (!this.props.showLoadingGifMap) {
       var eventCards = this.props.selectedEventIDs.map((eventId) => {
         var event = this.props.events.find((associatedEvent) => associatedEvent.id === eventId);
         var description = $('<div>' + event.description + '</div>').text(); 
@@ -31,17 +30,10 @@ export default class EventList extends Component {
       });
       return (
         <div>
+          {this.props.showLoadingGifMap && <div><br/><img id="eventpage-gif" src="https://66.media.tumblr.com/d799ad55c1a36417ef381ee48385987a/tumblr_o204gziLrm1v6xy94o1_400.gif" /></div>}
           {eventCards}
         </div>
       );
-    } else {
-        return (
-          <div>
-            <br/>
-            <img id="eventpage-gif" src="https://66.media.tumblr.com/d799ad55c1a36417ef381ee48385987a/tumblr_o204gziLrm1v6xy94o1_400.gif" />
-          </div>
-        );
-    }
   }
 
 }
