@@ -28,7 +28,7 @@ export default class App extends Component {
       date: new Date().toISOString().slice(0,10),
       location: null,
       address: null,
-      showLoadingGif: false,
+      showLoadingGifHome: false,
       changeCenter: false
     }
   }
@@ -46,12 +46,12 @@ export default class App extends Component {
 
   handleGeolocationPress() {
     //populate the place form with closest place
-    this.setState({showLoadingGif: true});
+    this.setState({showLoadingGifHome: true});
     geolocation.getCurrentPosition((position) => {
       // console.log(position);
       var locationObject= {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude) }
       this.handleNewParams(locationObject, this.state.date)
-      this.setState({showLoadingGif: false});
+      this.setState({showLoadingGifHome: false});
     });
   }
 
@@ -129,7 +129,7 @@ export default class App extends Component {
           date={this.state.date}
           handleGeolocationPress={this.handleGeolocationPress.bind(this)}
           location={this.state.location}
-          showLoadingGif={this.state.showLoadingGif}
+          showLoadingGifHome={this.state.showLoadingGifHome}
           handleNewParams={this.handleNewParams.bind(this)}
           setAddress={this.setAddress.bind(this)}
           address={this.state.address}

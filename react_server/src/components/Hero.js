@@ -26,7 +26,7 @@ export default class Hero extends Component {
             <div>
 
             </div>
-            { (this.props.showLoadingGif) && <img id="homepage-gif" src="https://67.media.tumblr.com/tumblr_mdkoyttBGV1rgpyeqo1_500.gif" />}
+            { (this.props.showLoadingGifHome) && <img id="homepage-gif" src="https://67.media.tumblr.com/tumblr_mdkoyttBGV1rgpyeqo1_500.gif" />}
           </div>
         </div>
       </section>

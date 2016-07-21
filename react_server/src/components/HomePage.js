@@ -16,7 +16,7 @@ export default class HomePage extends Component {
           switchPage={this.props.switchPage} 
           handleGeolocationPress={this.props.handleGeolocationPress}
           location={this.props.location}
-          showLoadingGif={this.props.showLoadingGif}
+          showLoadingGifHome={this.props.showLoadingGifHome}
           date={this.props.date}
           handleNewParams={this.props.handleNewParams}
           setAddress={this.props.setAddress}
