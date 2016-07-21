@@ -63,7 +63,6 @@ export default class GoogleMapContent extends Component {
         travelMode: google.maps.TravelMode.DRIVING,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          console.trace(result.routes[0].legs[0].distance.text)
           this.setState({
             directions: result
           });
@@ -179,19 +178,17 @@ export default class GoogleMapContent extends Component {
                   }
                 })
               }
-                {/*<DrawingManager
+                <Circle
                   options={{
-                    circleOptions: {
-                      strokeColor: "#FF0000",
-                      strokeOpacity: 0.8,
-                      fillColor: "#FF0000",
-                      fillOpacity: .35,
-                      strokeWeight: 2,
-                      center: this.props.defaultCenter,
-                      radius: this.state.radiusOfMarkers
-                    }
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 0.8,
+                    fillColor: "#FF0000",
+                    fillOpacity: .35,
+                    strokeWeight: 2,
+                    center: this.props.defaultCenter,
+                    radius: this.state.radiusOfMarkers * 1000
                   }}
-                /> */}
+                /> 
 
                 {this.state.directions ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true}} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
                 {(this.state.directions && this.state.showDirections) ? this.infoWindow() : null }
