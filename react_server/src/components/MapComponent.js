@@ -147,6 +147,7 @@ export default class GoogleMapContent extends Component {
                   ref='map'
                   defaultZoom={13}
                   defaultCenter={this.props.defaultCenter}
+                  center={this.props.mapCenter}
                 >
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 <Marker
