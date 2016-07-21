@@ -143,7 +143,7 @@ export default class GoogleMapContent extends Component {
               googleMapElement={
                 <GoogleMap
                   ref='map'
-                  defaultZoom={13}
+                  defaultZoom={12}
                   defaultCenter={this.props.defaultCenter}
                 >
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
