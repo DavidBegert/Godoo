@@ -47,12 +47,12 @@ export default class App extends Component {
 
   handleGeolocationPress() {
     //populate the place form with closest place
-    this.setState({showLoadingGifHome: true});
+    this.setState({showLoadingGifHome: true, showLoadingGifMap: true});
     geolocation.getCurrentPosition((position) => {
       // console.log(position);
       var locationObject= {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude) }
-      this.handleNewParams(locationObject, this.state.date)
-      this.setState({showLoadingGifHome: false});
+      this.handleNewParams(locationObject, this.state.date, true)
+      this.setState({showLoadingGifHome: false, showLoadingGifMap: false});
     });
   }
 

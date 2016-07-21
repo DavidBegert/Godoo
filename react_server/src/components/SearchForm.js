@@ -35,7 +35,7 @@ export default class SearchForm extends Component {
               this.props.setAddress(address);
               this.props.handleNewParams({ lat: latitude, lng: longitude }, this.props.date);
           }
-          if (this.props.changeCenterOfMap) {
+          if (this.props.changeCenterOfMap) { //if we want to change the center of the map
             console.log("now change the center");
             this.props.handleNewParams({ lat: latitude, lng: longitude }, this.props.date, true);
           }

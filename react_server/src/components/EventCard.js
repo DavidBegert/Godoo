@@ -82,7 +82,7 @@ export default class EventCard extends Component {
 
                   <nav className="level">
                     <div className="level-left">
-                      <a className="level-item" href= {this.buildCalendarUrl()} >
+                      <a className="level-item" href= {this.buildCalendarUrl()} target='_blank' >
                         <span className="icon is-small"><i className="fa fa-calendar"></i></span>
                       </a>
                       <a className="level-item">
