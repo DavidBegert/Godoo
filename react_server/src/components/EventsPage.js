@@ -79,6 +79,7 @@ export default class EventsPage extends Component {
               location={this.props.location}
               setAddress={this.props.setAddress}
               address={this.props.address}
+              changeCenterOfMap={true}
               />
             <EventList
               events={this.props.events}
@@ -95,6 +96,7 @@ export default class EventsPage extends Component {
               defaultCenter={this.props.location}
               radius={this.state.radius}
               eventIdMousedOver={this.state.eventIdMousedOver}
+              changeCenter={this.props.changeCenter}
             />
           </div>
         </div>

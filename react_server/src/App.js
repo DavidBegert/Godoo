@@ -29,6 +29,7 @@ export default class App extends Component {
       location: null,
       address: null,
       showLoadingGif: false,
+      changeCenter: false
     }
   }
 
@@ -54,9 +55,11 @@ export default class App extends Component {
     });
   }
 
-  handleNewParams(location, date) {
+  handleNewParams(location, date, changeCenter) {
     if (this.state.location !== location || this.state.date !== date) {
-      this.setState({location, date});
+      console.log(changeCenter);
+      this.setState({location, date, changeCenter});
+      this.setState({changeCenter: false})
       this.makeAjaxCall(location, date);
     }
   }
@@ -137,6 +140,7 @@ export default class App extends Component {
           location={this.state.location}
           setAddress={this.setAddress.bind(this)}
           address={this.state.address}
+          changeCenter={this.state.changeCenter}
         />
       );
     }
