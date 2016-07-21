@@ -42,7 +42,7 @@ export default class App extends Component {
   // TODO - Write logic to render either HomePage or EventsPage, fix the few bugs in the ajax request. (
   //like when they click a city and then click a date after the ajax request has finished... that needs some logic.)
   switchPage() {
-    this.setState({homePage: false});
+    this.setState({homePage: false, showLoadingGifMap: true}); // hack fix
   };
 
   handleGeolocationPress() {
@@ -58,7 +58,6 @@ export default class App extends Component {
 
   handleNewParams(location, date, changeCenter) {
     if (this.state.location !== location || this.state.date !== date) {
-      console.log(changeCenter);
       this.setState({location, date, changeCenter});
       this.setState({changeCenter: false})
       this.makeAjaxCall(location, date);
@@ -84,7 +83,8 @@ export default class App extends Component {
     }
     console.log("call made!");
     currentAjaxRequest.settings = {date, location};
-    if(showingLoadingGif) {this.setState({showLoadingGifMap: true}) };
+    if(showingLoadingGif) {console.log('setting to true!!!'); this.setState({showLoadingGifMap: true}) };
+    console.log(this.state.showLoadingGifMap)
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
@@ -112,6 +112,7 @@ export default class App extends Component {
           });
         this.setState({ events: (page_number == 1) ? goodResults.concat(this.state.events) : this.state.events.concat(goodResults) });
         console.log(this.state.events);
+        console.log("SETTING TO FALSE")
         this.setState({showLoadingGifMap: false}); //stop showing loading gif
         currentAjaxRequest = {};
         this.makeAjaxCall(this.state.location, this.state.date, page_number + 1, false);
