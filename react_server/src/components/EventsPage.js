@@ -86,7 +86,7 @@ export default class EventsPage extends Component {
               selectedEventIDs={this.state.selectedEventIDs}
               handleEventCardMouseEnter={this.handleEventCardMouseEnter.bind(this)}
               deselectEvent={this.deselectEvent.bind(this)}
-              //showLoadingGifMap={}
+              showLoadingGifMap={this.props.showLoadingGifMap}
             />
           </div>
           <div className='column is-two-thirds container-map' style={{height: "100%"}}>

@@ -29,6 +29,7 @@ export default class App extends Component {
       location: null,
       address: null,
       showLoadingGifHome: false,
+      showLoadingGifMap: false,
       changeCenter: false
     }
   }
@@ -68,7 +69,7 @@ export default class App extends Component {
     this.setState({address});
   }
 
-  makeAjaxCall(location = this.state.location, date = this.state.date, page_number = 1) {
+  makeAjaxCall(location = this.state.location, date = this.state.date, page_number = 1, showingLoadingGif = true) {
     date = this.convertDateForAjax(date);
     if (!location) {
       return;
@@ -83,6 +84,7 @@ export default class App extends Component {
     }
     console.log("call made!");
     currentAjaxRequest.settings = {date, location};
+    if(showingLoadingGif) {this.setState({showLoadingGifMap: true}) };
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
@@ -110,8 +112,9 @@ export default class App extends Component {
           });
         this.setState({ events: (page_number == 1) ? goodResults.concat(this.state.events) : this.state.events.concat(goodResults) });
         console.log(this.state.events);
+        this.setState({showLoadingGifMap: false}); //stop showing loading gif
         currentAjaxRequest = {};
-        this.makeAjaxCall(this.state.location, this.state.date, page_number + 1);
+        this.makeAjaxCall(this.state.location, this.state.date, page_number + 1, false);
       }.bind(this),
       error: function(xhr, textStatus, errorThrown) {
         console.log(xhr);
@@ -146,6 +149,7 @@ export default class App extends Component {
           setAddress={this.setAddress.bind(this)}
           address={this.state.address}
           changeCenter={this.state.changeCenter}
+          showLoadingGifMap={this.state.showLoadingGifMap}
         />
       );
     }
