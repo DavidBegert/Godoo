@@ -86,6 +86,9 @@ export default class EventCard extends Component {
                       <a className="level-item">
                         <span className="icon is-small"><i className="fa fa-ticket"></i></span>
                       </a>
+                      <a className="level-item">
+                        <span className="icon is-small"><i className="fa fa-facebook"></i></span>
+                      </a>
                     </div>
                   </nav>
                   

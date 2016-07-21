@@ -113,13 +113,14 @@
 .column .search-form {
  background-color: white;
  text-align: center;
- height: 25%;
+ height: 180px;
  width: 100%;
  border: 1px solid #d3d3d3;
 }
 
 .range-finder {
   margin-top: 30px;
+  color: #1fc8db;
 }
 
 .city-heading .search-form {
