@@ -21,9 +21,9 @@ export default class EventsPage extends Component {
   componentWillReceiveProps(newProps) {
     //set random event
     //debugger;
-    if (newProps.events.length) {
+    if (!this.state.selectedEventIDs[0]) {
       var randomEvent = this.getRandomEvent(newProps.events);
-      this.setState({ selectedEventIDs: [randomEvent.id] });
+      this.setState({ selectedEventIDs: [randomEvent.id].concat(this.state.selectedEventIDs) });
     }
   };
 
