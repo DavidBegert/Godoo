@@ -31,6 +31,9 @@ export default class GoogleMapContent extends Component {
         this.setState({markerIdToBounce: null});
       }
     }
+    if (newProps.mapCenter != this.props.mapCenter) {
+      this.refs.map.panTo(newProps.mapCenter);
+    }
 
   }
 

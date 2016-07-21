@@ -25,6 +25,7 @@ export default class EventList extends Component {
             image_url={event.image && event.image.small ? event.image.small.url : defaultImage } 
             handleEventCardMouseEnter={this.props.handleEventCardMouseEnter}
             deselectEvent={this.props.deselectEvent}
+            onEventCardClick={this.props.onEventCardClick}
           />
         )
       });
