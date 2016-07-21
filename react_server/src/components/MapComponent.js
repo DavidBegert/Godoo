@@ -25,7 +25,7 @@ export default class GoogleMapContent extends Component {
       this.setState({radiusOfMarkers: newProps.radius, markerIdToBounce: null})  //continue from here. 
     } 
     else {
-      if(this.props.selectedEventIDs === newProps.selectedEventIDs){  //if it was an event card mousedOver
+      if(newProps.wasEventMouseOver && false){  //if it was an event card mousedOver
         this.setState({markerIdToBounce: newProps.eventIdMousedOver});
       } else {
         this.setState({markerIdToBounce: null});
@@ -128,7 +128,6 @@ export default class GoogleMapContent extends Component {
     var centerProps = {
       center: this.props.defaultCenter,
     }
-    console.log(this.props.changeCenter);
     if (!this.props.changeCenter) { centerProps = null };
     if (this.props.events) {  
       return (

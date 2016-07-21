@@ -12,10 +12,17 @@ export default class EventsPage extends Component {
     super(props);
     if (props.events.length) { //if the ajax call completes before moving to this page
       var randomEvent = this.getRandomEvent(props.events); 
-      this.state = {selectedEventIDs: [randomEvent.id], radius: 2, eventIdMousedOver: null};
+      this.state = {selectedEventIDs: [randomEvent.id], radius: 2, eventIdMousedOver: null, wasEventMouseOver: false};
     } else {
-        this.state = {selectedEventIDs: [], radius: 2, eventIdMousedOver: null}
+        this.state = {selectedEventIDs: [], radius: 2, eventIdMousedOver: null, wasEventMouseOver: false}
       }
+  }
+
+  componentWillUpdate(newProps, newState) {
+    if(newState.wasEventMouseOver != true && newState.doit != true ) { //if anything but event mouse
+      newState.doit = false;
+      //this.setState({wasEventMouseOver: false})
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -50,7 +57,7 @@ export default class EventsPage extends Component {
   }
 
   handleEventCardMouseEnter(eventId) {
-    this.setState({eventIdMousedOver: eventId});
+    this.setState({eventIdMousedOver: eventId, wasEventMouseOver: true, doit: true});
   }
 
   deselectEvent(id) {
@@ -65,6 +72,7 @@ export default class EventsPage extends Component {
   // }
 
   render() {
+    console.log(this.state.wasEventMouseOver)
     return (
       <div>
         <Nav />
@@ -97,6 +105,7 @@ export default class EventsPage extends Component {
               defaultCenter={this.props.location}
               radius={this.state.radius}
               eventIdMousedOver={this.state.eventIdMousedOver}
+              wasEventMouseOver={this.state.wasEventMouseOver}
               changeCenter={this.props.changeCenter}
             />
           </div>

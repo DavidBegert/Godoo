@@ -84,7 +84,6 @@ export default class App extends Component {
     console.log("call made!");
     currentAjaxRequest.settings = {date, location};
     if(showingLoadingGif) {console.log('setting to true!!!'); this.setState({showLoadingGifMap: true}) };
-    console.log(this.state.showLoadingGifMap)
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
