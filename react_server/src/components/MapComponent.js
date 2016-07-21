@@ -125,7 +125,11 @@ export default class GoogleMapContent extends Component {
   }
 
   render() {
-
+    var centerProps = {
+      center: this.props.defaultCenter,
+    }
+    console.log(this.props.changeCenter);
+    if (!this.props.changeCenter) { centerProps = null };
     if (this.props.events) {  
       return (
           <div>
@@ -141,11 +145,14 @@ export default class GoogleMapContent extends Component {
                 </div>
               }
               googleMapElement={
+      
                 <GoogleMap
                   ref='map'
                   defaultZoom={13}
                   defaultCenter={this.props.defaultCenter}
+                  {...centerProps}
                 >
+
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 <Marker
                   key="userLocation"
