@@ -49,8 +49,6 @@ export default class SearchForm extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // console.log(newProps.location);
-    // console.log(this.props.location);
     if (!this.props.address || ((newProps.location && this.props.location) && newProps.location != this.props.location)) {
       this.displayAddress(newProps.location);
     }
