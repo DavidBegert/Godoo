@@ -9,6 +9,43 @@ export default class EventCard extends Component {
     }.bind(this))
   }
 
+  buildCalendarUrl(event) {
+    var url = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=";
+    url += this.props.title;
+    url += '&dates='
+    url += this.formatDateForCalendarUrl(this.props.start_time);
+    url += '/'
+    url += this.formatDateForCalendarUrl(this.props.stop_time)
+    url += '&details=';
+    url += this.props.description;
+    url += "&location=";
+    url += this.props.venue_address;
+    return url;
+  }
+
+  formatDateForCalendarUrl(dateTime) {
+    dateTime = dateTime.split(' ');
+    dateTime[0] = dateTime[0].split('-').join('');
+    dateTime[1] = dateTime[1].split(':').join('');
+    dateTime = dateTime[0] + 'T' + dateTime[1] + 'Z';
+    return dateTime;
+  }
+
+  formatDateForDisplay(startTime, endTime) {
+      var formattedDate = new Date(startTime);
+      if (formattedDate.getHours() >= 12) {
+        var hours = formattedDate.getHours() - 12 || 12;
+        return (hours + "pm " + formattedDate.toString().slice(0,16));
+      } else {
+
+        var hours = formattedDate.getHours();
+        if (hours === 0) {
+          return "All Day"
+        }
+        return (hours + "am " + formattedDate.toString().slice(0,16));
+      }
+    }
+
 
   render() {
     return (
@@ -30,7 +67,7 @@ export default class EventCard extends Component {
                     <br />
                     <em>{this.props.venue_name}</em>
                     <br />
-                    <em>{this.props.start_time}</em>
+                    <em>{this.formatDateForDisplay(this.props.start_time, this.props.stop_time)}</em>
                     <br />
                     <em>{this.props.venue_address}</em>
                     <br />
@@ -41,7 +78,7 @@ export default class EventCard extends Component {
 
                   <nav className="level">
                     <div className="level-left">
-                      <a className="level-item" href= {"https://calendar.google.com/calendar/render?action=TEMPLATE&text="+ this.props.title +"&dates=20160721T200000Z/20160721T240000Z&details=" + this.props.description +"&location=" + this.props.venue_address  +"&sf=true&output=xml#eventpage_6"} >
+                      <a className="level-item" href= {this.buildCalendarUrl()} >
                         <span className="icon is-small"><i className="fa fa-calendar"></i></span>
                       </a>
                       <a className="level-item">
