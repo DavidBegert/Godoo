@@ -26,7 +26,7 @@ export default class App extends Component {
       homePage: true,
       events: [],
       today: new Date().toISOString().slice(0,10),
-      mapCenter: null,
+      userLocation: null,
       showLoadingGif: false
     }
   }
@@ -46,13 +46,9 @@ export default class App extends Component {
     //populate the place form with closest place
     this.setState({showLoadingGif: true});
     geolocation.getCurrentPosition((position) => {
-      this.setState({mapCenter: {lat: position.coords.latitude, lng: position.coords.longitude }})
+      this.setState({userLocation: {lat: position.coords.latitude, lng: position.coords.longitude }})
       this.setState({showLoadingGif: false});
     });
-  }
-
-  handleEventCardClick(eventId) {
-    console.log("handleEventCardClick(" + eventId + ")");
   }
 
   makeAjaxCall(location, date = this.state.today, page_number = 1) {
@@ -72,9 +68,9 @@ export default class App extends Component {
     
     var lat = parseFloat(location.split(', ')[0]);
     var lng = parseFloat(location.split(', ')[1]);
-    var mapCenter = {lat: lat, lng: lng};
+    var userLocation = {lat: lat, lng: lng};
     console.log("call made!");
-    this.setState({mapCenter: mapCenter});
+    this.setState({userLocation: userLocation});
     currentAjaxRequest.settings = {date, location};
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
@@ -112,7 +108,7 @@ export default class App extends Component {
           switchPage={this.switchPage.bind(this)}
           today={this.state.today}
           handleGeolocationPress={this.handleGeolocationPress.bind(this)}
-          currentPosition={this.state.mapCenter}
+          currentPosition={this.state.userLocation}
           showLoadingGif={this.state.showLoadingGif}
         />
       );
@@ -120,9 +116,8 @@ export default class App extends Component {
       return (
         <EventsPage
           events={this.state.events}
-          currentPosition={this.state.mapCenter}
+          currentPosition={this.state.userLocation}
           today={this.state.today}
-          onEventCardClick={this.handleEventCardClick.bind(this)}
         />
       );
     }

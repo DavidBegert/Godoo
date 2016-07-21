@@ -12,9 +12,9 @@ export default class EventsPage extends Component {
     super(props);
     if (props.events.length) { //if the ajax call completes before moving to this page
       var randomEvent = this.getRandomEvent(props.events); 
-      this.state = {selectedEventIDs: [randomEvent.id], radius: 2, eventIdMousedOver: null};
+      this.state = {selectedEventIDs: [randomEvent.id], radius: 2, eventIdMousedOver: null, mapCenter: null};
     } else {
-        this.state = {selectedEventIDs: [], radius: 2, eventIdMousedOver: null}
+        this.state = {selectedEventIDs: [], radius: 2, eventIdMousedOver: null, mapCenter: null}
       }
   }
 
@@ -59,6 +59,12 @@ export default class EventsPage extends Component {
     this.setState({ selectedEventIDs: new_array });
   }
 
+  handleEventCardClick(eventId) {
+    var eventCard = this.props.events.find(function(event) { return event.id === eventId });
+    console.log(eventCard);
+    this.setState( {mapCenter: {lat: parseFloat(eventCard.latitude), lng: parseFloat(eventCard.longitude)}});
+  }
+
   // toggle() {
   //   this.setState({hide: !this.state.hide});
   // }
@@ -79,11 +85,12 @@ export default class EventsPage extends Component {
               selectedEventIDs={this.state.selectedEventIDs}
               handleEventCardMouseEnter={this.handleEventCardMouseEnter.bind(this)}
               deselectEvent={this.deselectEvent.bind(this)}
-              onEventCardClick={this.props.onEventCardClick}
+              onEventCardClick={this.handleEventCardClick.bind(this)}
             />
           </div>
           <div className='column is-two-thirds container-map' style={{height: "100%"}}>
             <MapComponent
+              mapCenter={this.state.mapCenter}
               selectedEventIDs={this.state.selectedEventIDs}
               events={this.props.events}
               onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
