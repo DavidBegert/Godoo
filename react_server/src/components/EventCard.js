@@ -15,7 +15,9 @@ export default class EventCard extends Component {
     url += '&dates='
     url += this.formatDateForCalendarUrl(this.props.start_time);
     url += '/'
-    url += this.formatDateForCalendarUrl(this.props.stop_time)
+    if (this.props.stop_time) {
+      url += this.formatDateForCalendarUrl(this.props.stop_time);
+    }
     url += '&details=';
     url += this.props.description;
     url += "&location=";

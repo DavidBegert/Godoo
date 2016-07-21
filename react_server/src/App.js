@@ -99,11 +99,18 @@ export default class App extends Component {
       success: function(response) {
         var results = response.events.event;
         // Filter out events with no description. They're usually crap.
+        if (!results) {
+          return;
+        }
         var goodResults = results.filter( function(event) {
           return event.description;
           });
-        this.setState({ events: goodResults });
+        this.setState({ events: this.state.events.concat(goodResults) });
+        console.log(this.state.events);
         currentAjaxRequest = {};
+        if (this.state.events.length < 50) {
+          this.makeAjaxCall(this.state.location, this.state.date, page_number + 1);
+        }
       }.bind(this),
       error: function(xhr, textStatus, errorThrown) {
         console.log(xhr);

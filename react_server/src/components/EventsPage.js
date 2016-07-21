@@ -42,7 +42,7 @@ export default class EventsPage extends Component {
   }
 
   getRandomEvent(events_array) {
-    return events_array[this.getRandomIntInclusive(0, this.props.events.length - 1)];
+    return events_array[0];
   }
 
   handleChangeInRadius(newRadius = 2) {
