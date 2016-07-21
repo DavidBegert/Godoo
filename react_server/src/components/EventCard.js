@@ -24,11 +24,13 @@ export default class EventCard extends Component {
   }
 
   formatDateForCalendarUrl(dateTime) {
-    dateTime = dateTime.split(' ');
-    dateTime[0] = dateTime[0].split('-').join('');
-    dateTime[1] = dateTime[1].split(':').join('');
-    dateTime = dateTime[0] + 'T' + dateTime[1] + 'Z';
-    return dateTime;
+    if (dateTime) {
+      dateTime = dateTime.split(' ');
+      dateTime[0] = dateTime[0].split('-').join('');
+      dateTime[1] = dateTime[1].split(':').join('');
+      dateTime = dateTime[0] + 'T' + dateTime[1] + 'Z';
+      return dateTime;
+    }
   }
 
   formatDateForDisplay(startTime, endTime) {
