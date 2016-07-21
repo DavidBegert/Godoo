@@ -180,13 +180,13 @@ export default class GoogleMapContent extends Component {
               }
                 <Circle
                   options={{
-                    strokeColor: "#FF0000",
+                    strokeColor: "green",
                     strokeOpacity: 0.8,
-                    fillColor: "#FF0000",
-                    fillOpacity: .35,
-                    strokeWeight: 2,
+                    fillColor: "green",
+                    fillOpacity: .25,
+                    strokeWeight: 1,
                     center: this.props.defaultCenter,
-                    radius: this.state.radiusOfMarkers * 1000
+                    radius: this.state.radiusOfMarkers * 1000,
                   }}
                 /> 
 
