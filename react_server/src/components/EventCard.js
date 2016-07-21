@@ -41,7 +41,7 @@ export default class EventCard extends Component {
 
                   <nav className="level">
                     <div className="level-left">
-                      <a className="level-item">
+                      <a className="level-item" href= {"https://calendar.google.com/calendar/render?action=TEMPLATE&text="+ this.props.title +"&dates=20160721T200000Z/20160721T240000Z&details=" + this.props.description +"&location=" + this.props.venue_address  +"&sf=true&output=xml#eventpage_6"} >
                         <span className="icon is-small"><i className="fa fa-calendar"></i></span>
                       </a>
                       <a className="level-item">
@@ -62,6 +62,13 @@ export default class EventCard extends Component {
         </div>
 
       </div>
+
+      // {"https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + this.props.title +  "&dates=" + this.props.start_time + "&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml#eventpage_6"}
+
+      
+
+      //calendar.google.com/calendar/render?action=TEMPLATE&text=Your+Event+Name&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml#eventpage_6
+  
 
     );
   }
