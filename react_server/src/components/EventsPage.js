@@ -21,8 +21,10 @@ export default class EventsPage extends Component {
   componentWillReceiveProps(newProps) {
     //set random event
     //debugger;
-    var randomEvent = this.getRandomEvent(newProps.events);
-    this.setState({ selectedEventIDs: [randomEvent.id] });
+    if (!this.state.selectedEventIDs[0]) {
+      var randomEvent = this.getRandomEvent(newProps.events);
+      this.setState({ selectedEventIDs: [randomEvent.id].concat(this.state.selectedEventIDs) });
+    }
   };
 
   handleMapMarkerClick(marker) {
@@ -40,7 +42,7 @@ export default class EventsPage extends Component {
   }
 
   getRandomEvent(events_array) {
-    return events_array[this.getRandomIntInclusive(0, this.props.events.length - 1)];
+    return events_array[0];
   }
 
   handleChangeInRadius(newRadius = 2) {
@@ -55,7 +57,6 @@ export default class EventsPage extends Component {
     var new_array = this.state.selectedEventIDs.filter( function(eventID) {
         return id !== eventID;
       });
-    console.log(new_array);
     this.setState({ selectedEventIDs: new_array });
   }
 
@@ -78,7 +79,13 @@ export default class EventsPage extends Component {
             <SearchForm 
               showButton={false}
               handleChangeInRadius={this.handleChangeInRadius.bind(this)}
-              today={this.props.today}
+              date={this.props.date}
+              handleGeolocationPress={this.props.handleGeolocationPress}
+              handleNewParams={this.props.handleNewParams}
+              location={this.props.location}
+              setAddress={this.props.setAddress}
+              address={this.props.address}
+              changeCenterOfMap={true}
               />
             <EventList
               events={this.props.events}
@@ -86,6 +93,7 @@ export default class EventsPage extends Component {
               handleEventCardMouseEnter={this.handleEventCardMouseEnter.bind(this)}
               deselectEvent={this.deselectEvent.bind(this)}
               onEventCardClick={this.handleEventCardClick.bind(this)}
+              showLoadingGifMap={this.props.showLoadingGifMap}
             />
           </div>
           <div className='column is-two-thirds container-map' style={{height: "100%"}}>
@@ -94,9 +102,10 @@ export default class EventsPage extends Component {
               selectedEventIDs={this.state.selectedEventIDs}
               events={this.props.events}
               onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
-              defaultCenter={this.props.currentPosition}
+              defaultCenter={this.props.location}
               radius={this.state.radius}
               eventIdMousedOver={this.state.eventIdMousedOver}
+              changeCenter={this.props.changeCenter}
             />
           </div>
         </div>

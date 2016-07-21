@@ -25,9 +25,13 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      today: new Date().toISOString().slice(0,10),
       userLocation: null,
-      showLoadingGif: false
+      date: new Date().toISOString().slice(0,10),
+      location: null,
+      address: null,
+      showLoadingGifHome: false,
+      showLoadingGifMap: false,
+      changeCenter: false
     }
   }
 
@@ -44,39 +48,48 @@ export default class App extends Component {
 
   handleGeolocationPress() {
     //populate the place form with closest place
-    this.setState({showLoadingGif: true});
+    this.setState({showLoadingGifHome: true, showLoadingGifMap: true});
     geolocation.getCurrentPosition((position) => {
-      this.setState({userLocation: {lat: position.coords.latitude, lng: position.coords.longitude }})
-      this.setState({showLoadingGif: false});
+      var locationObject= {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude) }
+      this.handleNewParams(locationObject, this.state.date, true)
+      this.setState({showLoadingGifHome: false, showLoadingGifMap: false});
     });
   }
 
-  makeAjaxCall(location, date = this.state.today, page_number = 1) {
-  date = this.convertDateForAjax(date);
+  handleNewParams(location, date, changeCenter) {
+    if (this.state.location !== location || this.state.date !== date) {
+      console.log(changeCenter);
+      this.setState({location, date, changeCenter});
+      this.setState({changeCenter: false})
+      this.makeAjaxCall(location, date);
+    }
+  }
+
+  setAddress(address) {
+    this.setState({address});
+  }
+
+  makeAjaxCall(location = this.state.location, date = this.state.date, page_number = 1, showingLoadingGif = true) {
+    date = this.convertDateForAjax(date);
     if (!location) {
       return;
     }
 
     if (currentAjaxRequest.promise) {
 
-      if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { //if they clicked on todays date return since that request is already going through
-        console.log("this ajax request is already underway.");
+      if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { 
         return;
       }
       currentAjaxRequest.promise.abort();
     }
-    
-    var lat = parseFloat(location.split(', ')[0]);
-    var lng = parseFloat(location.split(', ')[1]);
-    var userLocation = {lat: lat, lng: lng};
     console.log("call made!");
-    this.setState({userLocation: userLocation});
     currentAjaxRequest.settings = {date, location};
+    if(showingLoadingGif) {this.setState({showLoadingGifMap: true}) };
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
       data: {
-        location: location,
+        location: location.lat + ',' + location.lng,
         app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
         page_number: page_number,
@@ -89,14 +102,25 @@ export default class App extends Component {
         sort_order: 'relevance'
       },
       success: function(response) {
+        if (!response) {
+          return;
+        }
         var results = response.events.event;
         // Filter out events with no description. They're usually crap.
         var goodResults = results.filter( function(event) {
           return event.description;
           });
-        this.setState({ events: goodResults });
+        this.setState({ events: (page_number == 1) ? goodResults.concat(this.state.events) : this.state.events.concat(goodResults) });
+        console.log(this.state.events);
+        this.setState({showLoadingGifMap: false}); //stop showing loading gif
         currentAjaxRequest = {};
-      }.bind(this)
+        this.makeAjaxCall(this.state.location, this.state.date, page_number + 1, false);
+      }.bind(this),
+      error: function(xhr, textStatus, errorThrown) {
+        console.log(xhr);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
     });
   }
 
@@ -104,12 +128,15 @@ export default class App extends Component {
     if (this.state.homePage) {
       return (
         <HomePage 
-          makeCall={this.makeAjaxCall.bind(this)} 
           switchPage={this.switchPage.bind(this)}
-          today={this.state.today}
+          date={this.state.date}
           handleGeolocationPress={this.handleGeolocationPress.bind(this)}
           currentPosition={this.state.userLocation}
-          showLoadingGif={this.state.showLoadingGif}
+          location={this.state.location}
+          showLoadingGifHome={this.state.showLoadingGifHome}
+          handleNewParams={this.handleNewParams.bind(this)}
+          setAddress={this.setAddress.bind(this)}
+          address={this.state.address}
         />
       );
     } else {
@@ -117,7 +144,14 @@ export default class App extends Component {
         <EventsPage
           events={this.state.events}
           currentPosition={this.state.userLocation}
-          today={this.state.today}
+          date={this.state.date}
+          handleGeolocationPress={this.handleGeolocationPress.bind(this)}
+          handleNewParams={this.handleNewParams.bind(this)}
+          location={this.state.location}
+          setAddress={this.setAddress.bind(this)}
+          address={this.state.address}
+          changeCenter={this.state.changeCenter}
+          showLoadingGifMap={this.state.showLoadingGifMap}
         />
       );
     }

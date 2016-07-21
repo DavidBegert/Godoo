@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle, DirectionsRenderer} from "react-google-maps";
+import {GoogleMapLoader, GoogleMap, Marker, InfoWindow, Circle, DirectionsRenderer, DrawingManager} from "react-google-maps";
 import Filters from "./Filters";
 import $ from 'jquery';
 
@@ -16,8 +16,7 @@ export default class GoogleMapContent extends Component {
       radiusOfMarkers: 2,
       markerIdToBounce: null,
       directions: null,
-      showDirections: false,
-      routeInfoWindow: null
+      showDirections: false
     }
   }
 
@@ -31,6 +30,9 @@ export default class GoogleMapContent extends Component {
       } else {
         this.setState({markerIdToBounce: null});
       }
+    }
+    if (newProps.mapCenter != this.props.mapCenter) {
+      this.refs.map.panTo(newProps.mapCenter);
     }
 
   }
@@ -54,7 +56,7 @@ export default class GoogleMapContent extends Component {
   onMarkerClick(marker) { 
     //add route
     this.setState({showDirections: true});
-    if (!marker.showInfo) {
+    // if (!marker.showInfo) {
       console.log(marker);
       //show directions to marker
       var DirectionsService = new google.maps.DirectionsService();
@@ -64,35 +66,24 @@ export default class GoogleMapContent extends Component {
         travelMode: google.maps.TravelMode.DRIVING,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          // console.log(result.routes[0].legs[0].distance.text);
-          // console.log(result.routes[0].legs[0].duration.text);
-          // var step = Math.floor(result.routes[0].legs[0].steps.length/2);
-          // console.log(step);
-          // var infowindow2 = new google.maps.InfoWindow();
-          // infowindow2.setContent(result.routes[0].legs[0].distance.text + "<br>" + result.routes[0].legs[0].duration.text + " ");
-          // infowindow2.setPosition(result.routes[0].legs[0].steps[step].end_location);
-          // console.log(infowindow2);
-          //infowindow2.open(document.getElementById('mapDiv'));
           this.setState({
             directions: result
           });
-          console.log(this.state.directions.routes[0].legs[0].steps[2].end_location);
-          console.log(this.state.directions.routes[0].legs[0].distance.text);
         } else {
           console.error(`error fetching directions ${result}`);
         }
       });
       //end of showing directions
       this.props.onMapMarkerClick(marker);
-      marker.showInfo = true;
-      if (this.state.previousMarker && this.state.previousMarker != marker){ 
-        this.state.previousMarker.showInfo = false;
-      }
-      this.setState({previousMarker: marker});
-    } else {
-      marker.showInfo = false;
-    }
-    this.setState(this.state);
+    //   marker.showInfo = true;
+    //   // if (this.state.previousMarker && this.state.previousMarker != marker){ 
+    //   //   this.state.previousMarker.showInfo = false;
+    //   // }
+    //   this.setState({previousMarker: marker});
+    // } else {
+    //   marker.showInfo = false;
+    // }
+    // // this.setState(this.state);
   };
 
   getAnimation(marker) {
@@ -126,8 +117,22 @@ export default class GoogleMapContent extends Component {
     return (d / 1000.0); // returns the distance in kilometers
   };
 
-  render() {
+  infoWindow() {
+    return (
+      <InfoWindow 
+        onCloseclick={() => this.setState({showDirections: false})} 
+        position={this.state.directions.routes[0].legs[0].steps[Math.floor(this.state.directions.routes[0].legs[0].steps.length/2)].end_location}> 
+        {this.state.directions.routes[0].legs[0].distance.text + "<br>" + this.state.directions.routes[0].legs[0].duration.text + " "} 
+        </InfoWindow> 
+      );
+  }
 
+  render() {
+    var centerProps = {
+      center: this.props.defaultCenter,
+    }
+    console.log(this.props.changeCenter);
+    if (!this.props.changeCenter) { centerProps = null };
     if (this.props.events) {  
       return (
           <div>
@@ -143,12 +148,14 @@ export default class GoogleMapContent extends Component {
                 </div>
               }
               googleMapElement={
+      
                 <GoogleMap
                   ref='map'
                   defaultZoom={13}
                   defaultCenter={this.props.defaultCenter}
-                  center={this.props.mapCenter}
+                  {...centerProps}
                 >
+
                 <Filters onFilterClick={this.handleFilterClick.bind(this)}/>
                 <Marker
                   key="userLocation"
@@ -181,33 +188,20 @@ export default class GoogleMapContent extends Component {
                   }
                 })
               }
-                {/*<DrawingManager
-                  defaultDrawingMode={google.maps.drawing.OverlayType.CIRCLE}
-                  defaultOptions={{
-                    drawingControl: true,
-                    drawingControlOptions: {
-                      position: google.maps.ControlPosition.TOP_CENTER,
-                      drawingModes: [
-                        google.maps.drawing.OverlayType.CIRCLE,
-                        google.maps.drawing.OverlayType.POLYGON,
-                        google.maps.drawing.OverlayType.POLYLINE,
-                        google.maps.drawing.OverlayType.RECTANGLE,
-                      ],
-                    },
-                    circleOptions: {
-                      fillColor: `#ffff00`,
-                      fillOpacity: 1,
-                      strokeWeight: 5,
-                      clickable: false,
-                      editable: true,
-                      zIndex: 1,
-                    },
+                <Circle
+                  options={{
+                    strokeColor: "green",
+                    strokeOpacity: 0.8,
+                    fillColor: "green",
+                    fillOpacity: .25,
+                    strokeWeight: 1,
+                    center: this.props.defaultCenter,
+                    radius: this.state.radiusOfMarkers * 1000,
                   }}
-                /> */}
+                /> 
 
-                {this.state.directions && this.state.showDirections ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true, suppressInfoWindows: false, infoWindow: new google.maps.InfoWindow({content: this.state.directions.routes[0].legs[0].distance.text, position: this.state.directions.routes[0].legs[0].steps[2].end_location}) }} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
-                {this.state.directions && this.state.showDirections ? <InfoWindow position={this.state.directions.routes[0].legs[0].steps[2].end_location} content={this.state.directions.routes[0].legs[0].distance.text}> </InfoWindow> : null }
-
+                {this.state.directions ? <DirectionsRenderer options={{preserveViewport: true, suppressMarkers: true}} directions={this.state.directions}/*panel={document.getElementById('right-panel')} *//> : null}
+                {(this.state.directions && this.state.showDirections) ? this.infoWindow() : null }
 
 
               </GoogleMap>
