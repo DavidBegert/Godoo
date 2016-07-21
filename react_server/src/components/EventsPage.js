@@ -21,8 +21,10 @@ export default class EventsPage extends Component {
   componentWillReceiveProps(newProps) {
     //set random event
     //debugger;
-    var randomEvent = this.getRandomEvent(newProps.events);
-    this.setState({ selectedEventIDs: [randomEvent.id] });
+    if (newProps.events.length) {
+      var randomEvent = this.getRandomEvent(newProps.events);
+      this.setState({ selectedEventIDs: [randomEvent.id] });
+    }
   };
 
   handleMapMarkerClick(marker) {
@@ -55,7 +57,6 @@ export default class EventsPage extends Component {
     var new_array = this.state.selectedEventIDs.filter( function(eventID) {
         return id !== eventID;
       });
-    console.log(new_array);
     this.setState({ selectedEventIDs: new_array });
   }
 
@@ -72,7 +73,10 @@ export default class EventsPage extends Component {
             <SearchForm 
               showButton={false}
               handleChangeInRadius={this.handleChangeInRadius.bind(this)}
-              today={this.props.today}
+              date={this.props.date}
+              handleGeolocationPress={this.props.handleGeolocationPress}
+              handleNewParams={this.props.handleNewParams}
+              location={this.props.location}
               />
             <EventList
               events={this.props.events}
@@ -86,7 +90,7 @@ export default class EventsPage extends Component {
               selectedEventIDs={this.state.selectedEventIDs}
               events={this.props.events}
               onMapMarkerClick={this.handleMapMarkerClick.bind(this)}
-              defaultCenter={this.props.currentPosition}
+              defaultCenter={this.props.location}
               radius={this.state.radius}
               eventIdMousedOver={this.state.eventIdMousedOver}
             />

@@ -25,9 +25,9 @@ export default class App extends Component {
     this.state = {
       homePage: true,
       events: [],
-      today: new Date().toISOString().slice(0,10),
-      mapCenter: null,
-      showLoadingGif: false
+      date: new Date().toISOString().slice(0,10),
+      location: null,
+      showLoadingGif: false,
     }
   }
 
@@ -46,37 +46,40 @@ export default class App extends Component {
     //populate the place form with closest place
     this.setState({showLoadingGif: true});
     geolocation.getCurrentPosition((position) => {
-      this.setState({mapCenter: {lat: position.coords.latitude, lng: position.coords.longitude }})
+      // console.log(position);
+      var locationObject= {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude) }
+      this.handleNewParams(locationObject, this.state.date)
       this.setState({showLoadingGif: false});
     });
   }
 
-  makeAjaxCall(location, date = this.state.today, page_number = 1) {
-  date = this.convertDateForAjax(date);
+  handleNewParams(location, date) {
+    if (this.state.location !== location || this.state.date !== date) {
+      this.setState({location, date});
+      this.makeAjaxCall(location, date);
+    }
+  }
+
+  makeAjaxCall(location = this.state.location, date = this.state.date, page_number = 1) {
+    date = this.convertDateForAjax(date);
     if (!location) {
       return;
     }
 
     if (currentAjaxRequest.promise) {
 
-      if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { //if they clicked on todays date return since that request is already going through
-        console.log("this ajax request is already underway.");
+      if (date === currentAjaxRequest.settings.date && location === currentAjaxRequest.settings.location) { 
         return;
       }
       currentAjaxRequest.promise.abort();
     }
-    
-    var lat = parseFloat(location.split(', ')[0]);
-    var lng = parseFloat(location.split(', ')[1]);
-    var mapCenter = {lat: lat, lng: lng};
     console.log("call made!");
-    this.setState({mapCenter: mapCenter});
     currentAjaxRequest.settings = {date, location};
     currentAjaxRequest.promise = $.ajax({
       url: 'http://api.eventful.com/json/events/search',
       dataType: 'jsonp',
       data: {
-        location: location,
+        location: location.lat + ',' + location.lng,
         app_key: 'pVnn7M9Sk54FkgBf', //FFmssWtvRRfc9VF7
         page_size: 100,
         page_number: page_number,
@@ -96,7 +99,12 @@ export default class App extends Component {
           });
         this.setState({ events: goodResults });
         currentAjaxRequest = {};
-      }.bind(this)
+      }.bind(this),
+      error: function(xhr, textStatus, errorThrown) {
+        console.log(xhr);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
     });
   }
 
@@ -104,20 +112,22 @@ export default class App extends Component {
     if (this.state.homePage) {
       return (
         <HomePage 
-          makeCall={this.makeAjaxCall.bind(this)} 
           switchPage={this.switchPage.bind(this)}
-          today={this.state.today}
+          date={this.state.date}
           handleGeolocationPress={this.handleGeolocationPress.bind(this)}
-          currentPosition={this.state.mapCenter}
+          location={this.state.location}
           showLoadingGif={this.state.showLoadingGif}
+          handleNewParams={this.handleNewParams.bind(this)}
         />
       );
     } else {
       return (
         <EventsPage
           events={this.state.events}
-          currentPosition={this.state.mapCenter}
-          today={this.state.today}
+          date={this.state.date}
+          handleGeolocationPress={this.handleGeolocationPress.bind(this)}
+          handleNewParams={this.handleNewParams.bind(this)}
+          location={this.state.location}
         />
       );
     }

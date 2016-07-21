@@ -14,14 +14,15 @@ export default class Hero extends Component {
             <br />
             <br />
             <SearchForm 
-              makeCall={this.props.makeCall} 
-              showButton={true} 
-              currentPosition={this.props.currentPosition}
-              today={this.props.today}
+              showButton={true}
+              location={this.props.location}
+              date={this.props.date}
               switchPage={this.props.switchPage}
+              handleGeolocationPress={this.props.handleGeolocationPress}
+              handleNewParams={this.props.handleNewParams}
             />
             <div>
-              <button onClick={() => this.props.handleGeolocationPress()}> Use My Current Location </button>
+
             </div>
             { (this.props.showLoadingGif) && <img id="homepage-gif" src="https://67.media.tumblr.com/tumblr_mdkoyttBGV1rgpyeqo1_500.gif" />}
           </div>
