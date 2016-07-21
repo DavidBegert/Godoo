@@ -26,11 +26,13 @@ export default class EventCard extends Component {
   }
 
   formatDateForCalendarUrl(dateTime) {
-    dateTime = dateTime.split(' ');
-    dateTime[0] = dateTime[0].split('-').join('');
-    dateTime[1] = dateTime[1].split(':').join('');
-    dateTime = dateTime[0] + 'T' + dateTime[1] + 'Z';
-    return dateTime;
+    if (dateTime) {
+      dateTime = dateTime.split(' ');
+      dateTime[0] = dateTime[0].split('-').join('');
+      dateTime[1] = dateTime[1].split(':').join('');
+      dateTime = dateTime[0] + 'T' + dateTime[1] + 'Z';
+      return dateTime;
+    }
   }
 
   formatDateForDisplay(startTime, endTime) {
@@ -85,6 +87,9 @@ export default class EventCard extends Component {
                       </a>
                       <a className="level-item">
                         <span className="icon is-small"><i className="fa fa-ticket"></i></span>
+                      </a>
+                      <a className="level-item">
+                        <span className="icon is-small"><i className="fa fa-facebook"></i></span>
                       </a>
                     </div>
                   </nav>
