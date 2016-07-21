@@ -8,9 +8,11 @@ export default class Hero extends Component {
       <section className="hero is-large">
         <div className="hero-body hero-pic">
           <div className="container city-heading">
-            <h1 className="title hero-title">
-              Discover events around the city
+            <h1 className="title hero-title .header-text-blur">
+              Go Doo
             </h1>
+            <hr id="hero-hr"/>
+            <h4 className="title hero-subtitle"> Discover Events Near You </h4>
             <br />
             <br />
             <SearchForm 

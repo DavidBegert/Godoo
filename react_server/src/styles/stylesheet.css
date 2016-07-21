@@ -61,13 +61,27 @@
 .hero-title {
   color:white;
   font-family: 'Montserrat', sans-serif;
-  font-size: 50px;
-  margin-top: 70px;
-  margin-bottom: 1000px;
+  font-size: 70px;
+  margin-top: -55px;
+  text-shadow: 0.1em 0.1em 0.4em black;
 }
 
+
 .hero-subtitle {
+  text-shadow: 0.1em 0.1em 0.4em black;
   color: white;
+
+}
+
+#hero-hr {
+    border: none;
+    height: 4px;
+    /* Set the hr color */
+    color: white; /* old IE */
+    background-color: white; /* Modern Browsers */
+    width: 30%;
+    text-align: left;
+    margin-left: 35%;
 }
 
 /* Failed attempt to style the section block */
