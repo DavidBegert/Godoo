@@ -96,7 +96,7 @@ export default class SearchForm extends Component {
         <button className="button get-started" onClick={() => this.handleGetStartedPress() }> Get Started </button>
       }
         <div>
-        <button onClick={() => this.props.handleGeolocationPress()}> Use My Current Location </button>
+        <button className="button is-small" onClick={() => this.props.handleGeolocationPress()}> Use My Current Location </button>
         </div>
         { (!this.props.showButton) && <div className="range-finder"> Range <input className="center" id="radiusInputField" defaultValue={2} type="range" min=".2" max="10" step=".2" /> </div> }
 

@@ -60,8 +60,9 @@
 
 .hero-title {
   color:white;
-  font-family: arial;
+  font-family: 'Montserrat', sans-serif;
   font-size: 50px;
+  margin-top: 70px;
   margin-bottom: 1000px;
 }
 
@@ -150,6 +151,7 @@
 
 .how-it-works-headings {
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #how-it-works-images img {
