@@ -8,7 +8,6 @@ export default class EventList extends Component {
   //TO DO : FIgure out what to do with events that have start and end time as 12am (some are all day but dunno when they close and stuff)
     
     var defaultImage = "http://thumb101.shutterstock.com/display_pic_with_logo/11994/253973893/stock-vector-event-word-cloud-business-concept-253973893.jpg";
-    console.log(this.props.showLoadingGifMap)
       var eventCards = this.props.selectedEventIDs.map((eventId) => {
         var event = this.props.events.find((associatedEvent) => associatedEvent.id === eventId);
         var description = $('<div>' + event.description + '</div>').text(); 
