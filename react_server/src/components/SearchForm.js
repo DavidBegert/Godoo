@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
+var currentPosition;
 export default class SearchForm extends Component {
 
   constructor(props) {
     super(props);
+    var currentPosition;
     this.state = {
       showWarning: false
     }
@@ -47,8 +49,8 @@ export default class SearchForm extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps.location);
-    console.log(this.props.location);
+    // console.log(newProps.location);
+    // console.log(this.props.location);
     if (!this.state.address || ((newProps.location && this.props.location) && newProps.location != this.props.location)) {
       this.displayAddress(newProps.location);
     }
