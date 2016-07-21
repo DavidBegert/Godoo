@@ -33,6 +33,7 @@ export default class GoogleMapContent extends Component {
     }
     if (newProps.mapCenter != this.props.mapCenter) {
       this.refs.map.panTo(newProps.mapCenter);
+      this.onEventCardClickForMap(newProps.mapCenter);
     }
 
   }
@@ -51,6 +52,26 @@ export default class GoogleMapContent extends Component {
       }
       return {filteredCategories: newFilterSet};
     });
+  }
+  onEventCardClickForMap(mapCenter) { 
+    //add route
+    this.setState({showDirections: true});
+    // if (!marker.showInfo) {
+      //show directions to marker
+      var DirectionsService = new google.maps.DirectionsService();
+      DirectionsService.route({
+        origin: this.props.defaultCenter,
+        destination: mapCenter,
+        travelMode: google.maps.TravelMode.DRIVING,
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      });
   }
 
   onMarkerClick(marker) { 
