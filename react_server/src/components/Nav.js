@@ -11,7 +11,10 @@ export default class Nav extends Component {
           </a>
         </div>
 
+
+
         <div className="nav-right nav-menu">
+        
           <a className="nav-item" href="#">
             Explore
           </a>
@@ -24,7 +27,20 @@ export default class Nav extends Component {
               <span>Contact us</span>
             </a>
           </span>
-        </div>
+          </div>
+
+          <span className="eventful-badge eventful-small nav-item">
+            <a href="http://eventful.com/">
+              <img 
+                src="http://api.eventful.com/images/powered/eventful_88x31.gif"
+                alt="Local Events, Concerts, Tickets"
+              />
+              <p>
+                Events by
+              </p>
+            </a>
+          </span>
+
       </nav>
     );
   }
