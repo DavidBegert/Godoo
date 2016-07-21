@@ -20,6 +20,8 @@ export default class Hero extends Component {
               switchPage={this.props.switchPage}
               handleGeolocationPress={this.props.handleGeolocationPress}
               handleNewParams={this.props.handleNewParams}
+              setAddress={this.props.setAddress}
+              address={this.props.address}
             />
             <div>
 

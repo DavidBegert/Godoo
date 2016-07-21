@@ -27,6 +27,7 @@ export default class App extends Component {
       events: [],
       date: new Date().toISOString().slice(0,10),
       location: null,
+      address: null,
       showLoadingGif: false,
     }
   }
@@ -58,6 +59,10 @@ export default class App extends Component {
       this.setState({location, date});
       this.makeAjaxCall(location, date);
     }
+  }
+
+  setAddress(address) {
+    this.setState({address});
   }
 
   makeAjaxCall(location = this.state.location, date = this.state.date, page_number = 1) {
@@ -118,6 +123,8 @@ export default class App extends Component {
           location={this.state.location}
           showLoadingGif={this.state.showLoadingGif}
           handleNewParams={this.handleNewParams.bind(this)}
+          setAddress={this.setAddress.bind(this)}
+          address={this.state.address}
         />
       );
     } else {
@@ -128,6 +135,8 @@ export default class App extends Component {
           handleGeolocationPress={this.handleGeolocationPress.bind(this)}
           handleNewParams={this.handleNewParams.bind(this)}
           location={this.state.location}
+          setAddress={this.setAddress.bind(this)}
+          address={this.state.address}
         />
       );
     }

@@ -32,7 +32,7 @@ export default class SearchForm extends Component {
           if( status == google.maps.GeocoderStatus.OK ) {
               var latitude = results[0].geometry.location.lat();
               var longitude = results[0].geometry.location.lng();
-              this.setState({address});
+              this.props.setAddress(address);
               this.props.handleNewParams({ lat: latitude, lng: longitude }, this.props.date);
           }
         }.bind(this));
@@ -51,7 +51,7 @@ export default class SearchForm extends Component {
   componentWillReceiveProps(newProps) {
     // console.log(newProps.location);
     // console.log(this.props.location);
-    if (!this.state.address || ((newProps.location && this.props.location) && newProps.location != this.props.location)) {
+    if (!this.props.address || ((newProps.location && this.props.location) && newProps.location != this.props.location)) {
       this.displayAddress(newProps.location);
     }
   }
@@ -64,7 +64,7 @@ export default class SearchForm extends Component {
       if ( status == google.maps.GeocoderStatus.OK ) {
         var address = results[0].formatted_address;
         locationInput.value = address;
-        this.setState({address});
+        this.props.setAddress(address);
       }
     }.bind(this));
   }
@@ -84,7 +84,8 @@ export default class SearchForm extends Component {
           className="input input-location" 
           id="searchTextField" 
           type="text"
-          defaultValue={this.state.address}
+          defaultValue={this.props.address}
+          placeholder="Enter your city or address"
          />
         <input 
           className="input input-date"

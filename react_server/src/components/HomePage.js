@@ -19,6 +19,8 @@ export default class HomePage extends Component {
           showLoadingGif={this.props.showLoadingGif}
           date={this.props.date}
           handleNewParams={this.props.handleNewParams}
+          setAddress={this.props.setAddress}
+          address={this.props.address}
         />
         <InfoSection />
       </div>

@@ -77,6 +77,8 @@ export default class EventsPage extends Component {
               handleGeolocationPress={this.props.handleGeolocationPress}
               handleNewParams={this.props.handleNewParams}
               location={this.props.location}
+              setAddress={this.props.setAddress}
+              address={this.props.address}
               />
             <EventList
               events={this.props.events}
