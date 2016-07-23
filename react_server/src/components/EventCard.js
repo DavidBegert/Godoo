@@ -54,7 +54,7 @@ export default class EventCard extends Component {
     return (
       // Removed 1/3 width bulma class
       // TODO : Jazz it up with bulma css.
-      <div id={this.props.id} onClick={(e) => { e.stopPropagation(); this.props.onEventCardClick(this.props.id)} }>
+      <div id={this.props.id} /*onClick={(e) => { e.stopPropagation(); this.props.onEventCardClick(this.props.id)} }*/>
         <div className="box1">
           <div className="box space_edit2">
             <article className="media">
@@ -63,7 +63,7 @@ export default class EventCard extends Component {
                   <img src={this.props.image_url} alt="Image"/>
                 </figure>
               </div>
-              <div className="media-content">
+              <div className="media-content" onClick={(e) => { e.stopPropagation(); this.props.onEventCardClick(this.props.id)}}>
                 <div className="content">
                   <p>
                     <strong>{this.props.title}</strong>
